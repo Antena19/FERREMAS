@@ -1,0 +1,52 @@
+<footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h4><i class="bi bi-tools"></i> Ferremas</h4>
+          <p>Tu ferretería de confianza para proyectos grandes y pequeños.</p>
+          <div class="redes-sociales">
+            <a href="#" target="_blank"><i class="bi bi-facebook"></i></a>
+            <a href="#" target="_blank"><i class="bi bi-instagram"></i></a>
+            <a href="#" target="_blank"><i class="bi bi-twitter"></i></a>
+            <a href="#" target="_blank"><i class="bi bi-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <h4>Enlaces rápidos</h4>
+          <ul class="enlaces">
+            <li><a [routerLink]="['/publico/catalogo']">Productos</a></li>
+            <li><a [routerLink]="['/publico/ofertas']">Ofertas</a></li>
+            <li><a [routerLink]="['/publico/nosotros']">Sobre nosotros</a></li>
+            <li><a [routerLink]="['/publico/contacto']">Contacto</a></li>
+            <li><a [routerLink]="['/publico/terminos']">Términos y condiciones</a></li>
+            <li><a [routerLink]="['/publico/privacidad']">Política de privacidad</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-md-4">
+          <h4>Contacto</h4>
+          <address>
+            <p><i class="bi bi-geo-alt"></i> Av. Principal 123, Puerto Montt</p>
+            <p><i class="bi bi-telephone"></i> +56 9 1234 5678</p>
+            <p><i class="bi bi-envelope"></i> contacto&#64;ferremas.cl</p>
+          </address>
+          <h4>Horario de atención</h4>
+          <p>Lunes a Viernes: 9:00 - 18:00</p>
+          <p>Sábado: 9:00 - 14:00</p>
+        </div>
+      </div>
+      
+      <div class="derechos">
+        <p>&copy; {{ anioActual }} Ferremas. Todos los derechos reservados.</p>
+        <div class="metodos-pago">
+          <span class="metodo-pago" title="Transferencia Bancaria">
+            <i class="bi bi-bank"></i>
+          </span>
+          <span class="metodo-pago" title="Mercado Pago">
+            <i class="bi bi-wallet2"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </footer>

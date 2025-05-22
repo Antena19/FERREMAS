@@ -1,0 +1,76 @@
+.retorno-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    padding: 2rem 0;
+  }
+  
+  .retorno-card {
+    max-width: 600px;
+    width: 100%;
+    padding: 3rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: none;
+  }
+  
+  .cargando {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+  }
+  
+  .cargando p {
+    margin-top: 1rem;
+    color: #6c757d;
+  }
+  
+  .icono-exito, .icono-error {
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .icono-exito {
+    color: var(--success-color);
+  }
+  
+  .icono-error {
+    color: var(--danger-color);
+  }
+  
+  h2 {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+  }
+  
+  p {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: #495057;
+  }
+  
+  .botones-accion {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  @media (max-width: 576px) {
+    .retorno-card {
+      padding: 2rem 1.5rem;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+    }
+    
+    .botones-accion {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }

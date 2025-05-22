@@ -1,0 +1,51 @@
+.detalle-producto {
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .imagen-container {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .producto-imagen {
+    max-height: 350px;
+    object-fit: contain;
+  }
+  
+  .codigo {
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+  
+  .precio-container {
+    margin-top: 1rem;
+  }
+  
+  .precio {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #d9534f;
+  }
+  
+  .iva {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-left: 0.5rem;
+  }
+  
+  .descripcion h4, .cantidad-container h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #495057;
+  }
+  
+  .acciones {
+    margin-top: 2rem;
+  }

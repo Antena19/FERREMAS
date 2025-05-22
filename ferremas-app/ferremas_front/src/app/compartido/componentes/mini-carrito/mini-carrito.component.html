@@ -1,0 +1,54 @@
+<div class="mini-carrito-container">
+    <button class="btn-carrito" (click)="toggleDropdown()">
+      <i class="bi bi-cart"></i>
+      <span class="badge" *ngIf="totalItems > 0">{{ totalItems }}</span>
+    </button>
+    
+    <div class="dropdown-carrito" *ngIf="mostrarDropdown">
+      <div class="header-dropdown">
+        <h5>Mi Carrito ({{ totalItems }} items)</h5>
+        <button class="btn-cerrar" (click)="cerrarDropdown()">×</button>
+      </div>
+      
+      <div class="body-dropdown">
+        <div *ngIf="carrito.items.length === 0" class="carrito-vacio">
+          <p>Tu carrito está vacío</p>
+          <button class="btn-comprar" [routerLink]="['/publico/catalogo']" (click)="cerrarDropdown()">
+            Ir a comprar
+          </button>
+        </div>
+        
+        <div *ngIf="carrito.items.length > 0">
+          <div class="item-carrito" *ngFor="let item of carrito.items.slice(0, 3)">
+            <div class="item-imagen">
+              <img [src]="item.producto?.imagenUrl || 'assets/img/no-image.svg'" [alt]="item.producto?.nombre">
+            </div>
+            <div class="item-detalles">
+              <p class="item-nombre">{{ item.producto?.nombre }}</p>
+              <p class="item-precio">{{ item.cantidad }} x ${{ item.precioUnitario | number:'1.0-0' }}</p>
+            </div>
+          </div>
+          
+          <div *ngIf="carrito.items.length > 3" class="mas-items">
+            <p>Y {{ carrito.items.length - 3 }} artículos más...</p>
+          </div>
+          
+          <div class="totales">
+            <p>Subtotal: <span>${{ carrito.subtotal | number:'1.0-0' }}</span></p>
+            <p *ngIf="carrito.descuentos > 0">Descuento: <span>-${{ carrito.descuentos | number:'1.0-0' }}</span></p>
+            <p>IVA: <span>${{ carrito.impuestos | number:'1.0-0' }}</span></p>
+            <p class="total">Total: <span>${{ carrito.total | number:'1.0-0' }}</span></p>
+          </div>
+          
+          <div class="acciones">
+            <button class="btn-ver-carrito" (click)="irAlCarrito()">
+              Ver carrito
+            </button>
+            <button class="btn-checkout" (click)="irAlCheckout()">
+              Checkout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

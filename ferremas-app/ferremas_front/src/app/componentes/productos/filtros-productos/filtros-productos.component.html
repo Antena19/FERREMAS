@@ -1,0 +1,66 @@
+<div class="card mb-4">
+  <div class="card-body">
+    <!-- Mensaje de carga -->
+    <div *ngIf="cargando" class="text-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="error" class="alert alert-danger" role="alert">
+      {{ error }}
+    </div>
+
+    <!-- Buscador -->
+    <div class="mb-3">
+      <label for="busqueda" class="form-label">Buscar productos</label>
+      <div class="input-group">
+        <input type="text" 
+               class="form-control" 
+               id="busqueda"
+               [(ngModel)]="busqueda"
+               placeholder="Buscar...">
+        <button class="btn btn-primary" 
+                type="button"
+                (click)="onBuscar()">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Filtro por categoría -->
+    <div class="mb-3">
+      <label for="categoria" class="form-label">Categoría</label>
+      <select class="form-select" 
+              id="categoria"
+              (change)="onCategoriaChange($any($event.target).value)">
+        <option value="0">Todas las categorías</option>
+        <option *ngFor="let categoria of categorias" 
+                [value]="categoria.id">
+          {{ categoria.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Filtro por marca -->
+    <div class="mb-3">
+      <label for="marca" class="form-label">Marca</label>
+      <select class="form-select" 
+              id="marca"
+              (change)="onMarcaChange($any($event.target).value)">
+        <option value="0">Todas las marcas</option>
+        <option *ngFor="let marca of marcas" 
+                [value]="marca.id">
+          {{ marca.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Botón limpiar filtros -->
+    <button class="btn btn-outline-secondary w-100" 
+            (click)="limpiarFiltros()">
+      Limpiar filtros
+    </button>
+  </div>
+</div> 

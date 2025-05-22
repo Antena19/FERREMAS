@@ -1,0 +1,67 @@
+<header class="header">
+    <div class="container">
+      <div class="logo">
+        <a [routerLink]="['/']">
+          <i class="bi bi-tools"></i>
+          <span>Ferremas</span>
+        </a>
+      </div>
+      
+      <div class="busqueda">
+        <input type="text" placeholder="¿Qué estás buscando?">
+        <button>
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+      
+      <div class="acciones">
+        <div class="mini-carrito-wrapper">
+          <app-mini-carrito></app-mini-carrito>
+        </div>
+        
+        <div class="usuario-wrapper">
+          <button class="btn-usuario" (click)="toggleMenu()">
+            <i class="bi bi-person-circle"></i>
+            <span *ngIf="usuarioAutenticado">{{ nombreUsuario }}</span>
+            <span *ngIf="!usuarioAutenticado">Mi cuenta</span>
+          </button>
+          
+          <div class="menu-usuario" *ngIf="mostrarMenu">
+            <div *ngIf="!usuarioAutenticado">
+              <a [routerLink]="['/autenticacion/login']">Iniciar sesión</a>
+              <a [routerLink]="['/autenticacion/registro']">Registrarse</a>
+            </div>
+            
+            <div *ngIf="usuarioAutenticado">
+              <div class="menu-header">
+                <p>{{ nombreUsuario }}</p>
+                <p class="rol">{{ rol }}</p>
+              </div>
+              
+              <div class="menu-opciones">
+                <a [routerLink]="['/cliente/perfil']" *ngIf="rol === 'cliente'">Mi perfil</a>
+                <a [routerLink]="['/cliente/pedidos']" *ngIf="rol === 'cliente'">Mis pedidos</a>
+                <a [routerLink]="['/admin']" *ngIf="rol === 'administrador'">Panel de administración</a>
+                <a [routerLink]="['/vendedor']" *ngIf="rol === 'vendedor'">Panel de vendedor</a>
+                <a [routerLink]="['/bodeguero']" *ngIf="rol === 'bodeguero'">Panel de bodeguero</a>
+                <a [routerLink]="['/contador']" *ngIf="rol === 'contador'">Panel de contador</a>
+                <a href="javascript:void(0)" (click)="cerrarSesion()">Cerrar sesión</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <nav class="navegacion">
+      <div class="container">
+        <ul>
+          <li><a [routerLink]="['/']">Inicio</a></li>
+          <li><a [routerLink]="['/catalogo']">Catálogo</a></li>
+          <li><a [routerLink]="['/categorias']">Categorías</a></li>
+          <li><a [routerLink]="['/ofertas']">Ofertas</a></li>
+          <li><a [routerLink]="['/contacto']">Contacto</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>

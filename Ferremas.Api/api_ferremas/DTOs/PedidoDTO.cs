@@ -7,10 +7,22 @@ namespace Ferremas.Api.DTOs
     {
         public int Id { get; set; }
         public DateTime Fecha { get; set; }
-        public int ClienteId { get; set; }
-        public string ClienteNombre { get; set; }
+        public int UsuarioId { get; set; }
+        public string UsuarioNombre { get; set; }
         public string Estado { get; set; }
+        public string TipoEntrega { get; set; }
+        public int? SucursalId { get; set; }
+        public string SucursalNombre { get; set; }
+        public int? DireccionId { get; set; }
+        public decimal Subtotal { get; set; }
+        public decimal CostoEnvio { get; set; }
+        public decimal Impuestos { get; set; }
         public decimal Total { get; set; }
+        public string Notas { get; set; }
+        public int? VendedorId { get; set; }
+        public string VendedorNombre { get; set; }
+        public int? BodegueroId { get; set; }
+        public string BodegueroNombre { get; set; }
         public List<PedidoItemResponseDTO> Items { get; set; }
     }
 

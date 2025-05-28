@@ -9,9 +9,10 @@ namespace Ferremas.Api.Services
     {
         Task<IEnumerable<PedidoDTO>> GetAllPedidosAsync();
         Task<PedidoDTO> GetPedidoByIdAsync(int id);
-        Task<IEnumerable<PedidoDTO>> GetPedidosByClienteIdAsync(int clienteId);
+        Task<IEnumerable<PedidoDTO>> GetPedidosByUsuarioIdAsync(int usuarioId);
         Task<PedidoDTO> UpdatePedidoAsync(int id, PedidoUpdateDTO pedidoUpdateDTO);
         Task<PedidoDTO> UpdatePedidoEstadoAsync(int id, string estado);
         Task<bool> DeletePedidoAsync(int id);
+        Task<IEnumerable<PedidoDTO>> GetPedidosPendientesAsync();
     }
 }

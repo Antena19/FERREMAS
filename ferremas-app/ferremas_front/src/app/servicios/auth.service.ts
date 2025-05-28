@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap, catchError, of } from 'rxjs';
+import { BehaviorSubject, Observable, tap, catchError, of, switchMap, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { 
     Usuario, 
@@ -13,6 +13,7 @@ import {
 } from '../modelos/usuario.model';
 import { Producto } from '../modelos/producto.model';
 import { Carrito } from '../modelos/carrito.model';
+import { EventosService } from './eventos.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,10 @@ export class AuthService {
   private usuarioSubject = new BehaviorSubject<Usuario | null>(this.cargarUsuarioLocal());
   public usuario$ = this.usuarioSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private eventosService: EventosService
+  ) {
     this.cargarUsuarioActual();
   }
 
@@ -31,9 +35,13 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/login`, { email, password })
       .pipe(
         tap(response => {
+          console.log('Login exitoso, usuario:', response.usuario);
           localStorage.setItem('auth_token', response.token);
           localStorage.setItem('usuario', JSON.stringify(response.usuario));
           this.usuarioSubject.next(response.usuario);
+          // Notificar que el usuario ha iniciado sesión
+          console.log('Notificando evento de login...');
+          this.eventosService.notificarLogin();
         })
       );
   }

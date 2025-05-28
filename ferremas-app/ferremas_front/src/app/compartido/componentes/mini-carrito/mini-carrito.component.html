@@ -21,7 +21,12 @@
         <div *ngIf="carrito.items.length > 0">
           <div class="item-carrito" *ngFor="let item of carrito.items.slice(0, 3)">
             <div class="item-imagen">
-              <img [src]="item.producto?.imagenUrl || 'assets/img/no-image.svg'" [alt]="item.producto?.nombre">
+              <img 
+                [src]="'assets/' + (item.producto?.imagenUrl || 'no-imagen.png')" 
+                alt="{{ item.producto?.nombre || 'Sin nombre' }}"
+                (error)="onImgError($event)"
+                width="40" height="40"
+              />
             </div>
             <div class="item-detalles">
               <p class="item-nombre">{{ item.producto?.nombre }}</p>

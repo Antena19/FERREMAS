@@ -82,20 +82,36 @@ namespace Ferremas.Api.Repositories
                         fecha_pago,
                         estado,
                         metodo,
+                        mercadopago_payment_id,
+                        mercadopago_preference_id,
+                        mercadopago_status,
+                        mercadopago_status_detail,
+                        mercadopago_payment_method_id,
+                        mercadopago_payment_type_id,
+                        mercadopago_installments,
+                        mercadopago_card_number,
                         referencia_transaccion,
-                        mercado_pago_preference_id,
-                        url_retorno,
-                        notas
+                        notas,
+                        contador_id,
+                        url_retorno
                     ) VALUES (
                         @PedidoId,
                         @Monto,
                         @FechaPago,
                         @Estado,
                         @Metodo,
-                        @ReferenciaTransaccion,
+                        @MercadoPagoPaymentId,
                         @MercadoPagoPreferenceId,
-                        @UrlRetorno,
-                        @Notas
+                        @MercadoPagoStatus,
+                        @MercadoPagoStatusDetail,
+                        @MercadoPagoPaymentMethodId,
+                        @MercadoPagoPaymentTypeId,
+                        @MercadoPagoInstallments,
+                        @MercadoPagoCardNumber,
+                        @ReferenciaTransaccion,
+                        @Notas,
+                        @ContadorId,
+                        @UrlRetorno
                     );
                     SELECT LAST_INSERT_ID();";
 
@@ -106,10 +122,18 @@ namespace Ferremas.Api.Repositories
                     pago.FechaPago,
                     pago.Estado,
                     pago.Metodo,
-                    pago.ReferenciaTransaccion,
+                    pago.MercadoPagoPaymentId,
                     pago.MercadoPagoPreferenceId,
-                    pago.UrlRetorno,
-                    pago.Notas
+                    pago.MercadoPagoStatus,
+                    pago.MercadoPagoStatusDetail,
+                    pago.MercadoPagoPaymentMethodId,
+                    pago.MercadoPagoPaymentTypeId,
+                    pago.MercadoPagoInstallments,
+                    pago.MercadoPagoCardNumber,
+                    pago.ReferenciaTransaccion,
+                    pago.Notas,
+                    pago.ContadorId,
+                    pago.UrlRetorno
                 });
 
                 return id;
@@ -127,10 +151,18 @@ namespace Ferremas.Api.Repositories
                     SET 
                         estado = @Estado,
                         metodo = @Metodo,
+                        mercadopago_payment_id = @MercadoPagoPaymentId,
+                        mercadopago_preference_id = @MercadoPagoPreferenceId,
+                        mercadopago_status = @MercadoPagoStatus,
+                        mercadopago_status_detail = @MercadoPagoStatusDetail,
+                        mercadopago_payment_method_id = @MercadoPagoPaymentMethodId,
+                        mercadopago_payment_type_id = @MercadoPagoPaymentTypeId,
+                        mercadopago_installments = @MercadoPagoInstallments,
+                        mercadopago_card_number = @MercadoPagoCardNumber,
                         referencia_transaccion = @ReferenciaTransaccion,
-                        mercado_pago_preference_id = @MercadoPagoPreferenceId,
-                        url_retorno = @UrlRetorno,
-                        notas = @Notas
+                        notas = @Notas,
+                        contador_id = @ContadorId,
+                        url_retorno = @UrlRetorno
                     WHERE id = @Id";
 
                 var filasAfectadas = await connection.ExecuteAsync(sql, new
@@ -138,10 +170,18 @@ namespace Ferremas.Api.Repositories
                     pago.Id,
                     pago.Estado,
                     pago.Metodo,
-                    pago.ReferenciaTransaccion,
+                    pago.MercadoPagoPaymentId,
                     pago.MercadoPagoPreferenceId,
-                    pago.UrlRetorno,
-                    pago.Notas
+                    pago.MercadoPagoStatus,
+                    pago.MercadoPagoStatusDetail,
+                    pago.MercadoPagoPaymentMethodId,
+                    pago.MercadoPagoPaymentTypeId,
+                    pago.MercadoPagoInstallments,
+                    pago.MercadoPagoCardNumber,
+                    pago.ReferenciaTransaccion,
+                    pago.Notas,
+                    pago.ContadorId,
+                    pago.UrlRetorno
                 });
 
                 return filasAfectadas > 0;
@@ -184,7 +224,7 @@ namespace Ferremas.Api.Repositories
                     SELECT p.*, ped.fecha as FechaPedido
                     FROM pagos p
                     JOIN pedidos ped ON p.pedido_id = ped.id
-                    WHERE p.mercado_pago_preference_id = @MercadoPagoPreferenceId";
+                    WHERE p.mercadopago_preference_id = @MercadoPagoPreferenceId";
 
                 var pago = await connection.QueryFirstOrDefaultAsync<Pago>(sql, new { MercadoPagoPreferenceId = mercadoPagoPreferenceId });
                 return pago;

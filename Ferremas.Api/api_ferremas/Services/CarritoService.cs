@@ -53,7 +53,7 @@ namespace Ferremas.Api.Services
                     {
                         Console.WriteLine($"[AgregarItem] usuarioId={usuarioId}, productoId={productoId}, cantidad={cantidad}");
 
-                        // Obtener o crear carrito
+                        // Obtener o crear carrito activo
                         var carrito = await ObtenerCarritoActivo(connection, usuarioId, transaction);
                         if (carrito == null)
                         {
@@ -93,6 +93,18 @@ namespace Ferremas.Api.Services
                             await CrearItemCarrito(connection, nuevoItem, transaction);
                         }
 
+                        // Actualizar totales del carrito
+                        var updateCommand = new MySqlCommand(
+                            @"UPDATE carritos
+                              SET subtotal = (SELECT COALESCE(SUM(subtotal),0) FROM items_carrito WHERE carrito_id = @CarritoId),
+                                  impuestos = (SELECT COALESCE(SUM(subtotal),0) FROM items_carrito WHERE carrito_id = @CarritoId) * 0.19,
+                                  total = (SELECT COALESCE(SUM(subtotal),0) FROM items_carrito WHERE carrito_id = @CarritoId) * 1.19
+                              WHERE id = @CarritoId",
+                            connection,
+                            transaction);
+                        updateCommand.Parameters.AddWithValue("@CarritoId", carrito.Id);
+                        await updateCommand.ExecuteNonQueryAsync();
+
                         transaction.Commit();
 
                         Console.WriteLine("[AgregarItem] Obteniendo carrito actualizado...");
@@ -101,7 +113,10 @@ namespace Ferremas.Api.Services
                     catch (Exception ex)
                     {
                         Console.WriteLine($"[AgregarItem] ERROR: {ex.Message}");
-                        transaction.Rollback();
+                        if (transaction.Connection != null)
+                        {
+                            try { transaction.Rollback(); } catch { }
+                        }
                         throw;
                     }
                 }
@@ -133,6 +148,19 @@ namespace Ferremas.Api.Services
                         item.Subtotal = item.PrecioUnitario * cantidad;
 
                         await ActualizarItemCarrito(connection, item, transaction);
+
+                        // Actualizar totales del carrito
+                        var updateCommand = new MySqlCommand(
+                            @"UPDATE carritos
+                              SET subtotal = (SELECT COALESCE(SUM(subtotal),0) FROM items_carrito WHERE carrito_id = @CarritoId),
+                                  impuestos = (SELECT COALESCE(SUM(subtotal),0) FROM items_carrito WHERE carrito_id = @CarritoId) * 0.19,
+                                  total = (SELECT COALESCE(SUM(subtotal),0) FROM items_carrito WHERE carrito_id = @CarritoId) * 1.19
+                              WHERE id = @CarritoId",
+                            connection,
+                            transaction);
+                        updateCommand.Parameters.AddWithValue("@CarritoId", carrito.Id);
+                        await updateCommand.ExecuteNonQueryAsync();
+
                         transaction.Commit();
 
                         return await ObtenerCarrito(usuarioId);
@@ -168,6 +196,19 @@ namespace Ferremas.Api.Services
                         }
 
                         await EliminarItemCarrito(connection, itemId, transaction);
+
+                        // Actualizar totales del carrito
+                        var updateCommand = new MySqlCommand(
+                            @"UPDATE carritos
+                              SET subtotal = (SELECT COALESCE(SUM(subtotal),0) FROM items_carrito WHERE carrito_id = @CarritoId),
+                                  impuestos = (SELECT COALESCE(SUM(subtotal),0) FROM items_carrito WHERE carrito_id = @CarritoId) * 0.19,
+                                  total = (SELECT COALESCE(SUM(subtotal),0) FROM items_carrito WHERE carrito_id = @CarritoId) * 1.19
+                              WHERE id = @CarritoId",
+                            connection,
+                            transaction);
+                        updateCommand.Parameters.AddWithValue("@CarritoId", carrito.Id);
+                        await updateCommand.ExecuteNonQueryAsync();
+
                         transaction.Commit();
 
                         return await ObtenerCarrito(usuarioId);
@@ -194,6 +235,16 @@ namespace Ferremas.Api.Services
                         if (carrito != null)
                         {
                             await EliminarItemsCarrito(connection, carrito.Id, transaction);
+
+                            // Actualizar totales del carrito
+                            var updateCommand = new MySqlCommand(
+                                @"UPDATE carritos
+                                  SET subtotal = 0, impuestos = 0, descuentos = 0, total = 0
+                                  WHERE id = @CarritoId",
+                                connection,
+                                transaction);
+                            updateCommand.Parameters.AddWithValue("@CarritoId", carrito.Id);
+                            await updateCommand.ExecuteNonQueryAsync();
                         }
                         transaction.Commit();
                     }
@@ -216,14 +267,75 @@ namespace Ferremas.Api.Services
             return carrito;
         }
 
+        public async Task<Carrito> SincronizarCarrito(int usuarioId, List<ItemSincronizarDTO> items)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Obtener o crear carrito activo
+                        var carrito = await ObtenerCarritoActivo(connection, usuarioId, transaction);
+                        if (carrito == null)
+                        {
+                            carrito = await CrearCarrito(connection, usuarioId, transaction);
+                        }
+                        // Eliminar todos los items actuales
+                        await EliminarItemsCarrito(connection, carrito.Id, transaction);
+                        // Agregar los nuevos items
+                        foreach (var item in items)
+                        {
+                            var producto = await _productoService.ObtenerPorIdAsync(item.ProductoId);
+                            if (producto == null) continue;
+                            var nuevoItem = new ItemCarrito
+                            {
+                                CarritoId = carrito.Id,
+                                ProductoId = item.ProductoId,
+                                Cantidad = item.Cantidad,
+                                PrecioUnitario = producto.Precio,
+                                Subtotal = producto.Precio * item.Cantidad
+                            };
+                            await CrearItemCarrito(connection, nuevoItem, transaction);
+                        }
+                        // Actualizar totales del carrito
+                        var updateCommand = new MySqlCommand(
+                            @"UPDATE carritos
+                              SET subtotal = (SELECT COALESCE(SUM(subtotal),0) FROM items_carrito WHERE carrito_id = @CarritoId),
+                                  impuestos = (SELECT COALESCE(SUM(subtotal),0) FROM items_carrito WHERE carrito_id = @CarritoId) * 0.19,
+                                  total = (SELECT COALESCE(SUM(subtotal),0) FROM items_carrito WHERE carrito_id = @CarritoId) * 1.19
+                              WHERE id = @CarritoId",
+                            connection,
+                            transaction);
+                        updateCommand.Parameters.AddWithValue("@CarritoId", carrito.Id);
+                        await updateCommand.ExecuteNonQueryAsync();
+                        transaction.Commit();
+                        return await ObtenerCarrito(usuarioId);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (transaction.Connection != null)
+                        {
+                            try { transaction.Rollback(); } catch { }
+                        }
+                        throw;
+                    }
+                }
+            }
+        }
+
         #region Métodos Privados
 
         private async Task<Carrito> ObtenerCarritoActivo(MySqlConnection connection, int usuarioId, MySqlTransaction transaction = null)
         {
             var command = new MySqlCommand(
-                @"SELECT Id, usuario_id, FechaCreacion, FechaActualizacion, Subtotal, Impuestos, Descuentos, Total 
-                  FROM Carritos 
-                  WHERE usuario_id = @UsuarioId AND Activo = 1",
+                @"SELECT id, usuario_id, fecha_creacion, fecha_actualizacion, subtotal, impuestos, descuentos, total 
+                  FROM carritos 
+                  WHERE usuario_id = @UsuarioId AND activo = 1
+                  ORDER BY id DESC
+                  LIMIT 1
+                  FOR UPDATE",
                 connection,
                 transaction);
 
@@ -237,8 +349,8 @@ namespace Ferremas.Api.Services
                     {
                         Id = reader.GetInt32(0),
                         UsuarioId = reader.GetInt32(1),
-                        FechaCreacion = reader.GetDateTime(2),
-                        FechaActualizacion = reader.IsDBNull(3) ? null : (DateTime?)reader.GetDateTime(3),
+                        FechaCreacion = reader.GetDateTime(reader.GetOrdinal("fecha_creacion")),
+                        FechaActualizacion = reader.IsDBNull(reader.GetOrdinal("fecha_actualizacion")) ? null : (DateTime?)reader.GetDateTime(reader.GetOrdinal("fecha_actualizacion")),
                         Subtotal = reader.GetDecimal(4),
                         Impuestos = reader.GetDecimal(5),
                         Descuentos = reader.GetDecimal(6),
@@ -252,8 +364,13 @@ namespace Ferremas.Api.Services
 
         private async Task<Carrito> CrearCarrito(MySqlConnection connection, int usuarioId, MySqlTransaction transaction = null)
         {
+            // Verificar de nuevo si ya existe un carrito activo (condición de carrera)
+            var carritoExistente = await ObtenerCarritoActivo(connection, usuarioId, transaction);
+            if (carritoExistente != null)
+                return carritoExistente;
+
             var command = new MySqlCommand(
-                @"INSERT INTO Carritos (usuario_id, FechaCreacion, Activo) 
+                @"INSERT INTO carritos (usuario_id, fecha_creacion, activo) 
                   VALUES (@UsuarioId, @FechaCreacion, 1);
                   SELECT LAST_INSERT_ID();",
                 connection,
@@ -277,11 +394,11 @@ namespace Ferremas.Api.Services
         {
             var items = new List<ItemCarrito>();
             var command = new MySqlCommand(
-                @"SELECT i.Id, i.CarritoId, i.ProductoId, i.Cantidad, i.PrecioUnitario, i.Subtotal,
-                         p.Nombre, p.Descripcion, p.Precio, p.Stock, p.ImagenUrl
-                  FROM ItemsCarrito i
-                  INNER JOIN Productos p ON i.ProductoId = p.Id
-                  WHERE i.CarritoId = @CarritoId",
+                @"SELECT i.id, i.carrito_id, i.producto_id, i.cantidad, i.precio_unitario, i.subtotal,
+                         p.nombre, p.descripcion, p.precio, p.imagen_url
+                  FROM items_carrito i
+                  INNER JOIN productos p ON i.producto_id = p.id
+                  WHERE i.carrito_id = @CarritoId",
                 connection,
                 transaction);
 
@@ -305,7 +422,7 @@ namespace Ferremas.Api.Services
                             Nombre = reader.GetString(6),
                             Descripcion = reader.GetString(7),
                             Precio = reader.GetDecimal(8),
-                            ImagenUrl = reader.GetString(10)
+                            ImagenUrl = reader.GetString(9)
                         }
                     });
                 }
@@ -317,9 +434,9 @@ namespace Ferremas.Api.Services
         private async Task<ItemCarrito> ObtenerItemCarrito(MySqlConnection connection, int carritoId, int productoId, MySqlTransaction transaction = null)
         {
             var command = new MySqlCommand(
-                @"SELECT Id, CarritoId, ProductoId, Cantidad, PrecioUnitario, Subtotal
-                  FROM ItemsCarrito
-                  WHERE CarritoId = @CarritoId AND ProductoId = @ProductoId",
+                @"SELECT id, carrito_id, producto_id, cantidad, precio_unitario, subtotal
+                  FROM items_carrito
+                  WHERE carrito_id = @CarritoId AND producto_id = @ProductoId",
                 connection,
                 transaction);
 
@@ -348,9 +465,9 @@ namespace Ferremas.Api.Services
         private async Task<ItemCarrito> ObtenerItemCarritoPorId(MySqlConnection connection, int itemId, MySqlTransaction transaction = null)
         {
             var command = new MySqlCommand(
-                @"SELECT Id, CarritoId, ProductoId, Cantidad, PrecioUnitario, Subtotal
-                  FROM ItemsCarrito
-                  WHERE Id = @ItemId",
+                @"SELECT id, carrito_id, producto_id, cantidad, precio_unitario, subtotal
+                  FROM items_carrito
+                  WHERE id = @ItemId",
                 connection,
                 transaction);
 
@@ -378,7 +495,7 @@ namespace Ferremas.Api.Services
         private async Task CrearItemCarrito(MySqlConnection connection, ItemCarrito item, MySqlTransaction transaction = null)
         {
             var command = new MySqlCommand(
-                @"INSERT INTO ItemsCarrito (CarritoId, ProductoId, Cantidad, PrecioUnitario, Subtotal)
+                @"INSERT INTO items_carrito (carrito_id, producto_id, cantidad, precio_unitario, subtotal)
                   VALUES (@CarritoId, @ProductoId, @Cantidad, @PrecioUnitario, @Subtotal);
                   SELECT LAST_INSERT_ID();",
                 connection,
@@ -396,9 +513,9 @@ namespace Ferremas.Api.Services
         private async Task ActualizarItemCarrito(MySqlConnection connection, ItemCarrito item, MySqlTransaction transaction = null)
         {
             var command = new MySqlCommand(
-                @"UPDATE ItemsCarrito 
-                  SET Cantidad = @Cantidad, Subtotal = @Subtotal
-                  WHERE Id = @Id",
+                @"UPDATE items_carrito 
+                  SET cantidad = @Cantidad, subtotal = @Subtotal
+                  WHERE id = @Id",
                 connection,
                 transaction);
 
@@ -412,7 +529,7 @@ namespace Ferremas.Api.Services
         private async Task EliminarItemCarrito(MySqlConnection connection, int itemId, MySqlTransaction transaction = null)
         {
             var command = new MySqlCommand(
-                "DELETE FROM ItemsCarrito WHERE Id = @Id",
+                "DELETE FROM items_carrito WHERE id = @Id",
                 connection,
                 transaction);
 
@@ -424,7 +541,7 @@ namespace Ferremas.Api.Services
         private async Task EliminarItemsCarrito(MySqlConnection connection, int carritoId, MySqlTransaction transaction = null)
         {
             var command = new MySqlCommand(
-                "DELETE FROM ItemsCarrito WHERE CarritoId = @CarritoId",
+                "DELETE FROM items_carrito WHERE carrito_id = @CarritoId",
                 connection,
                 transaction);
 

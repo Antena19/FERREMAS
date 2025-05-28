@@ -100,6 +100,26 @@ namespace Ferremas.Api.Services
             return await _productoRepository.ActualizarStockAsync(productoId, cantidad);
         }
 
+        public async Task<IEnumerable<ProductoDTO>> ObtenerPorCategoriaAsync(int categoriaId)
+        {
+            var productos = await _productoRepository.ObtenerPorCategoriaAsync(categoriaId);
+            return productos.Select(p => MapearADTO(p));
+        }
+
+        public async Task<bool> ActualizarInventarioAsync(int productoId, InventarioUpdateDTO inventarioDTO)
+        {
+            if (!await _productoRepository.ProductoExisteAsync(productoId))
+            {
+                return false;
+            }
+
+            return await _productoRepository.ActualizarInventarioAsync(
+                productoId,
+                inventarioDTO.SucursalId,
+                inventarioDTO.Stock
+            );
+        }
+
         // Método auxiliar para mapear de Modelo a DTO
         private ProductoDTO MapearADTO(Producto producto)
         {

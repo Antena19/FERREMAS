@@ -25,6 +25,7 @@ namespace Ferremas.Api.Services
 
             // Configuración global de Mercado Pago
             MercadoPagoConfig.AccessToken = _accessToken;
+            MercadoPagoConfig.IntegratorId = "dev_24c65fb163bf11ea96500242ac130004";
         }
 
         public async Task<MercadoPagoResponseDTO> CrearPreferenciaPago(Pedido pedido, int pagoId)
@@ -41,8 +42,8 @@ namespace Ferremas.Api.Services
                 Title = $"Pedido #{pedido.Id}",
                 Description = $"Pago de pedido #{pedido.Id}",
                 Quantity = 1,
-                CurrencyId = "CLP", // Cambiar según tu país
-                UnitPrice = pedido.Total
+                CurrencyId = "CLP",
+                UnitPrice = Convert.ToInt32(pedido.Total * 100) // Convertir a centavos
             });
 
             // Configurar URLs de retorno
@@ -59,7 +60,15 @@ namespace Ferremas.Api.Services
                 Items = items,
                 BackUrls = backUrls,
                 AutoReturn = "approved",
-                ExternalReference = pagoId.ToString()
+                ExternalReference = pagoId.ToString(),
+                PaymentMethods = new PreferencePaymentMethodsRequest
+                {
+                    ExcludedPaymentMethods = new List<PreferencePaymentMethodRequest>(),
+                    ExcludedPaymentTypes = new List<PreferencePaymentTypeRequest>(),
+                    Installments = 1
+                },
+                StatementDescriptor = "FERREMAS",
+                BinaryMode = true
             };
 
             // Enviar solicitud a Mercado Pago
@@ -69,7 +78,7 @@ namespace Ferremas.Api.Services
             return new MercadoPagoResponseDTO
             {
                 PreferenceId = preference.Id,
-                InitPoint = preference.InitPoint,
+                InitPoint = preference.SandboxInitPoint, // Usar SandboxInitPoint para pruebas
                 SandboxInitPoint = preference.SandboxInitPoint,
                 PublicKey = _publicKey
             };

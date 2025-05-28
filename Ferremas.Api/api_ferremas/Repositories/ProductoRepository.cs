@@ -262,5 +262,49 @@ namespace Ferremas.Api.Repositories
                 return existe > 0;
             }
         }
+
+        public async Task<IEnumerable<Producto>> ObtenerPorCategoriaAsync(int categoriaId)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var sql = @"
+                    SELECT p.*, c.nombre as CategoriaNombre, m.nombre as MarcaNombre
+                    FROM productos p
+                    LEFT JOIN categorias c ON p.categoria_id = c.id
+                    LEFT JOIN marcas m ON p.marca_id = m.id
+                    WHERE p.categoria_id = @CategoriaId AND p.activo = 1
+                    ORDER BY p.nombre";
+
+                var productos = await connection.QueryAsync<Producto>(sql, new { CategoriaId = categoriaId });
+                return productos;
+            }
+        }
+
+        public async Task<bool> ActualizarInventarioAsync(int productoId, int sucursalId, int stock)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var sql = @"
+                    INSERT INTO inventario (producto_id, sucursal_id, stock, ultimo_ingreso)
+                    VALUES (@ProductoId, @SucursalId, @Stock, NOW())
+                    ON DUPLICATE KEY UPDATE 
+                        stock = @Stock,
+                        ultimo_ingreso = CASE WHEN @Stock > stock THEN NOW() ELSE ultimo_ingreso END,
+                        ultima_salida = CASE WHEN @Stock < stock THEN NOW() ELSE ultima_salida END";
+
+                var filasAfectadas = await connection.ExecuteAsync(sql, new
+                {
+                    ProductoId = productoId,
+                    SucursalId = sucursalId,
+                    Stock = stock
+                });
+
+                return filasAfectadas > 0;
+            }
+        }
     }
 }

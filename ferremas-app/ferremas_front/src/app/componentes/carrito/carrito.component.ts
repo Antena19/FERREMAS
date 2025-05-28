@@ -34,10 +34,36 @@ export class CarritoComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    console.log('Inicializando componente de carrito...');
     this.cargando = true;
 
-    const data = localStorage.getItem(this.LOCAL_KEY);
-    console.log("carrito cargado");
+    // Suscribirse a los cambios del carrito
+    this.carritoSubscription = this.carritoService.carrito$.subscribe({
+      next: (carrito) => {
+        console.log('Carrito actualizado en componente:', carrito);
+        this.carrito = carrito;
+        this.cargando = false;
+      },
+      error: (error) => {
+        console.error('Error en suscripción del carrito:', error);
+        this.error = 'Error al cargar el carrito';
+        this.cargando = false;
+        this.notificacionService.error(this.error);
+      }
+    });
+
+    // Cargar carrito inicial
+    console.log('Solicitando carga inicial del carrito...');
+    this.carritoService.obtenerCarrito().subscribe({
+      next: (carrito) => {
+        console.log('Carrito inicial cargado:', carrito);
+      },
+      error: (error) => {
+        console.error('Error al cargar carrito inicial:', error);
+        this.error = 'Error al cargar el carrito';
+        this.notificacionService.error(this.error);
+      }
+    });
   }
 
   ngOnDestroy(): void {

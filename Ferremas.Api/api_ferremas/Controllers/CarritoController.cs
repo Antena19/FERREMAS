@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Ferremas.Api.Services;
 using Ferremas.Api.Modelos;
+using System;
+using System.Collections.Generic;
 
 namespace Ferremas.Api.Controllers
 {
@@ -69,6 +71,24 @@ namespace Ferremas.Api.Controllers
 
             await _carritoService.VaciarCarrito(usuarioId);
             return Ok(new { mensaje = "Carrito vaciado" });
+        }
+
+        // POST: api/carrito/sincronizar
+        [HttpPost("sincronizar")]
+        public async Task<IActionResult> SincronizarCarrito([FromBody] SincronizarCarritoDTO dto)
+        {
+            if (dto == null || dto.UsuarioId <= 0 || dto.Items == null)
+                return BadRequest("Datos inválidos");
+            try
+            {
+                var carrito = await _carritoService.SincronizarCarrito(dto.UsuarioId, dto.Items);
+                return Ok(carrito);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[SincronizarCarrito] ERROR: {ex.Message}");
+                return StatusCode(500, "Error interno del servidor");
+            }
         }
     }
 

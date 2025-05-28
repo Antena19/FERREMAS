@@ -8,11 +8,12 @@ namespace Ferremas.Api.Repositories
     {
         Task<IEnumerable<Pedido>> GetAllPedidosAsync();
         Task<Pedido> GetPedidoByIdAsync(int id);
-        Task<IEnumerable<Pedido>> GetPedidosByClienteIdAsync(int clienteId);
+        Task<IEnumerable<Pedido>> GetPedidosByUsuarioIdAsync(int usuarioId);
         Task<Pedido> CreatePedidoAsync(Pedido pedido);
         Task<Pedido> UpdatePedidoAsync(int id, Pedido pedido);
         Task<Pedido> UpdatePedidoEstadoAsync(int id, string estado);
         Task<bool> DeletePedidoAsync(int id);
         Task<bool> PedidoExistsAsync(int id);
+        Task<IEnumerable<Pedido>> GetPedidosPendientesAsync();
     }
 }

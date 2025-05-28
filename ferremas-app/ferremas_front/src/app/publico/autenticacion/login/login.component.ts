@@ -40,7 +40,11 @@ export class LoginComponent {
         this.carritoService.sincronizarCarritoConBackend().subscribe({
           next: () => {
             this.notificacionService.exito('¡Bienvenido!');
-            this.router.navigate(['/cliente/carrito']);
+            this.router.navigate(['/catalogo']);
+          },
+          error: (err) => {
+            this.notificacionService.error('No se pudo sincronizar el carrito, pero tu sesión fue iniciada.');
+            this.router.navigate(['/catalogo']);
           }
         });
       },

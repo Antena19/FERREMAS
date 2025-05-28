@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { MiniCarritoComponent } from '../mini-carrito/mini-carrito.component';
 import { AuthService } from '../../../servicios/auth.service';
 
@@ -16,8 +16,15 @@ export class HeaderComponent implements OnInit {
   nombreUsuario = '';
   rol = '';
   mostrarMenu = false;
+  mostrarMenuUsuario = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.mostrarMenu = false;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.authService.usuario$.subscribe(usuario => {

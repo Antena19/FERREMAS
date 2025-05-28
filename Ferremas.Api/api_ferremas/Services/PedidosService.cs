@@ -39,13 +39,17 @@ namespace Ferremas.Api.Services
             return MapPedidoToDTO(pedido);
         }
 
-        public async Task<IEnumerable<PedidoDTO>> GetPedidosByClienteIdAsync(int clienteId)
+        public async Task<IEnumerable<PedidoDTO>> GetPedidosByUsuarioIdAsync(int usuarioId)
         {
-            var pedidos = await _pedidoRepository.GetPedidosByClienteIdAsync(clienteId);
+            var pedidos = await _pedidoRepository.GetPedidosByUsuarioIdAsync(usuarioId);
             return pedidos.Select(p => MapPedidoToDTO(p));
         }
 
-        
+        public async Task<IEnumerable<PedidoDTO>> GetPedidosPendientesAsync()
+        {
+            var pedidos = await _pedidoRepository.GetPedidosPendientesAsync();
+            return pedidos.Select(p => MapPedidoToDTO(p));
+        }
 
         public async Task<PedidoDTO> UpdatePedidoAsync(int id, PedidoUpdateDTO pedidoUpdateDTO)
         {
@@ -53,13 +57,10 @@ namespace Ferremas.Api.Services
             if (pedidoExistente == null)
                 return null;
 
-            // Actualizar el estado del pedido
             pedidoExistente.Estado = pedidoUpdateDTO.Estado;
 
-            // Si hay items para actualizar
             if (pedidoUpdateDTO.Items != null && pedidoUpdateDTO.Items.Count > 0)
             {
-                // Recalcular el total del pedido
                 decimal totalPedido = 0;
                 var itemsExistentes = pedidoExistente.Items.ToList();
                 var itemsActualizados = new List<PedidoItem>();
@@ -68,7 +69,6 @@ namespace Ferremas.Api.Services
                 {
                     PedidoItem item;
 
-                    // Si es un item existente, actualizar
                     if (itemDTO.Id.HasValue)
                     {
                         item = itemsExistentes.FirstOrDefault(i => i.Id == itemDTO.Id.Value);
@@ -84,7 +84,6 @@ namespace Ferremas.Api.Services
                         item.PrecioUnitario = producto.Precio;
                         item.Subtotal = producto.Precio * itemDTO.Cantidad;
                     }
-                    // Si es un nuevo item, agregar
                     else
                     {
                         var producto = await _productoRepository.ObtenerPorIdAsync(itemDTO.ProductoId);
@@ -106,7 +105,6 @@ namespace Ferremas.Api.Services
                     totalPedido += item.Subtotal;
                 }
 
-                // Eliminar items que no están en la actualización
                 var itemsAEliminar = itemsExistentes
                     .Where(i => !itemsActualizados.Any(ia => ia.Id == i.Id))
                     .ToList();
@@ -119,7 +117,6 @@ namespace Ferremas.Api.Services
                 pedidoExistente.Total = totalPedido;
             }
 
-            // Actualizar el pedido en la base de datos
             var pedidoActualizado = await _pedidoRepository.UpdatePedidoAsync(id, pedidoExistente);
             return MapPedidoToDTO(pedidoActualizado);
         }
@@ -143,11 +140,23 @@ namespace Ferremas.Api.Services
             return new PedidoDTO
             {
                 Id = pedido.Id,
-                Fecha = pedido.Fecha,
-                ClienteId = pedido.ClienteId,
-                ClienteNombre = pedido.Cliente?.Nombre,
+                Fecha = pedido.FechaPedido,
+                UsuarioId = pedido.UsuarioId,
+                UsuarioNombre = pedido.Usuario?.Nombre,
                 Estado = pedido.Estado,
+                TipoEntrega = pedido.TipoEntrega,
+                SucursalId = pedido.SucursalId,
+                SucursalNombre = pedido.Sucursal?.Nombre,
+                DireccionId = pedido.DireccionId,
+                Subtotal = pedido.Subtotal,
+                CostoEnvio = pedido.CostoEnvio,
+                Impuestos = pedido.Impuestos,
                 Total = pedido.Total,
+                Notas = pedido.Notas,
+                VendedorId = pedido.VendedorId,
+                VendedorNombre = pedido.Vendedor?.Nombre,
+                BodegueroId = pedido.BodegueroId,
+                BodegueroNombre = pedido.Bodeguero?.Nombre,
                 Items = pedido.Items?.Select(i => new PedidoItemResponseDTO
                 {
                     Id = i.Id,

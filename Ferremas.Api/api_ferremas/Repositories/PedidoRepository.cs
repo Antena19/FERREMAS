@@ -24,10 +24,23 @@ namespace Ferremas.Api.Repositories
                 await connection.OpenAsync();
 
                 var sql = @"
-                    SELECT p.*, c.nombre as ClienteNombre
+                    SELECT 
+                        p.id,
+                        p.usuario_id as UsuarioId,
+                        p.fecha_pedido as FechaPedido,
+                        p.estado,
+                        p.tipo_entrega as TipoEntrega,
+                        p.sucursal_id as SucursalId,
+                        p.direccion_id as DireccionId,
+                        p.subtotal,
+                        p.costo_envio as CostoEnvio,
+                        p.impuestos,
+                        p.total,
+                        p.notas,
+                        p.vendedor_id as VendedorId,
+                        p.bodeguero_id as BodegueroId
                     FROM pedidos p
-                    JOIN clientes c ON p.cliente_id = c.id
-                    ORDER BY p.fecha DESC";
+                    ORDER BY p.fecha_pedido DESC";
 
                 var pedidos = await connection.QueryAsync<Pedido>(sql);
 
@@ -48,9 +61,9 @@ namespace Ferremas.Api.Repositories
                 await connection.OpenAsync();
 
                 var sql = @"
-                    SELECT p.*, c.nombre as ClienteNombre
+                    SELECT p.*, u.nombre as UsuarioNombre
                     FROM pedidos p
-                    JOIN clientes c ON p.cliente_id = c.id
+                    JOIN usuarios u ON p.usuario_id = u.id
                     WHERE p.id = @Id";
 
                 var pedido = await connection.QueryFirstOrDefaultAsync<Pedido>(sql, new { Id = id });
@@ -65,20 +78,20 @@ namespace Ferremas.Api.Repositories
             }
         }
 
-        public async Task<IEnumerable<Pedido>> GetPedidosByClienteIdAsync(int clienteId)
+        public async Task<IEnumerable<Pedido>> GetPedidosByUsuarioIdAsync(int usuarioId)
         {
             using (var connection = new MySqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
 
                 var sql = @"
-                    SELECT p.*, c.nombre as ClienteNombre
+                    SELECT p.*, u.nombre as UsuarioNombre
                     FROM pedidos p
-                    JOIN clientes c ON p.cliente_id = c.id
-                    WHERE p.cliente_id = @ClienteId
-                    ORDER BY p.fecha DESC";
+                    JOIN usuarios u ON p.usuario_id = u.id
+                    WHERE p.usuario_id = @UsuarioId
+                    ORDER BY p.fecha_pedido DESC";
 
-                var pedidos = await connection.QueryAsync<Pedido>(sql, new { ClienteId = clienteId });
+                var pedidos = await connection.QueryAsync<Pedido>(sql, new { UsuarioId = usuarioId });
 
                 foreach (var pedido in pedidos)
                 {
@@ -96,37 +109,61 @@ namespace Ferremas.Api.Repositories
             {
                 await connection.OpenAsync();
 
-                // Iniciar transacción
                 using (var transaction = await connection.BeginTransactionAsync())
                 {
                     try
                     {
-                        // Insertar pedido
                         var sqlPedido = @"
                             INSERT INTO pedidos (
-                                cliente_id,
-                                fecha,
+                                usuario_id,
+                                fecha_pedido,
                                 estado,
-                                total
+                                tipo_entrega,
+                                sucursal_id,
+                                direccion_id,
+                                subtotal,
+                                costo_envio,
+                                impuestos,
+                                total,
+                                notas,
+                                vendedor_id,
+                                bodeguero_id
                             ) VALUES (
-                                @ClienteId,
-                                @Fecha,
+                                @UsuarioId,
+                                @FechaPedido,
                                 @Estado,
-                                @Total
+                                @TipoEntrega,
+                                @SucursalId,
+                                @DireccionId,
+                                @Subtotal,
+                                @CostoEnvio,
+                                @Impuestos,
+                                @Total,
+                                @Notas,
+                                @VendedorId,
+                                @BodegueroId
                             );
                             SELECT LAST_INSERT_ID();";
 
                         var pedidoId = await connection.ExecuteScalarAsync<int>(sqlPedido, new
                         {
-                            pedido.ClienteId,
-                            pedido.Fecha,
+                            pedido.UsuarioId,
+                            pedido.FechaPedido,
                             pedido.Estado,
-                            pedido.Total
+                            pedido.TipoEntrega,
+                            pedido.SucursalId,
+                            pedido.DireccionId,
+                            pedido.Subtotal,
+                            pedido.CostoEnvio,
+                            pedido.Impuestos,
+                            pedido.Total,
+                            pedido.Notas,
+                            pedido.VendedorId,
+                            pedido.BodegueroId
                         }, transaction);
 
                         pedido.Id = pedidoId;
 
-                        // Insertar items del pedido
                         if (pedido.Items != null && pedido.Items.Count > 0)
                         {
                             var sqlItem = @"
@@ -161,15 +198,11 @@ namespace Ferremas.Api.Repositories
                             }
                         }
 
-                        // Commit de la transacción
                         await transaction.CommitAsync();
-
-                        // Retornar el pedido completo
                         return await GetPedidoByIdAsync(pedidoId);
                     }
                     catch (Exception)
                     {
-                        // Rollback en caso de error
                         await transaction.RollbackAsync();
                         throw;
                     }
@@ -183,34 +216,47 @@ namespace Ferremas.Api.Repositories
             {
                 await connection.OpenAsync();
 
-                // Iniciar transacción
                 using (var transaction = await connection.BeginTransactionAsync())
                 {
                     try
                     {
-                        // Actualizar datos del pedido
                         var sqlPedido = @"
                             UPDATE pedidos 
                             SET 
                                 estado = @Estado,
-                                total = @Total
+                                tipo_entrega = @TipoEntrega,
+                                sucursal_id = @SucursalId,
+                                direccion_id = @DireccionId,
+                                subtotal = @Subtotal,
+                                costo_envio = @CostoEnvio,
+                                impuestos = @Impuestos,
+                                total = @Total,
+                                notas = @Notas,
+                                vendedor_id = @VendedorId,
+                                bodeguero_id = @BodegueroId
                             WHERE id = @Id";
 
                         await connection.ExecuteAsync(sqlPedido, new
                         {
                             Id = id,
                             pedido.Estado,
-                            pedido.Total
+                            pedido.TipoEntrega,
+                            pedido.SucursalId,
+                            pedido.DireccionId,
+                            pedido.Subtotal,
+                            pedido.CostoEnvio,
+                            pedido.Impuestos,
+                            pedido.Total,
+                            pedido.Notas,
+                            pedido.VendedorId,
+                            pedido.BodegueroId
                         }, transaction);
 
-                        // Gestionar los items
                         if (pedido.Items != null && pedido.Items.Count > 0)
                         {
-                            // Obtener los items actuales para ver cuáles eliminar
                             var sqlGetItems = "SELECT id FROM pedido_items WHERE pedido_id = @PedidoId";
                             var itemsActualesIds = await connection.QueryAsync<int>(sqlGetItems, new { PedidoId = id }, transaction);
 
-                            // Crear HashSet para búsqueda rápida
                             var itemsNuevosIds = new HashSet<int>();
                             foreach (var item in pedido.Items)
                             {
@@ -218,7 +264,6 @@ namespace Ferremas.Api.Repositories
                                     itemsNuevosIds.Add(item.Id);
                             }
 
-                            // Borrar items que ya no están en la lista
                             foreach (var itemId in itemsActualesIds)
                             {
                                 if (!itemsNuevosIds.Contains(itemId))
@@ -228,10 +273,8 @@ namespace Ferremas.Api.Repositories
                                 }
                             }
 
-                            // Actualizar o insertar items
                             foreach (var item in pedido.Items)
                             {
-                                // Si es un item existente, actualizar
                                 if (item.Id > 0)
                                 {
                                     var sqlUpdateItem = @"
@@ -252,7 +295,6 @@ namespace Ferremas.Api.Repositories
                                         item.Subtotal
                                     }, transaction);
                                 }
-                                // Si es un nuevo item, insertar
                                 else
                                 {
                                     var sqlInsertItem = @"
@@ -286,15 +328,11 @@ namespace Ferremas.Api.Repositories
                             }
                         }
 
-                        // Commit de la transacción
                         await transaction.CommitAsync();
-
-                        // Retornar el pedido actualizado
                         return await GetPedidoByIdAsync(id);
                     }
                     catch (Exception)
                     {
-                        // Rollback en caso de error
                         await transaction.RollbackAsync();
                         throw;
                     }
@@ -322,27 +360,21 @@ namespace Ferremas.Api.Repositories
             {
                 await connection.OpenAsync();
 
-                // Iniciar transacción
                 using (var transaction = await connection.BeginTransactionAsync())
                 {
                     try
                     {
-                        // Eliminar primero los items del pedido
                         var sqlDeleteItems = "DELETE FROM pedido_items WHERE pedido_id = @PedidoId";
                         await connection.ExecuteAsync(sqlDeleteItems, new { PedidoId = id }, transaction);
 
-                        // Eliminar el pedido
                         var sqlDeletePedido = "DELETE FROM pedidos WHERE id = @Id";
                         var filasAfectadas = await connection.ExecuteAsync(sqlDeletePedido, new { Id = id }, transaction);
 
-                        // Commit de la transacción
                         await transaction.CommitAsync();
-
                         return filasAfectadas > 0;
                     }
                     catch (Exception)
                     {
-                        // Rollback en caso de error
                         await transaction.RollbackAsync();
                         throw;
                     }
@@ -371,14 +403,44 @@ namespace Ferremas.Api.Repositories
                 await connection.OpenAsync();
 
                 var sql = @"
-                    SELECT pi.*, p.nombre as ProductoNombre
+                    SELECT 
+                        pi.id,
+                        pi.pedido_id as PedidoId,
+                        pi.producto_id as ProductoId,
+                        pi.cantidad,
+                        pi.precio_unitario as PrecioUnitario,
+                        pi.subtotal
                     FROM pedido_items pi
-                    JOIN productos p ON pi.producto_id = p.id
                     WHERE pi.pedido_id = @PedidoId";
 
                 var items = await connection.QueryAsync<PedidoItem>(sql, new { PedidoId = pedidoId });
 
                 return items;
+            }
+        }
+
+        public async Task<IEnumerable<Pedido>> GetPedidosPendientesAsync()
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var sql = @"
+                    SELECT p.*, u.nombre as UsuarioNombre
+                    FROM pedidos p
+                    JOIN usuarios u ON p.usuario_id = u.id
+                    WHERE p.estado = 'pendiente'
+                    ORDER BY p.fecha_pedido DESC";
+
+                var pedidos = await connection.QueryAsync<Pedido>(sql);
+
+                foreach (var pedido in pedidos)
+                {
+                    var items = await GetPedidoItemsAsync(pedido.Id);
+                    pedido.Items = items as ICollection<PedidoItem>;
+                }
+
+                return pedidos;
             }
         }
     }

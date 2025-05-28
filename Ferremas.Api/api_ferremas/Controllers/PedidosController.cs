@@ -53,13 +53,13 @@ namespace Ferremas.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene los pedidos de un cliente específico
+        /// Obtiene los pedidos de un usuario específico
         /// </summary>
-        [HttpGet("cliente/{clienteId}")]
+        [HttpGet("usuario/{usuarioId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<PedidoDTO>>> GetPedidosByCliente(int clienteId)
+        public async Task<ActionResult<IEnumerable<PedidoDTO>>> GetPedidosByUsuario(int usuarioId)
         {
-            var pedidos = await _pedidosService.GetPedidosByClienteIdAsync(clienteId);
+            var pedidos = await _pedidosService.GetPedidosByUsuarioIdAsync(usuarioId);
             return Ok(pedidos);
         }
 
@@ -127,8 +127,8 @@ namespace Ferremas.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<PedidoDTO>> UpdateEstadoPedido(int id, [FromBody] string estado)
         {
-            if (string.IsNullOrEmpty(estado) || !new[] { "PENDIENTE", "EN_PROCESO", "COMPLETADO", "CANCELADO" }.Contains(estado))
-                return BadRequest("Estado no válido. Debe ser: PENDIENTE, EN_PROCESO, COMPLETADO o CANCELADO");
+            if (string.IsNullOrEmpty(estado) || !new[] { "pendiente", "aprobado", "preparando", "enviado", "entregado", "cancelado" }.Contains(estado.ToLower()))
+                return BadRequest("Estado no válido. Debe ser: pendiente, aprobado, preparando, enviado, entregado o cancelado");
 
             var pedidoActualizado = await _pedidosService.UpdatePedidoEstadoAsync(id, estado);
 
@@ -152,6 +152,26 @@ namespace Ferremas.Api.Controllers
                 return NotFound($"No se encontró el pedido con ID {id}");
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Obtiene todos los pedidos pendientes
+        /// </summary>
+        [HttpGet("pendientes")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Roles = "administrador,vendedor,bodeguero")]
+        public async Task<ActionResult<IEnumerable<PedidoDTO>>> GetPedidosPendientes()
+        {
+            try
+            {
+                var pedidos = await _pedidosService.GetPedidosPendientesAsync();
+                return Ok(pedidos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    "Error al obtener los pedidos pendientes: " + ex.Message);
+            }
         }
     }
 }

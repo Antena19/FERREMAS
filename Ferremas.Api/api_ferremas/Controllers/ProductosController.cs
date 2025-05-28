@@ -6,6 +6,7 @@ using Ferremas.Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Ferremas.Api.Controllers
 {
@@ -45,6 +46,16 @@ namespace Ferremas.Api.Controllers
             return Ok(producto);
         }
 
+        // GET: api/Productos/categoria/5
+        [HttpGet("categoria/{id}")]
+        [ProducesResponseType(typeof(IEnumerable<ProductoDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ObtenerPorCategoria(int id)
+        {
+            var productos = await _productoService.ObtenerPorCategoriaAsync(id);
+            return Ok(productos);
+        }
+
         // GET: api/Productos/buscar?termino=taladro&categoriaId=2&precioMin=1000&precioMax=5000
         [HttpGet("buscar")]
         [ProducesResponseType(typeof(IEnumerable<ProductoDTO>), StatusCodes.Status200OK)]
@@ -60,7 +71,7 @@ namespace Ferremas.Api.Controllers
 
         // POST: api/Productos
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "administrador")]
         [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CrearProducto([FromBody] ProductoCreateDTO productoDTO)
@@ -87,7 +98,7 @@ namespace Ferremas.Api.Controllers
 
         // PUT: api/Productos/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "administrador")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -110,7 +121,7 @@ namespace Ferremas.Api.Controllers
 
         // DELETE: api/Productos/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "administrador")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> EliminarProducto(int id)
@@ -139,6 +150,35 @@ namespace Ferremas.Api.Controllers
             }
 
             return NoContent();
+        }
+        // PUT: api/Productos/1/inventario
+        [HttpPut("{id}/inventario")]
+        [Authorize(Roles = "administrador,vendedor")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ActualizarInventario(int id, [FromBody] InventarioUpdateDTO inventarioDTO)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var resultado = await _productoService.ActualizarInventarioAsync(id, inventarioDTO);
+
+                if (!resultado)
+                {
+                    return NotFound();
+                }
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

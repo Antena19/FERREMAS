@@ -1,4 +1,4 @@
-﻿namespace Ferremas.Api.DTOs
+namespace Ferremas.Api.DTOs
 {
     public class UsuarioDTO
     {
@@ -13,4 +13,4 @@
         public DateTime? UltimoAcceso { get; set; }
         public bool Activo { get; set; }
     }
-}
+} 

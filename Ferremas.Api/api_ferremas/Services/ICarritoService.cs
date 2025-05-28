@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Ferremas.Api.Modelos;
+using System.Collections.Generic;
 
 namespace Ferremas.Api.Services
 {
@@ -11,5 +12,6 @@ namespace Ferremas.Api.Services
         Task<Carrito> EliminarItem(int usuarioId, int itemId);
         Task VaciarCarrito(int usuarioId);
         Task<Carrito> CalcularTotales(Carrito carrito);
+        Task<Carrito> SincronizarCarrito(int usuarioId, List<ItemSincronizarDTO> items);
     }
 } 

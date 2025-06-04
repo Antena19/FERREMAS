@@ -63,6 +63,14 @@ namespace Ferremas.Api.Modelos
         [ForeignKey("BodegueroId")]
         public Usuario Bodeguero { get; set; }
 
+        // Propiedades adicionales para pedidos_vendedor
+        public DateTime? FechaAsignacion { get; set; }
+        public string EstadoAsignacion { get; set; }
+        public decimal? ComisionCalculada { get; set; }
+
+        // Propiedades de navegación
+        public virtual Cliente Cliente { get; set; }
+        public virtual Direccion DireccionEntrega { get; set; }
         public virtual ICollection<PedidoItem> Items { get; set; }
     }
 }

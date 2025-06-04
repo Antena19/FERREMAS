@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ferremas.Api.Controllers
 {
-    [Authorize(Roles = "Contador")]
+    [Authorize(Roles = "contador")]
     [ApiController]
     [Route("api/[controller]")]
     public class ContadorController : ControllerBase
@@ -22,11 +22,18 @@ namespace Ferremas.Api.Controllers
         {
             try
             {
+                if (!new[] { "pendiente", "completado", "fallido", "reembolsado" }.Contains(request.Estado.ToLower()))
+                {
+                    return BadRequest("Estado inválido. Debe ser uno de: pendiente, completado, fallido, reembolsado");
+                }
+
                 var pago = await _contadorService.AprobarPagoTransferencia(
                     request.PedidoId,
                     request.ContadorId,
                     request.BancoOrigen,
-                    request.NumeroCuenta
+                    request.NumeroCuenta,
+                    request.Estado,
+                    request.Notas
                 );
                 return Ok(pago);
             }
@@ -73,5 +80,7 @@ namespace Ferremas.Api.Controllers
         public int ContadorId { get; set; }
         public string BancoOrigen { get; set; }
         public string NumeroCuenta { get; set; }
+        public string Estado { get; set; }  // pendiente, completado, fallido, reembolsado
+        public string Notas { get; set; }
     }
 } 

@@ -24,7 +24,7 @@ namespace Ferremas.Api.Repositories
                 await connection.OpenAsync();
 
                 var sql = @"
-                    SELECT p.*, ped.fecha as FechaPedido
+                    SELECT p.*, ped.fecha_pedido as FechaPedido
                     FROM pagos p
                     JOIN pedidos ped ON p.pedido_id = ped.id
                     ORDER BY p.fecha_pago DESC";
@@ -41,7 +41,7 @@ namespace Ferremas.Api.Repositories
                 await connection.OpenAsync();
 
                 var sql = @"
-                    SELECT p.*, ped.fecha as FechaPedido
+                    SELECT p.*, ped.fecha_pedido as FechaPedido
                     FROM pagos p
                     JOIN pedidos ped ON p.pedido_id = ped.id
                     WHERE p.id = @Id";
@@ -58,7 +58,7 @@ namespace Ferremas.Api.Repositories
                 await connection.OpenAsync();
 
                 var sql = @"
-                    SELECT p.*, ped.fecha as FechaPedido
+                    SELECT p.*, ped.fecha_pedido as FechaPedido
                     FROM pagos p
                     JOIN pedidos ped ON p.pedido_id = ped.id
                     WHERE p.pedido_id = @PedidoId
@@ -221,7 +221,7 @@ namespace Ferremas.Api.Repositories
                 await connection.OpenAsync();
 
                 var sql = @"
-                    SELECT p.*, ped.fecha as FechaPedido
+                    SELECT p.*, ped.fecha_pedido as FechaPedido
                     FROM pagos p
                     JOIN pedidos ped ON p.pedido_id = ped.id
                     WHERE p.mercadopago_preference_id = @MercadoPagoPreferenceId";

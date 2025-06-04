@@ -174,10 +174,39 @@ namespace Ferremas.Api.Services
                     if (pedidoBodega == null)
                         throw new Exception("Pedido bodega no encontrado");
 
+                    // Verificar que todos los items estén preparados
+                    using var commandVerificarItems = new MySqlCommand(@"
+                        SELECT COUNT(*) as total, 
+                               SUM(CASE WHEN estado = 'preparado' THEN 1 ELSE 0 END) as preparados
+                        FROM items_pedido_bodega
+                        WHERE pedido_bodega_id = @pedidoBodegaId", connection, transaction);
+
+                    commandVerificarItems.Parameters.AddWithValue("@pedidoBodegaId", pedidoBodegaId);
+                    using var readerItems = await commandVerificarItems.ExecuteReaderAsync();
+                    if (!await readerItems.ReadAsync())
+                        throw new Exception("Error al verificar items del pedido");
+
+                    var totalItems = readerItems.GetInt32("total");
+                    var itemsPreparados = readerItems.GetInt32("preparados");
+                    await readerItems.CloseAsync();
+
+                    if (totalItems != itemsPreparados)
+                        throw new Exception("No todos los items del pedido están preparados");
+
                     // Crear entrega bodega
                     using var commandEntrega = new MySqlCommand(@"
-                        INSERT INTO entregas_bodega (pedido_bodega_id, fecha_entrega, estado, tipo_entrega)
-                        VALUES (@pedidoBodegaId, NOW(), 'preparada', @tipoEntrega);
+                        INSERT INTO entregas_bodega (
+                            pedido_bodega_id, 
+                            fecha_entrega, 
+                            estado, 
+                            tipo_entrega
+                        )
+                        VALUES (
+                            @pedidoBodegaId, 
+                            NOW(), 
+                            'preparada', 
+                            @tipoEntrega
+                        );
                         SELECT LAST_INSERT_ID();", connection, transaction);
 
                     commandEntrega.Parameters.AddWithValue("@pedidoBodegaId", pedidoBodegaId);
@@ -188,20 +217,33 @@ namespace Ferremas.Api.Services
                     // Actualizar estado del pedido bodega
                     using var commandPedidoBodega = new MySqlCommand(@"
                         UPDATE pedidos_bodega 
-                        SET estado = 'preparado' 
+                        SET estado = 'preparado',
+                            fecha_preparacion = NOW()
                         WHERE id = @pedidoBodegaId", connection, transaction);
 
                     commandPedidoBodega.Parameters.AddWithValue("@pedidoBodegaId", pedidoBodegaId);
                     await commandPedidoBodega.ExecuteNonQueryAsync();
 
-                    // Actualizar estado del pedido
+                    // Actualizar estado del pedido según tipo de entrega
                     using var commandPedido = new MySqlCommand(@"
                         UPDATE pedidos 
-                        SET estado = 'preparado' 
+                        SET estado = CASE 
+                            WHEN tipo_entrega = 'envio' THEN 'en_entrega'
+                            ELSE 'entregado'
+                        END
                         WHERE id = @pedidoId", connection, transaction);
 
                     commandPedido.Parameters.AddWithValue("@pedidoId", pedidoBodega.PedidoId);
                     await commandPedido.ExecuteNonQueryAsync();
+
+                    // Actualizar estado en pedidos_vendedor
+                    using var commandPedidoVendedor = new MySqlCommand(@"
+                        UPDATE pedidos_vendedor 
+                        SET estado = 'completado' 
+                        WHERE pedido_id = @pedidoId", connection, transaction);
+
+                    commandPedidoVendedor.Parameters.AddWithValue("@pedidoId", pedidoBodega.PedidoId);
+                    await commandPedidoVendedor.ExecuteNonQueryAsync();
 
                     // Actualizar inventario
                     foreach (var item in pedidoBodega.Items)
@@ -209,7 +251,8 @@ namespace Ferremas.Api.Services
                         using var commandInventario = new MySqlCommand(@"
                             UPDATE inventario 
                             SET stock = stock - @cantidad 
-                            WHERE producto_id = @productoId AND sucursal_id = @sucursalId", connection, transaction);
+                            WHERE producto_id = @productoId 
+                            AND sucursal_id = @sucursalId", connection, transaction);
 
                         commandInventario.Parameters.AddWithValue("@cantidad", item.Cantidad);
                         commandInventario.Parameters.AddWithValue("@productoId", item.ProductoId);

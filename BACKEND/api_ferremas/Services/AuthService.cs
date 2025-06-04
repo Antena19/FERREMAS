@@ -235,10 +235,10 @@ namespace Ferremas.Api.Services
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSecret);
-
+            
             // Usar el rol tal cual está en la base de datos
             var rol = usuario.Rol;
-
+            
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),

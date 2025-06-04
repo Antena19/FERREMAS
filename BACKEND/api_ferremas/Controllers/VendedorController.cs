@@ -1,10 +1,17 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Ferremas.Api.DTOs;
 using Ferremas.Api.Services;
+using Ferremas.Api.Modelos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using MySql.Data.MySqlClient;
 
 namespace Ferremas.Api.Controllers
 {
-    [Authorize(Roles = "Vendedor")]
+    [Authorize(Policy = "RequireVendedorRole")]
     [ApiController]
     [Route("api/[controller]")]
     public class VendedorController : ControllerBase
@@ -16,77 +23,141 @@ namespace Ferremas.Api.Controllers
             _vendedorService = vendedorService;
         }
 
+        private int GetVendedorId()
+        {
+            var usuarioId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            using (var connection = new MySqlConnection(_vendedorService.GetConnectionString()))
+            {
+                connection.Open();
+                using var command = new MySqlCommand("SELECT id FROM vendedores WHERE usuario_id = @usuarioId", connection);
+                command.Parameters.AddWithValue("@usuarioId", usuarioId);
+                return Convert.ToInt32(command.ExecuteScalar());
+            }
+        }
+
         [HttpGet("clientes")]
-        public async Task<IActionResult> GetClientes()
-        {
-            var clientes = await _vendedorService.GetClientes();
-            return Ok(clientes);
-        }
-
-        [HttpGet("cliente/{clienteId}")]
-        public async Task<IActionResult> GetClienteById(int clienteId)
-        {
-            var cliente = await _vendedorService.GetClienteById(clienteId);
-            if (cliente == null)
-                return NotFound();
-            return Ok(cliente);
-        }
-
-        [HttpGet("pedidos-asignados/{vendedorId}")]
-        public async Task<IActionResult> GetPedidosAsignados(int vendedorId)
-        {
-            var pedidos = await _vendedorService.GetPedidosAsignados(vendedorId);
-            return Ok(pedidos);
-        }
-
-        [HttpGet("pedido/{pedidoId}")]
-        public async Task<IActionResult> GetPedidoById(int pedidoId)
-        {
-            var pedido = await _vendedorService.GetPedidoById(pedidoId);
-            if (pedido == null)
-                return NotFound();
-            return Ok(pedido);
-        }
-
-        [HttpPost("pedido-bodega")]
-        public async Task<IActionResult> CrearPedidoBodega([FromBody] PedidoBodegaRequest request)
+        public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
             try
             {
-                var pedidoBodega = await _vendedorService.CrearPedidoBodega(request.PedidoId, request.VendedorId);
-                return Ok(pedidoBodega);
+                var clientes = await _vendedorService.GetClientes();
+                return Ok(clientes);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
 
-        [HttpGet("todos-pedidos")]
-        public async Task<IActionResult> GetTodosLosPedidos()
-        {
-            var pedidos = await _vendedorService.GetTodosLosPedidos();
-            return Ok(pedidos);
-        }
-
-        [HttpPut("pedido/{pedidoId}/estado")]
-        public async Task<IActionResult> ActualizarEstadoPedido(int pedidoId, [FromBody] string estado)
+        [HttpGet("cliente/{clienteId}")]
+        public async Task<ActionResult<Cliente>> GetClienteById(int clienteId)
         {
             try
             {
-                var pedido = await _vendedorService.ActualizarEstadoPedido(pedidoId, estado);
+                var cliente = await _vendedorService.GetClienteById(clienteId);
+                if (cliente == null)
+                {
+                    return NotFound($"Cliente con ID {clienteId} no encontrado");
+                }
+                return Ok(cliente);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
+        [HttpGet("pedidos-asignados")]
+        public async Task<ActionResult<IEnumerable<PedidoVendedorDTO>>> GetPedidosAsignados()
+        {
+            try
+            {
+                var usuarioId = int.Parse(User.FindFirst("nameid")?.Value);
+                using (var connection = new MySqlConnection(_vendedorService.GetConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    using var command = new MySqlCommand("SELECT id FROM vendedores WHERE usuario_id = @usuarioId", connection);
+                    command.Parameters.AddWithValue("@usuarioId", usuarioId);
+                    var vendedorId = Convert.ToInt32(await command.ExecuteScalarAsync());
+                    
+                    if (vendedorId == 0)
+                    {
+                        return NotFound("Vendedor no encontrado");
+                    }
+
+                    var pedidos = await _vendedorService.GetPedidosAsignados(vendedorId);
+                    return Ok(pedidos);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
+        [HttpGet("pedido/{pedidoId}")]
+        public async Task<ActionResult<Pedido>> GetPedidoById(int pedidoId)
+        {
+            try
+            {
+                var pedido = await _vendedorService.GetPedidoById(pedidoId);
+                if (pedido == null)
+                {
+                    return NotFound($"Pedido con ID {pedidoId} no encontrado");
+                }
                 return Ok(pedido);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
-    }
 
-    public class PedidoBodegaRequest
-    {
-        public int PedidoId { get; set; }
-        public int VendedorId { get; set; }
+        [HttpPost("pedido/{pedidoId}/crear-pedido-bodega")]
+        public async Task<ActionResult<PedidoBodega>> CrearPedidoBodega(int pedidoId)
+        {
+            try
+            {
+                var vendedorId = int.Parse(User.FindFirst("nameid")?.Value);
+                var pedidoBodega = await _vendedorService.CrearPedidoBodega(pedidoId, vendedorId);
+                return Ok(pedidoBodega);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
+        [HttpGet("pedidos")]
+        public async Task<ActionResult<IEnumerable<Pedido>>> GetTodosLosPedidos()
+        {
+            try
+            {
+                var pedidos = await _vendedorService.GetTodosLosPedidos();
+                return Ok(pedidos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
+        [HttpPut("pedido/{pedidoId}/estado")]
+        public async Task<ActionResult<Pedido>> ActualizarEstadoPedido(int pedidoId, [FromBody] string estado)
+        {
+            try
+            {
+                var pedido = await _vendedorService.ActualizarEstadoPedido(pedidoId, estado);
+                if (pedido == null)
+                {
+                    return NotFound($"Pedido con ID {pedidoId} no encontrado");
+                }
+                return Ok(pedido);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
     }
 } 

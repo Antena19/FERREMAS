@@ -3582,7 +3582,33 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Cliente"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Cliente"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Cliente"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -3605,30 +3631,62 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cliente"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cliente"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cliente"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/api/Vendedor/pedidos-asignados/{vendedorId}": {
+    "/api/Vendedor/pedidos-asignados": {
       "get": {
         "tags": [
           "Vendedor"
         ],
-        "parameters": [
-          {
-            "name": "vendedorId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PedidoVendedorDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PedidoVendedorDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PedidoVendedorDTO"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -3651,50 +3709,102 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pedido"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pedido"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pedido"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/api/Vendedor/pedido-bodega": {
+    "/api/Vendedor/pedido/{pedidoId}/crear-pedido-bodega": {
       "post": {
         "tags": [
           "Vendedor"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PedidoBodegaRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PedidoBodegaRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/PedidoBodegaRequest"
-              }
+        "parameters": [
+          {
+            "name": "pedidoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PedidoBodega"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PedidoBodega"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PedidoBodega"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/api/Vendedor/todos-pedidos": {
+    "/api/Vendedor/pedidos": {
       "get": {
         "tags": [
           "Vendedor"
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pedido"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pedido"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pedido"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -3736,7 +3846,24 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pedido"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pedido"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pedido"
+                }
+              }
+            }
           }
         }
       }
@@ -3796,6 +3923,14 @@
             "nullable": true
           },
           "numeroCuenta": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "notas": {
             "type": "string",
             "nullable": true
           }
@@ -4110,6 +4245,28 @@
             "items": {
               "$ref": "#/components/schemas/DireccionDTO"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientePedidoDTO": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "apellido": {
+            "type": "string",
+            "nullable": true
+          },
+          "correoElectronico": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -4442,6 +4599,70 @@
           "stock": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ItemPedidoBodega": {
+        "required": [
+          "cantidad",
+          "estado",
+          "pedidoBodegaId",
+          "productoId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pedidoBodegaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cantidad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cantidadPreparada": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estado": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string"
+          },
+          "pedidoBodega": {
+            "$ref": "#/components/schemas/PedidoBodega"
+          },
+          "producto": {
+            "$ref": "#/components/schemas/Producto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ItemPedidoDTO": {
+        "type": "object",
+        "properties": {
+          "producto": {
+            "$ref": "#/components/schemas/ProductoDTO"
+          },
+          "cantidad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "precioUnitario": {
+            "type": "number",
+            "format": "double"
+          },
+          "subtotal": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
@@ -4837,6 +5058,26 @@
           "bodeguero": {
             "$ref": "#/components/schemas/Usuario"
           },
+          "fechaAsignacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "estadoAsignacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "comisionCalculada": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "cliente": {
+            "$ref": "#/components/schemas/Cliente"
+          },
+          "direccionEntrega": {
+            "$ref": "#/components/schemas/Direccion"
+          },
           "items": {
             "type": "array",
             "items": {
@@ -4847,9 +5088,20 @@
         },
         "additionalProperties": false
       },
-      "PedidoBodegaRequest": {
+      "PedidoBodega": {
+        "required": [
+          "bodegueroId",
+          "estado",
+          "fechaCreacion",
+          "pedidoId",
+          "vendedorId"
+        ],
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "pedidoId": {
             "type": "integer",
             "format": "int32"
@@ -4857,6 +5109,44 @@
           "vendedorId": {
             "type": "integer",
             "format": "int32"
+          },
+          "bodegueroId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaPreparacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "estado": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string"
+          },
+          "notas": {
+            "type": "string",
+            "nullable": true
+          },
+          "pedido": {
+            "$ref": "#/components/schemas/Pedido"
+          },
+          "vendedor": {
+            "$ref": "#/components/schemas/Usuario"
+          },
+          "bodeguero": {
+            "$ref": "#/components/schemas/Usuario"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemPedidoBodega"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -5091,6 +5381,77 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PedidoItemUpdateDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PedidoVendedorDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaPedido": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipoEntrega": {
+            "type": "string",
+            "nullable": true
+          },
+          "subtotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "costoEnvio": {
+            "type": "number",
+            "format": "double"
+          },
+          "impuestos": {
+            "type": "number",
+            "format": "double"
+          },
+          "total": {
+            "type": "number",
+            "format": "double"
+          },
+          "notas": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaAsignacion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estadoAsignacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "comisionCalculada": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "cliente": {
+            "$ref": "#/components/schemas/ClientePedidoDTO"
+          },
+          "sucursal": {
+            "$ref": "#/components/schemas/SucursalDTO"
+          },
+          "direccionEntrega": {
+            "$ref": "#/components/schemas/DireccionDTO"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemPedidoDTO"
             },
             "nullable": true
           }
@@ -5487,6 +5848,16 @@
           },
           "activo": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SucursalDTO": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

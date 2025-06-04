@@ -137,13 +137,16 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("RequireAdminRole", policy =>
         policy.RequireRole("administrador"));
 
+    options.AddPolicy("RequireVendedorRole", policy =>
+        policy.RequireRole("vendedor"));
+
     // Configurar el mapeo de roles
     options.AddPolicy("RequireRole", policy =>
     {
         policy.RequireAssertion(context =>
         {
             var roleClaim = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
-            return roleClaim != null && roleClaim.Value == "administrador";
+            return roleClaim != null && (roleClaim.Value == "administrador" || roleClaim.Value == "vendedor");
         });
     });
 });

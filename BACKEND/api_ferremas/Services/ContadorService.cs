@@ -13,7 +13,7 @@ namespace Ferremas.Api.Services
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public async Task<Pago> AprobarPagoTransferencia(int pedidoId, int contadorId, string bancoOrigen, string numeroCuenta)
+        public async Task<Pago> AprobarPagoTransferencia(int pedidoId, int contadorId, string bancoOrigen, string numeroCuenta, string estado, string notas)
         {
             using (var connection = new MySqlConnection(_connectionString))
             {
@@ -21,51 +21,172 @@ namespace Ferremas.Api.Services
                 using var transaction = await connection.BeginTransactionAsync();
                 try
                 {
-                    // Obtener el pedido
-                    using var commandPedido = new MySqlCommand(@"
-                        SELECT * FROM pedidos WHERE id = @pedidoId", connection, transaction);
-                    commandPedido.Parameters.AddWithValue("@pedidoId", pedidoId);
+                    // Obtener el usuario_id del contador
+                    using var commandContador = new MySqlCommand(@"
+                        SELECT usuario_id 
+                        FROM contadores 
+                        WHERE id = @contadorId AND activo = 1", connection, transaction);
+                    commandContador.Parameters.AddWithValue("@contadorId", contadorId);
                     
-                    using var readerPedido = await commandPedido.ExecuteReaderAsync();
-                    if (!await readerPedido.ReadAsync())
-                        throw new Exception("Pedido no encontrado");
+                    var usuarioId = await commandContador.ExecuteScalarAsync();
+                    if (usuarioId == null)
+                        throw new Exception("Contador no encontrado o inactivo");
 
-                    var monto = readerPedido.GetDecimal("total");
-                    await readerPedido.CloseAsync();
-
-                    // Crear el pago
+                    // Obtener el pago pendiente
                     using var commandPago = new MySqlCommand(@"
-                        INSERT INTO pagos (pedido_id, metodo, monto, estado, fecha_pago, referencia_transaccion, contador_id)
-                        VALUES (@pedidoId, 'transferencia', @monto, 'completado', NOW(), @referencia, @contadorId);
-                        SELECT LAST_INSERT_ID();", connection, transaction);
-
-                    var referencia = $"TRF-{bancoOrigen}-{numeroCuenta}-{DateTime.Now:yyyyMMddHHmmss}";
+                        SELECT * FROM pagos 
+                        WHERE pedido_id = @pedidoId 
+                        AND metodo = 'transferencia' 
+                        AND estado = 'pendiente'", connection, transaction);
                     commandPago.Parameters.AddWithValue("@pedidoId", pedidoId);
-                    commandPago.Parameters.AddWithValue("@monto", monto);
-                    commandPago.Parameters.AddWithValue("@referencia", referencia);
-                    commandPago.Parameters.AddWithValue("@contadorId", contadorId);
+                    
+                    using var readerPago = await commandPago.ExecuteReaderAsync();
+                    if (!await readerPago.ReadAsync())
+                        throw new Exception("No se encontró un pago pendiente por transferencia para este pedido");
 
-                    var pagoId = Convert.ToInt32(await commandPago.ExecuteScalarAsync());
+                    var pagoId = readerPago.GetInt32("id");
+                    var monto = readerPago.GetDecimal("monto");
+                    await readerPago.CloseAsync();
+
+                    // Actualizar el pago
+                    using var commandUpdatePago = new MySqlCommand(@"
+                        UPDATE pagos 
+                        SET estado = @estado,
+                            contador_id = @usuarioId,
+                            fecha_pago = NOW()
+                        WHERE id = @pagoId", connection, transaction);
+
+                    commandUpdatePago.Parameters.AddWithValue("@estado", estado);
+                    commandUpdatePago.Parameters.AddWithValue("@usuarioId", usuarioId);
+                    commandUpdatePago.Parameters.AddWithValue("@pagoId", pagoId);
+                    await commandUpdatePago.ExecuteNonQueryAsync();
+
+                    // Registrar la transferencia
+                    using var commandTransferencia = new MySqlCommand(@"
+                        INSERT INTO transferencias (
+                            pedido_id,
+                            contador_id,
+                            monto,
+                            banco_origen,
+                            numero_cuenta,
+                            fecha_transferencia,
+                            estado,
+                            notas
+                        ) VALUES (
+                            @pedidoId,
+                            @contadorId,
+                            @monto,
+                            @bancoOrigen,
+                            @numeroCuenta,
+                            NOW(),
+                            'confirmada',
+                            @notas
+                        )", connection, transaction);
+
+                    commandTransferencia.Parameters.AddWithValue("@pedidoId", pedidoId);
+                    commandTransferencia.Parameters.AddWithValue("@contadorId", contadorId);
+                    commandTransferencia.Parameters.AddWithValue("@monto", monto);
+                    commandTransferencia.Parameters.AddWithValue("@bancoOrigen", bancoOrigen);
+                    commandTransferencia.Parameters.AddWithValue("@numeroCuenta", numeroCuenta);
+                    commandTransferencia.Parameters.AddWithValue("@notas", notas);
+                    await commandTransferencia.ExecuteNonQueryAsync();
 
                     // Actualizar estado del pedido
                     using var commandUpdatePedido = new MySqlCommand(@"
                         UPDATE pedidos 
-                        SET estado = 'pagado' 
+                        SET estado = 'confirmado' 
                         WHERE id = @pedidoId", connection, transaction);
+
                     commandUpdatePedido.Parameters.AddWithValue("@pedidoId", pedidoId);
                     await commandUpdatePedido.ExecuteNonQueryAsync();
 
+                    // Buscar vendedor disponible en la sucursal
+                    using var commandVendedor = new MySqlCommand(@"
+                        SELECT v.usuario_id 
+                        FROM vendedores v
+                        INNER JOIN pedidos p ON p.sucursal_id = v.sucursal_id
+                        WHERE p.id = @pedidoId
+                        AND v.activo = 1
+                        ORDER BY RAND()
+                        LIMIT 1", connection, transaction);
+
+                    commandVendedor.Parameters.AddWithValue("@pedidoId", pedidoId);
+                    var vendedorUsuarioId = await commandVendedor.ExecuteScalarAsync();
+
+                    if (vendedorUsuarioId != null)
+                    {
+                        // Obtener el ID del vendedor
+                        using var commandGetVendedorId = new MySqlCommand(@"
+                            SELECT id 
+                            FROM vendedores 
+                            WHERE usuario_id = @usuarioId", connection, transaction);
+                        commandGetVendedorId.Parameters.AddWithValue("@usuarioId", vendedorUsuarioId);
+                        var vendedorId = await commandGetVendedorId.ExecuteScalarAsync();
+
+                        // Asignar vendedor al pedido
+                        using var commandAsignarVendedor = new MySqlCommand(@"
+                            UPDATE pedidos 
+                            SET vendedor_id = @vendedorUsuarioId,
+                                estado = 'asignado_vendedor'
+                            WHERE id = @pedidoId", connection, transaction);
+
+                        commandAsignarVendedor.Parameters.AddWithValue("@vendedorUsuarioId", vendedorUsuarioId);
+                        commandAsignarVendedor.Parameters.AddWithValue("@pedidoId", pedidoId);
+                        await commandAsignarVendedor.ExecuteNonQueryAsync();
+
+                        // Crear registro en pedidos_vendedor
+                        using var commandPedidoVendedor = new MySqlCommand(@"
+                            INSERT INTO pedidos_vendedor (
+                                pedido_id, 
+                                vendedor_id, 
+                                fecha_asignacion, 
+                                estado
+                            ) VALUES (
+                                @pedidoId,
+                                @vendedorId,
+                                NOW(),
+                                'asignado'
+                            )", connection, transaction);
+
+                        commandPedidoVendedor.Parameters.AddWithValue("@pedidoId", pedidoId);
+                        commandPedidoVendedor.Parameters.AddWithValue("@vendedorId", vendedorId);
+                        await commandPedidoVendedor.ExecuteNonQueryAsync();
+                    }
+
                     await transaction.CommitAsync();
 
-                    // Obtener el pago creado
-                    return await GetPagoById(pagoId);
+                    // Obtener el pago actualizado
+                    using var commandGetPago = new MySqlCommand(@"
+                        SELECT p.*, t.banco_origen, t.numero_cuenta, t.fecha_registro, t.notas
+                        FROM pagos p
+                        LEFT JOIN transferencias t ON p.id = t.pago_id
+                        WHERE p.id = @pagoId", connection);
+
+                    commandGetPago.Parameters.AddWithValue("@pagoId", pagoId);
+
+                    using var readerPagoActualizado = await commandGetPago.ExecuteReaderAsync();
+                    if (await readerPagoActualizado.ReadAsync())
+                    {
+                        return new Pago
+                        {
+                            Id = readerPagoActualizado.GetInt32("id"),
+                            PedidoId = readerPagoActualizado.GetInt32("pedido_id"),
+                            Metodo = readerPagoActualizado.GetString("metodo"),
+                            Monto = readerPagoActualizado.GetDecimal("monto"),
+                            Estado = readerPagoActualizado.GetString("estado"),
+                            FechaPago = readerPagoActualizado.GetDateTime("fecha_pago"),
+                            ContadorId = readerPagoActualizado.GetInt32("contador_id"),
+                            Notas = readerPagoActualizado.IsDBNull(readerPagoActualizado.GetOrdinal("notas")) ? null : readerPagoActualizado.GetString("notas")
+                        };
+                    }
                 }
-                catch
+                catch (Exception ex)
                 {
                     await transaction.RollbackAsync();
-                    throw;
+                    throw new Exception($"Error al aprobar la transferencia: {ex.Message}");
                 }
             }
+            return null;
         }
 
         public async Task<IEnumerable<Pago>> GetHistorialPagos(DateTime fechaInicio, DateTime fechaFin)
@@ -114,7 +235,7 @@ namespace Ferremas.Api.Services
             {
                 await connection.OpenAsync();
                 using var command = new MySqlCommand(@"
-                    SELECT p.*, pe.* 
+                    SELECT p.*, pe.estado as estado_pedido 
                     FROM pagos p
                     INNER JOIN pedidos pe ON p.pedido_id = pe.id
                     WHERE p.estado = 'pendiente'
@@ -123,21 +244,33 @@ namespace Ferremas.Api.Services
                 using var reader = await command.ExecuteReaderAsync();
                 while (await reader.ReadAsync())
                 {
-                    pagos.Add(new Pago
+                    var pago = new Pago
                     {
                         Id = reader.GetInt32("id"),
                         PedidoId = reader.GetInt32("pedido_id"),
                         Metodo = reader.GetString("metodo"),
                         Monto = reader.GetDecimal("monto"),
                         Estado = reader.GetString("estado"),
-                        FechaPago = reader.GetDateTime("fecha_pago"),
-                        ReferenciaTransaccion = reader.GetString("referencia_transaccion"),
+                        FechaPago = reader.IsDBNull(reader.GetOrdinal("fecha_pago")) ? null : reader.GetDateTime("fecha_pago"),
+                        ReferenciaTransaccion = reader.IsDBNull(reader.GetOrdinal("referencia_transaccion")) ? null : reader.GetString("referencia_transaccion"),
+                        Notas = reader.IsDBNull(reader.GetOrdinal("notas")) ? null : reader.GetString("notas"),
+                        UrlRetorno = reader.IsDBNull(reader.GetOrdinal("url_retorno")) ? null : reader.GetString("url_retorno"),
+                        ContadorId = reader.IsDBNull(reader.GetOrdinal("contador_id")) ? null : reader.GetInt32("contador_id"),
+                        MercadoPagoPaymentId = reader.IsDBNull(reader.GetOrdinal("mercadopago_payment_id")) ? null : reader.GetString("mercadopago_payment_id"),
+                        MercadoPagoPreferenceId = reader.IsDBNull(reader.GetOrdinal("mercadopago_preference_id")) ? null : reader.GetString("mercadopago_preference_id"),
+                        MercadoPagoStatus = reader.IsDBNull(reader.GetOrdinal("mercadopago_status")) ? null : reader.GetString("mercadopago_status"),
+                        MercadoPagoStatusDetail = reader.IsDBNull(reader.GetOrdinal("mercadopago_status_detail")) ? null : reader.GetString("mercadopago_status_detail"),
+                        MercadoPagoPaymentMethodId = reader.IsDBNull(reader.GetOrdinal("mercadopago_payment_method_id")) ? null : reader.GetString("mercadopago_payment_method_id"),
+                        MercadoPagoPaymentTypeId = reader.IsDBNull(reader.GetOrdinal("mercadopago_payment_type_id")) ? null : reader.GetString("mercadopago_payment_type_id"),
+                        MercadoPagoInstallments = reader.IsDBNull(reader.GetOrdinal("mercadopago_installments")) ? null : reader.GetInt32("mercadopago_installments"),
+                        MercadoPagoCardNumber = reader.IsDBNull(reader.GetOrdinal("mercadopago_card_number")) ? null : reader.GetString("mercadopago_card_number"),
                         Pedido = new Pedido
                         {
                             Id = reader.GetInt32("pedido_id"),
                             Estado = reader.GetString("estado_pedido")
                         }
-                    });
+                    };
+                    pagos.Add(pago);
                 }
             }
             return pagos;

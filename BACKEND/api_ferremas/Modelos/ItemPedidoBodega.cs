@@ -5,6 +5,7 @@ namespace Ferremas.Api.Modelos
 {
     public class ItemPedidoBodega
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -16,11 +17,17 @@ namespace Ferremas.Api.Modelos
         [Required]
         public int Cantidad { get; set; }
 
-        [Column(TypeName = "decimal(10,2)")]
-        public decimal PrecioUnitario { get; set; }
+        public int CantidadPreparada { get; set; }
+
+        [Required]
+        [StringLength(20)]
+        public string Estado { get; set; } // pendiente, preparado
 
         // Propiedades de navegación
+        [ForeignKey("PedidoBodegaId")]
         public virtual PedidoBodega PedidoBodega { get; set; }
+
+        [ForeignKey("ProductoId")]
         public virtual Producto Producto { get; set; }
     }
 } 

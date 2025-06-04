@@ -18,36 +18,6 @@ USE `ferremas_ecommerce`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `asignaciones_pedidos`
---
-
-DROP TABLE IF EXISTS `asignaciones_pedidos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `asignaciones_pedidos` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `pedido_id` int NOT NULL,
-  `vendedor_id` int NOT NULL,
-  `fecha_asignacion` datetime DEFAULT CURRENT_TIMESTAMP,
-  `estado` enum('asignado','en_proceso','completado') DEFAULT 'asignado',
-  PRIMARY KEY (`id`),
-  KEY `pedido_id` (`pedido_id`),
-  KEY `vendedor_id` (`vendedor_id`),
-  CONSTRAINT `asignaciones_pedidos_ibfk_1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`),
-  CONSTRAINT `asignaciones_pedidos_ibfk_2` FOREIGN KEY (`vendedor_id`) REFERENCES `vendedores` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `asignaciones_pedidos`
---
-
-LOCK TABLES `asignaciones_pedidos` WRITE;
-/*!40000 ALTER TABLE `asignaciones_pedidos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `asignaciones_pedidos` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `bodegueros`
 --
 
@@ -546,7 +516,7 @@ CREATE TABLE `pagos` (
   KEY `idx_mercadopago_status` (`mercadopago_status`),
   CONSTRAINT `pagos_ibfk_1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`) ON DELETE CASCADE,
   CONSTRAINT `pagos_ibfk_2` FOREIGN KEY (`contador_id`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -555,7 +525,7 @@ CREATE TABLE `pagos` (
 
 LOCK TABLES `pagos` WRITE;
 /*!40000 ALTER TABLE `pagos` DISABLE KEYS */;
-INSERT INTO `pagos` VALUES (11,1,'mercadopago',32094.30,'pendiente','2025-05-28 15:17:02',NULL,'2411284550-c642ad9f-594a-453c-aad2-e6b14ab5bbea',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'https://localhost:4200/checkout/retorno?pedidoId=1&estado=pago');
+INSERT INTO `pagos` VALUES (11,1,'mercadopago',32094.30,'pendiente','2025-05-28 15:17:02',NULL,'2411284550-c642ad9f-594a-453c-aad2-e6b14ab5bbea',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'https://localhost:4200/checkout/retorno?pedidoId=1&estado=pago'),(12,12,'transferencia',83288.10,'completado','2025-06-04 14:09:36',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,24,'');
 /*!40000 ALTER TABLE `pagos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -633,7 +603,7 @@ CREATE TABLE `pedidos` (
 
 LOCK TABLES `pedidos` WRITE;
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
-INSERT INTO `pedidos` VALUES (1,10,'2025-05-27 15:31:30','pendiente','retiro_tienda',1,NULL,26970.00,0.00,5124.30,32094.30,'',NULL,NULL),(12,15,'2025-05-29 15:42:30','pendiente','retiro_tienda',1,1,69990.00,0.00,13298.10,83288.10,'test',NULL,NULL);
+INSERT INTO `pedidos` VALUES (1,10,'2025-05-27 15:31:30','pendiente','retiro_tienda',1,NULL,26970.00,0.00,5124.30,32094.30,'',NULL,NULL),(12,15,'2025-05-29 15:42:30','asignado_vendedor','retiro_tienda',1,1,69990.00,0.00,13298.10,83288.10,'test',25,NULL);
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -691,7 +661,7 @@ CREATE TABLE `pedidos_vendedor` (
   KEY `vendedor_id` (`vendedor_id`),
   CONSTRAINT `pedidos_vendedor_ibfk_1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`),
   CONSTRAINT `pedidos_vendedor_ibfk_2` FOREIGN KEY (`vendedor_id`) REFERENCES `vendedores` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -700,6 +670,7 @@ CREATE TABLE `pedidos_vendedor` (
 
 LOCK TABLES `pedidos_vendedor` WRITE;
 /*!40000 ALTER TABLE `pedidos_vendedor` DISABLE KEYS */;
+INSERT INTO `pedidos_vendedor` VALUES (1,12,1,'2025-06-04 14:09:36','asignado',NULL);
 /*!40000 ALTER TABLE `pedidos_vendedor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -980,7 +951,7 @@ CREATE TABLE `transferencias` (
   KEY `contador_id` (`contador_id`),
   CONSTRAINT `transferencias_ibfk_1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`),
   CONSTRAINT `transferencias_ibfk_2` FOREIGN KEY (`contador_id`) REFERENCES `contadores` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -989,6 +960,7 @@ CREATE TABLE `transferencias` (
 
 LOCK TABLES `transferencias` WRITE;
 /*!40000 ALTER TABLE `transferencias` DISABLE KEYS */;
+INSERT INTO `transferencias` VALUES (4,12,1,83288.10,'2025-06-04 14:09:36','Banco Estado','123456789','confirmada',NULL,'Transferencia verificada');
 /*!40000 ALTER TABLE `transferencias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1023,7 +995,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (10,'Angelina','Mendoza','ange.mendoza@duocuc.cl','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','17144575-2','+56998555466','cliente','2025-05-22 12:05:05','2025-05-28 19:44:14',1),(13,'admin','admin','admin@ferremas.cl','rJaJ4ickJwheNbnT4+i+2IyzQ0gotDuG/AWWytTG4nA=','191991999','99999999','Administrador','2025-05-27 20:22:21','2025-05-30 17:22:29',1),(15,'Prueba','Prueba','Prueba@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','101001001','10101010','cliente','2025-05-28 11:37:17','2025-05-29 16:30:03',1),(24,'Contador','Contador','contador@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-3','90909099','contador','2025-05-30 17:23:06','2025-05-30 17:23:06',1),(25,'Vendedor','Vendedor','vendedor@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-4','90909090','vendedor','2025-05-30 17:25:04','2025-05-30 17:25:04',1),(26,'Bodeguero','Bodeguero','bodeguero@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-5','90909097','bodeguero','2025-05-30 17:26:03','2025-05-30 17:26:03',1);
+INSERT INTO `usuarios` VALUES (10,'Angelina','Mendoza','ange.mendoza@duocuc.cl','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','17144575-2','+56998555466','cliente','2025-05-22 12:05:05','2025-05-28 19:44:14',1),(13,'admin','admin','admin@ferremas.cl','rJaJ4ickJwheNbnT4+i+2IyzQ0gotDuG/AWWytTG4nA=','191991999','99999999','Administrador','2025-05-27 20:22:21','2025-05-30 17:22:29',1),(15,'Prueba','Prueba','Prueba@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','101001001','10101010','cliente','2025-05-28 11:37:17','2025-06-04 11:20:54',1),(24,'Contador','Contador','contador@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-3','90909099','contador','2025-05-30 17:23:06','2025-06-04 14:09:09',1),(25,'Vendedor','Vendedor','vendedor@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-4','90909090','vendedor','2025-05-30 17:25:04','2025-06-04 16:11:34',1),(26,'Bodeguero','Bodeguero','bodeguero@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-5','90909097','bodeguero','2025-05-30 17:26:03','2025-05-30 17:26:03',1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2811,4 +2783,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-30 17:26:39
+-- Dump completed on 2025-06-04 16:14:22

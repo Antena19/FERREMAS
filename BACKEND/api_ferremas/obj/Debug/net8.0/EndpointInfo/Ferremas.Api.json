@@ -861,6 +861,47 @@
         }
       }
     },
+    "/api/Bodeguero/inventario": {
+      "get": {
+        "tags": [
+          "Bodeguero"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Bodeguero"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Inventario"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Inventario"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Inventario"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Bodeguero/pedidos-asignados/{bodegueroId}": {
       "get": {
         "tags": [
@@ -961,37 +1002,6 @@
         }
       }
     },
-    "/api/Bodeguero/inventario": {
-      "put": {
-        "tags": [
-          "Bodeguero"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Inventario"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Inventario"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Inventario"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Bodeguero/productos/{sucursalId}": {
       "get": {
         "tags": [
@@ -1008,6 +1018,102 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Bodeguero/pedido-bodega/{pedidoBodegaId}/estado": {
+      "put": {
+        "tags": [
+          "Bodeguero"
+        ],
+        "parameters": [
+          {
+            "name": "pedidoBodegaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Bodeguero/inventario/{sucursalId}/{productoId}": {
+      "put": {
+        "tags": [
+          "Bodeguero"
+        ],
+        "parameters": [
+          {
+            "name": "sucursalId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "productoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"

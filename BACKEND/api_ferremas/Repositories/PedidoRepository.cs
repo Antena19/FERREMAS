@@ -152,105 +152,32 @@ namespace Ferremas.Api.Repositories
                         if (carrito == null)
                             throw new Exception("No hay carrito activo para este usuario");
 
-                        // Crear el pedido
-                        var sqlPedido = @"
-                            INSERT INTO pedidos (
-                                usuario_id,
-                                fecha_pedido,
-                                estado,
-                                tipo_entrega,
-                                sucursal_id,
-                                direccion_id,
-                                subtotal,
-                                costo_envio,
-                                impuestos,
-                                total,
-                                notas
+                        // Crear pedido
+                        var pedidoId = await connection.ExecuteScalarAsync<int>(
+                            @"INSERT INTO pedidos (
+                                usuario_id, tipo_entrega, sucursal_id, direccion_id,
+                                subtotal, impuestos, costo_envio, total, notas, estado
                             ) VALUES (
-                                @UsuarioId,
-                                @FechaPedido,
-                                @Estado,
-                                @TipoEntrega,
-                                @SucursalId,
-                                @DireccionId,
-                                @Subtotal,
-                                @CostoEnvio,
-                                @Impuestos,
-                                @Total,
-                                @Notas
+                                @UsuarioId, @TipoEntrega, @SucursalId, @DireccionId,
+                                @Subtotal, @Impuestos, @CostoEnvio, @Total, @Notas, 'pendiente'
                             );
-                            SELECT LAST_INSERT_ID();";
-
-                        // Calcular totales
-                        var itemsCarrito = await connection.QueryAsync<dynamic>(
-                            "SELECT * FROM items_carrito WHERE carrito_id = @CarritoId",
-                            new { CarritoId = carrito.id },
+                            SELECT LAST_INSERT_ID();",
+                            pedido,
                             transaction
                         );
 
-                        decimal subtotal = 0;
-                        foreach (var item in itemsCarrito)
-                        {
-                            subtotal += item.subtotal;
-                        }
-
-                        decimal impuestos = subtotal * 0.19m;
-                        decimal costoEnvio = pedido.TipoEntrega == "despacho_domicilio" ? 5000 : 0;
-                        decimal total = subtotal + impuestos + costoEnvio;
-
-                        var pedidoId = await connection.ExecuteScalarAsync<int>(sqlPedido, new
-                        {
-                            pedido.UsuarioId,
-                            pedido.FechaPedido,
-                            pedido.Estado,
-                            pedido.TipoEntrega,
-                            pedido.SucursalId,
-                            pedido.DireccionId,
-                            Subtotal = subtotal,
-                            CostoEnvio = costoEnvio,
-                            Impuestos = impuestos,
-                            Total = total,
-                            pedido.Notas
-                        }, transaction);
-
                         // Mover items del carrito a pedido_items
-                        var sqlItems = @"
-                            INSERT INTO pedido_items (
-                                pedido_id,
-                                producto_id,
-                                cantidad,
-                                precio_unitario,
-                                subtotal
+                        await connection.ExecuteAsync(
+                            @"INSERT INTO pedido_items (
+                                pedido_id, producto_id, cantidad, precio_unitario, subtotal
                             )
                             SELECT 
-                                @PedidoId,
-                                producto_id,
-                                cantidad,
-                                precio_unitario,
-                                subtotal
+                                @PedidoId, producto_id, cantidad, precio_unitario, subtotal
                             FROM items_carrito
-                            WHERE carrito_id = @CarritoId";
-
-                        await connection.ExecuteAsync(sqlItems, new
-                        {
-                            PedidoId = pedidoId,
-                            CarritoId = carrito.id
-                        }, transaction);
-
-                        // Actualizar inventario
-                        var sqlInventario = @"
-                            UPDATE inventario i
-                            INNER JOIN items_carrito ic ON i.producto_id = ic.producto_id
-                            SET i.stock = i.stock - ic.cantidad,
-                                i.ultima_salida = NOW()
-                            WHERE ic.carrito_id = @CarritoId
-                            AND i.sucursal_id = @SucursalId";
-
-                        await connection.ExecuteAsync(sqlInventario, new
-                        {
-                            CarritoId = carrito.id,
-                            SucursalId = pedido.SucursalId
-                        }, transaction);
+                            WHERE carrito_id = @CarritoId",
+                            new { PedidoId = pedidoId, CarritoId = carrito.id },
+                            transaction
+                        );
 
                         // Desactivar carrito
                         await connection.ExecuteAsync(

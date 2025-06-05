@@ -72,22 +72,14 @@ namespace Ferremas.Api.Controllers
         {
             try
             {
-                var usuarioId = int.Parse(User.FindFirst("nameid")?.Value);
-                using (var connection = new MySqlConnection(_vendedorService.GetConnectionString()))
+                var vendedorId = GetVendedorId();
+                if (vendedorId == 0)
                 {
-                    await connection.OpenAsync();
-                    using var command = new MySqlCommand("SELECT id FROM vendedores WHERE usuario_id = @usuarioId", connection);
-                    command.Parameters.AddWithValue("@usuarioId", usuarioId);
-                    var vendedorId = Convert.ToInt32(await command.ExecuteScalarAsync());
-                    
-                    if (vendedorId == 0)
-                    {
-                        return NotFound("Vendedor no encontrado");
-                    }
-
-                    var pedidos = await _vendedorService.GetPedidosAsignados(vendedorId);
-                    return Ok(pedidos);
+                    return NotFound("Vendedor no encontrado");
                 }
+
+                var pedidos = await _vendedorService.GetPedidosAsignados(vendedorId);
+                return Ok(pedidos);
             }
             catch (Exception ex)
             {
@@ -118,8 +110,17 @@ namespace Ferremas.Api.Controllers
         {
             try
             {
-                var vendedorId = int.Parse(User.FindFirst("nameid")?.Value);
+                var vendedorId = GetVendedorId();
+                if (vendedorId == 0)
+                {
+                    return NotFound("Vendedor no encontrado");
+                }
+
                 var pedidoBodega = await _vendedorService.CrearPedidoBodega(pedidoId, vendedorId);
+                if (pedidoBodega == null)
+                {
+                    return NotFound($"No se pudo crear el pedido de bodega para el pedido {pedidoId}");
+                }
                 return Ok(pedidoBodega);
             }
             catch (Exception ex)

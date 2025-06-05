@@ -538,6 +538,16 @@
   },
   {
     "ContainingType": "Ferremas.Api.Controllers.BodegueroController",
+    "Method": "GetAllInventario",
+    "RelativePath": "api/Bodeguero/inventario",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ferremas.Api.Controllers.BodegueroController",
     "Method": "ActualizarInventario",
     "RelativePath": "api/Bodeguero/inventario",
     "HttpMethod": "PUT",
@@ -570,6 +580,32 @@
   },
   {
     "ContainingType": "Ferremas.Api.Controllers.BodegueroController",
+    "Method": "ActualizarStockInventario",
+    "RelativePath": "api/Bodeguero/inventario/{sucursalId}/{productoId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "sucursalId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "productoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "cantidad",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ferremas.Api.Controllers.BodegueroController",
     "Method": "GetPedidoBodegaById",
     "RelativePath": "api/Bodeguero/pedido-bodega/{pedidoBodegaId}",
     "HttpMethod": "GET",
@@ -579,6 +615,27 @@
       {
         "Name": "pedidoBodegaId",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ferremas.Api.Controllers.BodegueroController",
+    "Method": "ActualizarEstadoPedidoBodega",
+    "RelativePath": "api/Bodeguero/pedido-bodega/{pedidoBodegaId}/estado",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pedidoBodegaId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

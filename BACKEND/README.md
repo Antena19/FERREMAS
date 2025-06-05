@@ -110,6 +110,16 @@ api_ferremas/
 - Cálculo de totales
 - Proceso de checkout
 
+### 6. Gestión de Empleados
+- CRUD completo de usuarios por rol (vendedores, bodegueros, contadores)
+- Activación/desactivación de usuarios
+- Asignación de sucursales
+
+### 7. Gestión de Inventario
+- Control de stock por sucursal
+- Actualización de productos y stock
+- Gestión de entregas a bodega
+
 ## Configuración
 
 ### Requisitos Previos
@@ -196,7 +206,13 @@ api_ferremas/
 - `GET /api/pagos/{id}` - Obtener detalle de pago **(Solo Contador/Admin)**
 
 ### Admin (`/api/Admin`)
-- `/api/Admin/usuarios` (GET, POST, PUT, DELETE, activar/desactivar) **(Solo Administrador)**
+- `GET /api/Admin/usuarios` - Listar todos los usuarios **(Solo Administrador)**
+- `GET /api/Admin/usuarios/{id}` - Obtener usuario específico **(Solo Administrador)**
+- `POST /api/Admin/usuarios` - Crear nuevo usuario **(Solo Administrador)**
+- `PUT /api/Admin/usuarios` - Actualizar usuario **(Solo Administrador)**
+- `DELETE /api/Admin/usuarios/{id}` - Eliminar usuario **(Solo Administrador)**
+- `PUT /api/Admin/usuarios/{id}/activar` - Activar usuario **(Solo Administrador)**
+- `PUT /api/Admin/usuarios/{id}/desactivar` - Desactivar usuario **(Solo Administrador)**
 - `/api/Admin/clientes` (GET, POST, PUT, DELETE) **(Solo Administrador)**
 - `/api/Admin/vendedores` (GET, POST, PUT, DELETE) **(Solo Administrador)**
 - `/api/Admin/bodegueros` (GET, POST, PUT, DELETE) **(Solo Administrador)**
@@ -212,13 +228,13 @@ api_ferremas/
 - `PUT /api/Vendedor/pedido/{pedidoId}/estado` **(Solo Vendedor)**
 
 ### Bodeguero (`/api/Bodeguero`)
-- `GET /api/Bodeguero/inventario/{sucursalId}` **(Solo Bodeguero)**
-- `GET /api/Bodeguero/pedidos-asignados/{bodegueroId}` **(Solo Bodeguero)**
-- `GET /api/Bodeguero/pedido-bodega/{pedidoBodegaId}` **(Solo Bodeguero)**
-- `POST /api/Bodeguero/entrega-bodega/{pedidoBodegaId}` **(Solo Bodeguero)**
-- `PUT /api/Bodeguero/producto` **(Solo Bodeguero)**
-- `PUT /api/Bodeguero/inventario` **(Solo Bodeguero)**
-- `GET /api/Bodeguero/productos/{sucursalId}` **(Solo Bodeguero)**
+- `GET /api/Bodeguero/inventario/{sucursalId}` - Ver inventario de sucursal **(Solo Bodeguero)**
+- `GET /api/Bodeguero/productos/{sucursalId}` - Ver productos de sucursal **(Solo Bodeguero)**
+- `PUT /api/Bodeguero/producto` - Actualizar producto **(Solo Bodeguero)**
+- `PUT /api/Bodeguero/inventario` - Actualizar inventario **(Solo Bodeguero)**
+- `GET /api/Bodeguero/pedidos-asignados/{bodegueroId}` - Ver pedidos asignados **(Solo Bodeguero)**
+- `GET /api/Bodeguero/pedido-bodega/{pedidoBodegaId}` - Ver detalle de pedido **(Solo Bodeguero)**
+- `POST /api/Bodeguero/entrega-bodega/{pedidoBodegaId}` - Crear entrega a bodega **(Solo Bodeguero)**
 
 ### Contador (`/api/Contador`)
 - `POST /api/Contador/aprobar-transferencia` **(Solo Contador)**

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ferremas.Api.Controllers
 {
-    [Authorize(Roles = "Bodeguero")]
+    [Authorize(Roles = "bodeguero")]
     [ApiController]
     [Route("api/[controller]")]
     public class BodegueroController : ControllerBase
@@ -21,6 +21,13 @@ namespace Ferremas.Api.Controllers
         public async Task<IActionResult> GetInventarioSucursal(int sucursalId)
         {
             var inventario = await _bodegueroService.GetInventarioSucursal(sucursalId);
+            return Ok(inventario);
+        }
+
+        [HttpGet("inventario")]
+        public async Task<IActionResult> GetAllInventario()
+        {
+            var inventario = await _bodegueroService.GetAllInventario();
             return Ok(inventario);
         }
 
@@ -87,6 +94,40 @@ namespace Ferremas.Api.Controllers
         {
             var productos = await _bodegueroService.GetProductosSucursal(sucursalId);
             return Ok(productos);
+        }
+
+        [HttpPut("pedido-bodega/{pedidoBodegaId}/estado")]
+        public async Task<IActionResult> ActualizarEstadoPedidoBodega(int pedidoBodegaId, [FromBody] string estado)
+        {
+            try
+            {
+                var pedido = await _bodegueroService.ActualizarEstadoPedidoBodega(pedidoBodegaId, estado);
+                if (pedido == null)
+                    return NotFound(new { message = "Pedido no encontrado" });
+
+                return Ok(pedido);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error al actualizar el estado del pedido", error = ex.Message });
+            }
+        }
+
+        [HttpPut("inventario/{sucursalId}/{productoId}")]
+        public async Task<IActionResult> ActualizarStockInventario(int sucursalId, int productoId, [FromBody] int cantidad)
+        {
+            try
+            {
+                var inventario = await _bodegueroService.ActualizarStockInventario(sucursalId, productoId, cantidad);
+                if (inventario == null)
+                    return NotFound(new { message = "Producto no encontrado en el inventario de la sucursal" });
+
+                return Ok(inventario);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error al actualizar el stock", error = ex.Message });
+            }
         }
     }
 } 

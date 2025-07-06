@@ -144,6 +144,18 @@ namespace Ferremas.Api.Services
             return await _pedidoRepository.DeletePedidoAsync(id);
         }
 
+        public async Task<IEnumerable<PedidoDTO>> GetHistorialComprasClienteAsync(int clienteId)
+        {
+            var pedidos = await _pedidoRepository.GetHistorialComprasClienteAsync(clienteId);
+            return pedidos.Select(p => MapPedidoToDTO(p));
+        }
+
+        public async Task<IEnumerable<PedidoDTO>> GetHistorialComprasUsuarioAsync(int usuarioId)
+        {
+            var pedidos = await _pedidoRepository.GetHistorialComprasUsuarioAsync(usuarioId);
+            return pedidos.Select(p => MapPedidoToDTO(p));
+        }
+
         private PedidoDTO MapPedidoToDTO(Pedido pedido)
         {
             return new PedidoDTO

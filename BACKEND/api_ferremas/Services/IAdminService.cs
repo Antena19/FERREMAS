@@ -1,4 +1,5 @@
 using Ferremas.Api.Modelos;
+using Ferremas.Api.DTOs;
 
 namespace Ferremas.Api.Services
 {
@@ -17,6 +18,9 @@ namespace Ferremas.Api.Services
         Task<Vendedor> GetVendedorById(int id);
         Task<Bodeguero> GetBodegueroById(int id);
         Task<Contador> GetContadorById(int id);
+
+        // Obtener perfil completo del usuario
+        Task<PerfilUsuarioDTO> GetPerfilUsuario(int id);
 
         // Crear usuarios
         Task<Usuario> CreateUsuario(Usuario usuario, string rol);
@@ -42,5 +46,19 @@ namespace Ferremas.Api.Services
         // Cambiar estado de usuarios
         Task<bool> ActivarUsuario(int id);
         Task<bool> DesactivarUsuario(int id);
+
+        // ============================
+        // 🏠 GESTIÓN DE DIRECCIONES
+        // ============================
+        Task<IEnumerable<DireccionDTO>> GetDireccionesUsuario(int usuarioId);
+        Task<DireccionDTO> GetDireccionById(int id);
+        Task<DireccionDTO> CrearDireccion(DireccionDTO direccion);
+        Task<DireccionDTO> ActualizarDireccion(int id, DireccionDTO direccion);
+        Task<bool> EliminarDireccion(int id);
+
+        // ============================
+        // 👤 GESTIÓN DE DATOS PERSONALES
+        // ============================
+        Task<bool> ActualizarDatosPersonales(int usuarioId, DatosPersonalesDTO datos);
     }
 } 

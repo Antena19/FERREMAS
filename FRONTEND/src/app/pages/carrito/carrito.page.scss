@@ -1,0 +1,87 @@
+/* =============================== */
+/* 🛒 CONTENEDOR PRINCIPAL         */
+/* =============================== */
+.carrito-container {
+  padding: 1rem;
+  max-width: 600px;
+  margin: auto;
+  background-color: #f9f9f9;        // Fondo claro
+  min-height: 80vh;                 // Altura mínima visible
+}
+
+/* =============================== */
+/* ⏳ SPINNER DE CARGA             */
+/* =============================== */
+.spinner-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* =============================== */
+/* 📭 MENSAJE DE CARRITO VACÍO     */
+/* =============================== */
+.mensaje-vacio {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #777;
+  padding: 2rem;
+
+  ion-icon {
+    font-size: 2.5rem;
+    color: #bbb;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+  }
+}
+
+/* =============================== */
+/* 👤 MENSAJE PARA USUARIO NO LOGUEADO */
+/* =============================== */
+.mensaje-no-login {
+  p {
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* =============================== */
+/* 🧱 ITEM DE PRODUCTO EN CARRITO  */
+/* =============================== */
+.producto-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+/* 🧾 Información del producto */
+.info-producto {
+  flex: 1;
+
+  h4 {
+    font-size: 1.1rem;
+    margin: 0 0 0.3rem 0;
+    color: #333;
+  }
+
+  .precio {
+    color: #4CAF50;
+    font-weight: bold;
+  }
+}
+
+/* =============================== */
+/* ✅ BOTÓN CONFIRMAR PEDIDO       */
+/* =============================== */
+.confirmar-container {
+  margin-top: 2rem;
+}

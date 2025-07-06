@@ -1,0 +1,65 @@
+.productos-container {
+  padding: 1rem;                            // 📦 Espacio interior general
+  background-color: #f5f5f5;                // 🎨 Fondo gris claro
+  max-width: 1200px;                        // 📐 Ancho máximo para pantallas grandes
+  margin: auto;                             // 🎯 Centrado horizontal
+
+  h2 {
+    font-size: 1.5rem;                      // 🔠 Tamaño del título
+    margin-bottom: 1rem;                    // 📏 Espacio debajo del título
+    text-align: center;                     // 📍 Centrado del texto
+  }
+
+  .mensaje-vacio {
+    text-align: center;                     // 📍 Centrado del texto de carga
+    color: #555;                            // 🎨 Color de texto gris
+    padding: 2rem 0;                        // 📦 Espaciado vertical
+
+    p {
+      margin-top: 0.5rem;                   // 📏 Separación entre el spinner y el texto
+    }
+  }
+
+  .productos-grid {
+    display: flex;                          // 🔳 Usa Flexbox para la grilla
+    flex-wrap: wrap;                        // ↪️ Permite que los elementos bajen a la siguiente fila
+    justify-content: center;                // 🎯 Centra horizontalmente
+    gap: 1rem;                              // 📏 Espacio entre las tarjetas
+  }
+
+  .producto-card {
+    background-color: white;               // 🎨 Fondo blanco para las tarjetas
+    border-radius: 0.5rem;                 // 🟢 Bordes redondeados
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // 🌫️ Sombra ligera
+    width: 220px;                          // 📐 Ancho fijo de cada tarjeta
+    padding: 1rem;                         // 📦 Espacio interno
+    text-align: center;                    // 📍 Texto centrado
+
+    img {
+      width: 100%;                         // 📸 Imagen ocupa todo el ancho de la tarjeta
+      height: 120px;                       // 📐 Altura fija
+      object-fit: contain;                // 🧩 La imagen se ajusta sin deformarse
+      margin-bottom: 0.5rem;               // 📏 Espacio debajo de la imagen
+    }
+
+    h5 {
+      font-size: 1rem;                     // 🔠 Tamaño del nombre del producto
+      margin-bottom: 0.5rem;               // 📏 Separación inferior
+    }
+
+    .precio {
+      color: #4CAF50;                      // 🎨 Verde institucional
+      font-weight: bold;                   // 🅱️ Negrita
+      margin-bottom: 0.5rem;               // 📏 Separación debajo del precio
+    }
+
+    button {
+      background-color: #4CAF50;           // 🎨 Fondo verde del botón
+      color: white;                        // ✨ Texto blanco
+      border: none;                        // 🚫 Sin borde
+      padding: 0.4rem 1rem;                // 📏 Espaciado interno del botón
+      border-radius: 0.3rem;               // 🟢 Bordes redondeados
+      cursor: pointer;                     // 🖱️ Cambia el cursor al pasar encima
+    }
+  }
+}

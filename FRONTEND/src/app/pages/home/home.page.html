@@ -1,0 +1,50 @@
+<div class="home-container">
+
+  <!-- 🔷 CATEGORÍAS -->
+  <section class="categorias-section">
+    <h2>Categorías</h2>
+
+    <!-- 🧱 Grilla de categorías visibles en el Home -->
+    <div class="categorias-grid">
+      <!-- 🔁 Recorremos el array de categorías -->
+      <a *ngFor="let categoria of categorias"
+         [routerLink]="['/productos']"
+         [queryParams]="{ categoria: categoria.nombre }"
+         class="categoria-item">
+        <i [class]="categoria.icono"></i>     <!-- ✅ Ícono asociado a la categoría -->
+        <span>{{ categoria.nombre }}</span>  <!-- ✅ Nombre visible de la categoría -->
+      </a>
+    </div>
+  </section>
+
+  <!-- 🔶 PRODUCTOS DESTACADOS -->
+  <section class="productos-section">
+    <h2>Productos destacados</h2>
+
+    <!-- ⏳ Spinner mientras se cargan los productos -->
+    <div *ngIf="cargando" class="spinner-center">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <!-- 🧱 Grilla de productos destacados (máx. 8) -->
+    <div *ngIf="!cargando && productos.length > 0" class="productos-grid">
+      <!-- 🔁 Recorremos el array de productos -->
+      <div *ngFor="let producto of productos" class="producto-card">
+        <!-- 🖼 Imagen del producto -->
+        <img [src]="'assets/img/' + producto.imagen_url" [alt]="producto.nombre">
+        <!-- 🔤 Nombre del producto -->
+        <h5>{{ producto.nombre }}</h5>
+        <!-- 💲 Precio formateado -->
+        <p>${{ producto.precio | number:'1.0-0' }}</p>
+        <!-- 🛒 Botón de acción -->
+        <button (click)="agregarAlCarrito(producto)">Agregar al carrito</button>
+      </div>
+    </div>
+
+    <!-- 📎 Botón para ver más productos -->
+    <div class="ver-mas-container">
+      <a routerLink="/productos" (click)="verMas()">Ver más</a>
+    </div>
+  </section>
+
+</div>

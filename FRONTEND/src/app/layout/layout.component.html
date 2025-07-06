@@ -1,0 +1,82 @@
+<!-- ✅ Contenedor principal para toda la app -->
+<div class="layout-wrapper">
+
+  <!-- ✅ NAVBAR SUPERIOR FIJO -->
+  <div class="navbar-superior">
+    <div class="navbar-container">
+
+      <!-- 🔷 Logo con ícono tipo "home" (herramienta) -->
+      <div class="nav-item nav-logo">
+        <a routerLink="/home" class="inicio-icono">
+          <i class="bi bi-tools"></i> FERREMAS
+        </a>
+      </div>
+
+      <!-- 🔘 Acciones de navegación del usuario -->
+      <div class="nav-actions">
+
+        <!-- 🏠 Enlace Home (siempre visible) -->
+        <a routerLink="/home" class="nav-link">HOME</a>
+
+        <!-- 🔐 Enlace Login (solo si no hay usuario logueado - VISTA PÚBLICA) -->
+        <a *ngIf="!usuarioNombre" routerLink="/login" class="nav-link">INICIAR SESIÓN</a>
+
+        <!-- 👤 Enlace Mi Perfil (solo si hay sesión - VISTA AUTENTICADA) -->
+        <a *ngIf="usuarioNombre" routerLink="/editar-perfil" class="nav-link">MI PERFIL</a>
+
+        <!-- 📦 Enlace Pedidos (solo visible si hay sesión - VISTA AUTENTICADA) -->
+        <a *ngIf="usuarioNombre" routerLink="/pedidos" class="nav-link">PEDIDOS</a>
+
+        <!-- 🔓 Enlace Logout (solo si hay usuario logueado - VISTA AUTENTICADA) -->
+        <a *ngIf="usuarioNombre" (click)="logout()" class="nav-link">SALIR</a>
+
+        <!-- 🛒 Icono Carrito al final (siempre visible, solo icono y badge) -->
+        <a routerLink="/carrito" class="nav-cart-link">
+          <ion-icon name="cart-outline"></ion-icon>
+          <ion-badge *ngIf="carritoCantidad > 0" color="danger">{{ carritoCantidad }}</ion-badge>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 🌐 CONTENIDO RENDERIZADO DE LAS RUTAS HIJAS -->
+  <router-outlet></router-outlet>
+
+  <!-- 🧱 FOOTER GLOBAL DE TODA LA APP -->
+  <div class="footer-global">
+    <div class="footer-container">
+      <div class="footer-row">
+
+        <!-- 🧱 Marca e introducción -->
+        <div class="footer-col">
+          <h4 class="footer-title">FERREMAS</h4>
+          <p class="footer-text">
+            Tu ferretería online con todo para construcción y herramientas profesionales.
+          </p>
+        </div>
+
+        <!-- ☎️ Información de contacto -->
+        <div class="footer-col">
+          <h4 class="footer-title">Contacto</h4>
+          <ul class="footer-links">
+            <li><span>+56 2 2345 6789</span></li>
+            <li><span>Lunes a Viernes: 9:00 - 18:00</span></li>
+          </ul>
+        </div>
+
+        <!-- 🌐 Redes sociales -->
+        <div class="footer-col">
+          <h4 class="footer-title">Síguenos</h4>
+          <div class="social-links">
+            <ion-icon name="logo-facebook"></ion-icon>
+            <ion-icon name="logo-instagram"></ion-icon>
+            <ion-icon name="logo-whatsapp"></ion-icon>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

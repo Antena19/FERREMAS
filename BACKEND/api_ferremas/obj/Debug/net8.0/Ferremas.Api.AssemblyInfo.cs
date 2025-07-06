@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ferremas.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b713bbfc16f8e96259272ae8fc763e9d83117087")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b943b8c370b841b3bc9b95192b9d6dc4f05ec92")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ferremas.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ferremas.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

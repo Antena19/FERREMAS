@@ -1,0 +1,7 @@
+{
+  "name": "ferremas-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

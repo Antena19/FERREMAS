@@ -15,5 +15,7 @@ namespace Ferremas.Api.Repositories
         Task<bool> DeletePedidoAsync(int id);
         Task<bool> PedidoExistsAsync(int id);
         Task<IEnumerable<Pedido>> GetPedidosPendientesAsync();
+        Task<IEnumerable<Pedido>> GetHistorialComprasClienteAsync(int clienteId);
+        Task<IEnumerable<Pedido>> GetHistorialComprasUsuarioAsync(int usuarioId);
     }
 }

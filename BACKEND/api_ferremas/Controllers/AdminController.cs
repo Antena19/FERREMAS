@@ -166,6 +166,47 @@ namespace Ferremas.Api.Controllers
             }
         }
 
+        // Endpoint para obtener perfil completo del usuario
+        [HttpGet("perfil/{id}")]
+        public async Task<IActionResult> GetPerfilUsuario(int id)
+        {
+            try
+            {
+                var perfil = await _adminService.GetPerfilUsuario(id);
+                if (perfil == null)
+                    return NotFound(ApiResponse<object>.Error($"No se encontró el perfil del usuario con ID {id}"));
+                return Ok(ApiResponse<object>.Ok(perfil, "Perfil obtenido exitosamente"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ApiResponse<object>.Error($"Error al obtener perfil: {ex.Message}"));
+            }
+        }
+
+        // Endpoint público para obtener perfil del usuario autenticado
+        [HttpGet("mi-perfil")]
+        public async Task<IActionResult> GetMiPerfil()
+        {
+            try
+            {
+                // Obtener el ID del usuario desde el token JWT
+                var userIdClaim = User.FindFirst("userId");
+                if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+                {
+                    return Unauthorized(ApiResponse<object>.Error("No se pudo identificar al usuario"));
+                }
+
+                var perfil = await _adminService.GetPerfilUsuario(userId);
+                if (perfil == null)
+                    return NotFound(ApiResponse<object>.Error($"No se encontró el perfil del usuario"));
+                return Ok(ApiResponse<object>.Ok(perfil, "Perfil obtenido exitosamente"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ApiResponse<object>.Error($"Error al obtener perfil: {ex.Message}"));
+            }
+        }
+
         // Endpoints para vendedores
         [HttpGet("vendedores")]
         public async Task<IActionResult> GetAllVendedores()

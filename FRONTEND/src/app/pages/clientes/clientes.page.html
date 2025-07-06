@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Clientes registrados</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ng-container *ngIf="clientes.length > 0; else sinClientes">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="6" size-lg="4" *ngFor="let cliente of clientes">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{ cliente.nombre }}</ion-card-title>
+              <ion-card-subtitle>{{ cliente.email }}</ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+              <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
+              <p><strong>Dirección:</strong> {{ cliente.direccion }}, {{ cliente.ciudad }}, {{ cliente.region }}</p>
+              <p><strong>Estado:</strong> {{ cliente.estado || 'activo' }}</p>
+              <!-- Opcional: Puedes agregar botones como editar/eliminar en el futuro -->
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+
+  <ng-template #sinClientes>
+    <div class="ion-text-center">
+      <ion-icon name="people-outline" size="large"></ion-icon>
+      <p>No hay clientes registrados</p>
+    </div>
+  </ng-template>
+</ion-content>

@@ -1,0 +1,22 @@
+<div class="detalle-container" *ngIf="!cargando && producto">
+
+  <!-- 🖼 Imagen del producto -->
+  <img class="detalle-imagen" [src]="'assets/img/' + producto.imagen_url" [alt]="producto.nombre" />
+
+  <!-- 🧾 Nombre -->
+  <h2>{{ producto.nombre }}</h2>
+
+  <!-- 📝 Descripción -->
+  <p class="descripcion">{{ producto.descripcion }}</p>
+
+  <!-- 💲 Precio -->
+  <p class="precio">${{ producto.precio | number:'1.0-0' }}</p>
+
+  <!-- 🛒 Botón -->
+  <button class="agregar-boton" (click)="agregarAlCarrito()">Agregar al carrito</button>
+</div>
+
+<!-- ⏳ Spinner mientras carga -->
+<div class="spinner-center" *ngIf="cargando">
+  <ion-spinner name="crescent"></ion-spinner>
+</div>

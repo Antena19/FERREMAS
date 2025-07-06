@@ -1,0 +1,114 @@
+<div class="perfil-bg">
+  <div class="perfil-wrapper">
+    <div class="perfil-card">
+      <!-- 🏷️ Título -->
+      <h1 class="perfil-title verde">MI PERFIL</h1>
+      <p class="subtitulo">Gestiona tu información personal y direcciones de envío</p>
+
+      <!-- 📋 Formulario de datos personales -->
+      <form (ngSubmit)="guardarDatosPersonales()">
+        <div class="form-row">
+          <div class="input-group full-width">
+            <label class="input-label">Nombre</label>
+            <ion-input class="registro-input input-white" [(ngModel)]="cliente.nombre" name="nombre" placeholder="Tu nombre" fill="solid"></ion-input>
+          </div>
+          <div class="input-group full-width">
+            <label class="input-label">Apellido</label>
+            <ion-input class="registro-input input-white" [(ngModel)]="cliente.apellido" name="apellido" placeholder="Tu apellido" fill="solid"></ion-input>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="input-group">
+            <label class="input-label">RUT</label>
+            <ion-input class="registro-input input-white" [(ngModel)]="cliente.rut" name="rut" placeholder="Ej: 12345678-9 (sin puntos)" fill="solid"></ion-input>
+          </div>
+          <div class="input-group"></div>
+        </div>
+        <div class="form-row">
+          <div class="input-group full-width">
+            <label class="input-label">Correo Electrónico</label>
+            <ion-input class="registro-input input-white correo-input" [(ngModel)]="cliente.correoElectronico" name="email" type="email" placeholder="Correo electrónico" fill="solid"></ion-input>
+          </div>
+          <div class="input-group full-width">
+            <label class="input-label">Teléfono</label>
+            <ion-input class="registro-input input-white" [(ngModel)]="cliente.telefono" name="telefono" type="tel" placeholder="+56 9 1234 5678" fill="solid"></ion-input>
+          </div>
+        </div>
+        <div class="login-btn-center" style="margin-bottom: 2.5rem; margin-top: 1.5rem;">
+          <button type="submit" class="btn-grande btn-login-nativo">
+            GUARDAR DATOS PERSONALES
+          </button>
+        </div>
+      </form>
+
+      <!-- 🏠 Sección: Direcciones de Envío -->
+      <h2 class="perfil-title" style="margin-top:2rem;">Dirección de Envío</h2>
+      <!-- Mostrar dirección existente -->
+      <div *ngIf="direcciones.length === 1 && !mostrarModalDireccion" class="direccion-unica">
+        <div class="direccion-info">
+          <div>
+            <strong>{{ direcciones[0].calle }} {{ direcciones[0].numero }}</strong>
+            <span *ngIf="direcciones[0].departamento">, {{ direcciones[0].departamento }}</span><br>
+            <span>{{ direcciones[0].comuna }}, {{ direcciones[0].region }}</span><br>
+            <span *ngIf="direcciones[0].codigoPostal">Código Postal: {{ direcciones[0].codigoPostal }}</span>
+          </div>
+          <div class="direccion-acciones">
+            <span class="icono-editar" (click)="editarDireccion(direcciones[0])">✏️</span>
+            <span class="icono-eliminar" (click)="eliminarDireccion(direcciones[0].id)">🗑️</span>
+          </div>
+        </div>
+      </div>
+      <!-- Formulario para agregar/editar dirección -->
+      <form *ngIf="direcciones.length === 0 || mostrarModalDireccion" (ngSubmit)="guardarDireccion()" class="form-direccion" style="margin-bottom:2rem;">
+        <div class="form-row">
+          <div class="input-group">
+            <label class="input-label">Calle *</label>
+            <ion-input class="registro-input input-white" [(ngModel)]="nuevaDireccion.calle" name="calle" placeholder="Ej: Av. Providencia" fill="solid" required></ion-input>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Número *</label>
+            <ion-input class="registro-input input-white" [(ngModel)]="nuevaDireccion.numero" name="numero" placeholder="Ej: 1234" fill="solid" required></ion-input>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="input-group">
+            <label class="input-label">Departamento</label>
+            <ion-input class="registro-input input-white" [(ngModel)]="nuevaDireccion.departamento" name="departamento" placeholder="Ej: Depto 45" fill="solid"></ion-input>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Código Postal</label>
+            <ion-input class="registro-input input-white" [(ngModel)]="nuevaDireccion.codigoPostal" name="codigoPostal" placeholder="Ej: 7500000" fill="solid"></ion-input>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="input-group">
+            <label class="input-label">Comuna *</label>
+            <ion-input class="registro-input input-white" [(ngModel)]="nuevaDireccion.comuna" name="comuna" placeholder="Ej: Providencia" fill="solid" required></ion-input>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Región *</label>
+            <ion-input class="registro-input input-white" [(ngModel)]="nuevaDireccion.region" name="region" placeholder="Ej: Metropolitana" fill="solid" required></ion-input>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btn-login-nativo" [disabled]="!nuevaDireccion.calle || !nuevaDireccion.numero || !nuevaDireccion.comuna || !nuevaDireccion.region">
+            {{ direccionEditando ? 'Actualizar' : 'Agregar' }} Dirección
+          </button>
+          <button *ngIf="direccionEditando" type="button" class="btn-secundario" (click)="cancelarEdicionDireccion()">Cancelar</button>
+        </div>
+      </form>
+      <div *ngIf="direcciones.length === 0 && !mostrarModalDireccion" class="sin-direcciones">
+        <h3>No tienes dirección guardada</h3>
+        <p>Agrega una dirección para facilitar tus compras futuras.</p>
+      </div>
+
+      <!-- 📨 Mensajes de confirmación -->
+      <div *ngIf="mensaje" class="mensaje" [class]="'mensaje-' + tipoMensaje">
+        <ion-icon [name]="tipoMensaje === 'exito' ? 'checkmark-circle-outline' : 'alert-circle-outline'"></ion-icon>
+        {{ mensaje }}
+      </div>
+    </div>
+  </div>
+</div>
+
+

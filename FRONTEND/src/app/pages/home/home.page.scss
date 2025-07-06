@@ -1,0 +1,133 @@
+.home-container {
+  padding: 1rem;                            // 📦 Espacio interno general
+  background-color: #f5f5f5;                // 🎨 Fondo gris claro para toda la vista
+}
+
+/* 🎯 Sección de categorías */
+.categorias-section {
+  margin-bottom: 2rem;                      // 📏 Separación con la siguiente sección
+
+  h2 {
+    font-size: 1.4rem;                      // 🔠 Tamaño del título
+    margin-bottom: 1rem;                    // 📏 Espaciado inferior
+  }
+
+  .categorias-grid {
+    display: flex;                          // 🔳 Flexbox para organizar horizontalmente
+    flex-wrap: wrap;                        // 🔄 Permite que bajen de línea
+    gap: 1rem;                              // 📏 Espacio entre tarjetas
+
+    .categoria-item {
+      background: white;                    // 🎨 Fondo blanco
+      padding: 1rem;                        // 📦 Espacio interno
+      border-radius: 0.5rem;                // 🟢 Bordes redondeados
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // 🌫️ Sombra ligera
+      flex: 1 1 120px;                      // 📐 Ancho flexible con mínimo de 120px
+      text-align: center;                   // 📍 Centrado del contenido
+      font-size: 0.9rem;                    // 🔤 Tamaño de texto
+
+      i {
+        font-size: 1.5rem;                  // 🔠 Tamaño del ícono
+        display: block;                     // 🔽 Se muestra en una línea aparte
+        margin-bottom: 0.3rem;              // 📏 Espaciado inferior
+        color: #4CAF50;                     // 🎨 Color verde institucional
+      }
+    }
+  }
+}
+
+/* 🛠️ Sección de productos */
+.productos-section {
+  h2 {
+    font-size: 1.4rem;                      // 🔠 Tamaño del título
+    margin-bottom: 1rem;                    // 📏 Espaciado inferior
+  }
+
+  .productos-grid {
+    display: grid;                          // 🔳 Usamos grid en vez de flex
+    gap: 1rem;                              // 📏 Espacio entre tarjetas
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+    // 🧩 Adaptativo: mínimo 160px por tarjeta, autoajuste
+  }
+
+  .producto-card {
+    background: white;                      // 🎨 Fondo blanco
+    border-radius: 0.5rem;                  // 🟢 Bordes redondeados
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); // 🌫️ Sombra suave
+    padding: 1rem;                          // 📦 Espacio interno
+    text-align: center;                     // 📍 Centrado del contenido
+
+    img {
+      width: 100%;                          // 📸 Imagen ocupa todo el ancho disponible
+      height: 120px;                        // 📐 Altura fija
+      object-fit: contain;                  // 🧩 Contenido sin deformar
+      margin-bottom: 0.5rem;                // 📏 Espaciado inferior
+    }
+
+    h5 {
+      font-size: 1rem;                      // 🔠 Tamaño del nombre del producto
+      margin: 0.5rem 0;                     // 📏 Margen arriba y abajo
+    }
+
+    p {
+      color: #4CAF50;                       // 🎨 Verde para el precio
+      font-weight: bold;                    // 🅱️ Negrita
+      margin-bottom: 0.5rem;                // 📏 Espaciado inferior
+    }
+
+    button {
+      background-color: #4CAF50;            // 🎨 Fondo verde
+      color: white;                         // ✨ Texto blanco
+      border: none;                         // 🚫 Sin borde
+      border-radius: 0.4rem;                // 🟢 Bordes redondeados
+      padding: 0.5rem 1rem;                 // 📦 Espaciado interno
+      cursor: pointer;                      // 🖱️ Cursor tipo botón
+    }
+  }
+
+  .ver-mas-container {
+    text-align: center;                     // 📍 Centrado horizontal
+    margin-top: 1rem;                       // 📏 Espacio superior
+
+    .ver-mas-boton {
+      color: #4CAF50;                       // 🎨 Color verde
+      font-weight: bold;                    // 🅱️ Negrita
+      text-decoration: none;                // 🚫 Sin subrayado
+    }
+  }
+}
+
+/* 🌀 Spinner centrado */
+.spinner-center {
+  display: flex;                            // 🔳 Flexbox para centrar
+  justify-content: center;                 // 🎯 Centrado horizontal
+  align-items: center;                     // 🎯 Centrado vertical
+  height: 100px;                           // 📏 Altura total del contenedor
+}
+
+/* 🔎 Buscador de productos */
+.buscador {
+  width: 100%;
+  max-width: 400px;
+  margin: 1rem auto;
+  display: block;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+
+  background-color: #2c2c2c;       // 🌑 Fondo oscuro
+  color: #4CAF50;                  // ✅ Texto verde
+  border: 1px solid #4CAF50;       // 🟩 Borde verde
+  border-radius: 0.5rem;
+  outline: none;
+
+  &::placeholder {
+    color: #9ccc9c;                // 🎨 Verde claro para el placeholder
+    opacity: 1;
+  }
+
+  &:focus {
+    border-color: #81C784;         // 🌿 Verde más claro al enfocar
+    background-color: #2c2c2c;     // 🔄 Mantiene fondo oscuro
+    color: #4CAF50;                // 🔒 Forzar texto verde también al escribir
+  }
+}

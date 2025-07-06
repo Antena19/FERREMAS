@@ -1,0 +1,30 @@
+<div class="productos-container">
+
+  <h2>Todos los productos</h2>
+
+  <!-- 🔎 Campo de búsqueda -->
+  <input
+    type="text"
+    [(ngModel)]="terminoBusqueda"
+    (input)="filtrarProductos()"
+    placeholder="Buscar productos..."
+    class="buscador"
+  />
+
+  <!-- 🌀 Cargando o vacío -->
+  <div *ngIf="productosFiltrados.length === 0" class="mensaje-vacio">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>No se encontraron productos.</p>
+  </div>
+
+  <!-- 🧱 Grilla de productos -->
+  <div class="productos-grid" *ngIf="productosFiltrados.length > 0">
+    <div *ngFor="let producto of productosFiltrados" class="producto-card">
+      <img [src]="'assets/img/' + producto.imagen_url" [alt]="producto.nombre">
+      <h5>{{ producto.nombre }}</h5>
+      <p class="precio">${{ producto.precio | number:'1.0-0' }}</p>
+      <button (click)="verDetalle(producto.id)">Ver detalle</button>
+    </div>
+  </div>
+
+</div>

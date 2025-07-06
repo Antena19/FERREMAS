@@ -1,0 +1,23 @@
+ion-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+}
+
+ion-card-title {
+  font-size: 1.2rem;
+}
+
+ion-card-subtitle {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+ion-icon {
+  color: #ccc;
+  margin-bottom: 0.5rem;
+}

@@ -1,0 +1,28 @@
+<ion-content class="login-bg">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <h1 class="login-title">RECUPERAR CONTRASEÑA</h1>
+
+      <div *ngIf="mensaje" class="mensaje-exito">{{ mensaje }}</div>
+      <div *ngIf="error" class="mensaje-error">{{ error }}</div>
+
+      <div class="input-group">
+        <label for="correo" class="input-label">Correo electrónico</label>
+        <ion-input
+          id="correo"
+          type="email"
+          placeholder="ejemplo@correo.com"
+          [(ngModel)]="correo"
+          class="login-input input-white"
+          fill="solid">
+        </ion-input>
+      </div>
+
+      <div class="login-btn-center">
+        <button type="button" (click)="recuperar()" class="btn-grande btn-login-nativo" [disabled]="isDisabled()">
+          ENVIAR ENLACE
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-content>

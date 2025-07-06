@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\FERREMAS\\BACKEND\\api_ferremas\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|c:\\ferremas\\backend\\api_ferremas\\controllers\\productoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|solutionrelative:controllers\\productoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|c:\\ferremas\\backend\\api_ferremas\\controllers\\pedidoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|solutionrelative:controllers\\pedidoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|c:\\ferremas\\backend\\api_ferremas\\services\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|solutionrelative:services\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|c:\\ferremas\\backend\\api_ferremas\\controllers\\perfilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|solutionrelative:controllers\\perfilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|c:\\ferremas\\backend\\api_ferremas\\controllers\\productoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|solutionrelative:controllers\\productoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|c:\\ferremas\\backend\\api_ferremas\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -97,10 +101,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|c:\\ferremas\\backend\\api_ferremas\\dtos\\productodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|solutionrelative:dtos\\productodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|c:\\ferremas\\backend\\api_ferremas\\controllers\\pedidoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|solutionrelative:controllers\\pedidoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|c:\\ferremas\\backend\\api_ferremas\\services\\iproductoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -198,7 +198,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "PagosService.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\PagosService.cs",
               "RelativeDocumentMoniker": "Services\\PagosService.cs",
@@ -235,31 +235,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "PedidoRepository.cs",
-              "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Repositories\\PedidoRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\PedidoRepository.cs",
-              "ToolTip": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Repositories\\PedidoRepository.cs",
-              "RelativeToolTip": "Repositories\\PedidoRepository.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAvwA4AAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-26T17:30:39.081Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "IVendedorService.cs",
-              "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\IVendedorService.cs",
-              "RelativeDocumentMoniker": "Services\\IVendedorService.cs",
-              "ToolTip": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\IVendedorService.cs",
-              "RelativeToolTip": "Services\\IVendedorService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T17:35:46.482Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Producto.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Modelos\\Producto.cs",
               "RelativeDocumentMoniker": "Modelos\\Producto.cs",
@@ -271,7 +247,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "ClienteService.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\ClienteService.cs",
               "RelativeDocumentMoniker": "Services\\ClienteService.cs",
@@ -283,7 +259,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "VendedorController.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\VendedorController.cs",
               "RelativeDocumentMoniker": "Controllers\\VendedorController.cs",
@@ -295,7 +271,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "BodegueroService.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\BodegueroService.cs",
               "RelativeDocumentMoniker": "Services\\BodegueroService.cs",
@@ -307,7 +283,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
@@ -319,7 +295,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "AdminService.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\AdminService.cs",
               "RelativeDocumentMoniker": "Services\\AdminService.cs",
@@ -332,7 +308,57 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "PedidosController.cs",
+              "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\PedidosController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PedidosController.cs",
+              "ToolTip": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\PedidosController.cs",
+              "RelativeToolTip": "Controllers\\PedidosController.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAawEsAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-26T17:31:03.842Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ProductosController.cs",
+              "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\ProductosController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ProductosController.cs",
+              "ToolTip": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\ProductosController.cs",
+              "RelativeToolTip": "Controllers\\ProductosController.cs",
+              "ViewState": "AgIAAKMAAAAAAAAAAAAiwLUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-28T01:02:26.165Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "IVendedorService.cs",
+              "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\IVendedorService.cs",
+              "RelativeDocumentMoniker": "Services\\IVendedorService.cs",
+              "ToolTip": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\IVendedorService.cs",
+              "RelativeToolTip": "Services\\IVendedorService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T17:35:46.482Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "PedidoRepository.cs",
+              "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Repositories\\PedidoRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\PedidoRepository.cs",
+              "ToolTip": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Repositories\\PedidoRepository.cs",
+              "RelativeToolTip": "Repositories\\PedidoRepository.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAvwA4AAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-26T17:30:39.081Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "PerfilController.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\PerfilController.cs",
               "RelativeDocumentMoniker": "Controllers\\PerfilController.cs",
@@ -344,19 +370,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ProductosController.cs",
-              "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\ProductosController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ProductosController.cs",
-              "ToolTip": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\ProductosController.cs",
-              "RelativeToolTip": "Controllers\\ProductosController.cs",
-              "ViewState": "AgIAAKMAAAAAAAAAAAAiwLUAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-28T01:02:26.165Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -368,7 +382,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "BodegueroController.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\BodegueroController.cs",
               "RelativeDocumentMoniker": "Controllers\\BodegueroController.cs",
@@ -380,7 +394,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "VendedorService.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\VendedorService.cs",
               "RelativeDocumentMoniker": "Services\\VendedorService.cs",
@@ -392,7 +406,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "Services\\AuthService.cs",
@@ -404,7 +418,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "ContadorService.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\ContadorService.cs",
               "RelativeDocumentMoniker": "Services\\ContadorService.cs",
@@ -416,7 +430,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "EntregaBodega.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Modelos\\EntregaBodega.cs",
               "RelativeDocumentMoniker": "Modelos\\EntregaBodega.cs",
@@ -428,7 +442,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "IProductoRepository.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Repositories\\IProductoRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\IProductoRepository.cs",
@@ -440,7 +454,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "InventarioService.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\InventarioService.cs",
               "RelativeDocumentMoniker": "Services\\InventarioService.cs",
@@ -452,7 +466,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "ProductoRepository.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Repositories\\ProductoRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\ProductoRepository.cs",
@@ -464,19 +478,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "PedidosController.cs",
-              "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\PedidosController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PedidosController.cs",
-              "ToolTip": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\PedidosController.cs",
-              "RelativeToolTip": "Controllers\\PedidosController.cs",
-              "ViewState": "AgIAAEAAAAAAAAAAAAAawEsAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-26T17:31:03.842Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "IPedidosService.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\IPedidosService.cs",
               "RelativeDocumentMoniker": "Services\\IPedidosService.cs",
@@ -488,7 +490,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "IAuthService.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\IAuthService.cs",
               "RelativeDocumentMoniker": "Services\\IAuthService.cs",
@@ -500,7 +502,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "PedidosService.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\PedidosService.cs",
               "RelativeDocumentMoniker": "Services\\PedidosService.cs",
@@ -512,7 +514,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "ProductoDTO.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\DTOs\\ProductoDTO.cs",
               "RelativeDocumentMoniker": "DTOs\\ProductoDTO.cs",

@@ -32,7 +32,7 @@ namespace Ferremas.Api.Controllers
         }
     }
 
-    [Authorize(Roles = "Administrador")]
+    [Authorize(Roles = "Administrador,administrador")]
     [ApiController]
     [Route("api/[controller]")]
     public class AdminController : ControllerBase
@@ -399,6 +399,21 @@ namespace Ferremas.Api.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ApiResponse<bool>.Error($"Error al desactivar usuario: {ex.Message}"));
+            }
+        }
+
+        // Endpoint para obtener todas las sucursales
+        [HttpGet("sucursales")]
+        public async Task<IActionResult> GetAllSucursales()
+        {
+            try
+            {
+                var sucursales = await _adminService.GetAllSucursales();
+                return Ok(ApiResponse<IEnumerable<Sucursal>>.Ok(sucursales, "Lista de sucursales obtenida exitosamente"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ApiResponse<IEnumerable<Sucursal>>.Error($"Error al obtener sucursales: {ex.Message}"));
             }
         }
     }

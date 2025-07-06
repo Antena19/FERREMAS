@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\FERREMAS\\BACKEND\\api_ferremas\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|c:\\ferremas\\backend\\api_ferremas\\controllers\\productoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|solutionrelative:controllers\\productoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|c:\\ferremas\\backend\\api_ferremas\\controllers\\pedidoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|solutionrelative:controllers\\pedidoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -17,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|c:\\ferremas\\backend\\api_ferremas\\controllers\\perfilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|solutionrelative:controllers\\perfilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|c:\\ferremas\\backend\\api_ferremas\\controllers\\productoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|solutionrelative:controllers\\productoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{42DD5A17-5667-4E3A-B726-528526AF78A1}|Ferremas.Api.csproj|c:\\ferremas\\backend\\api_ferremas\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -197,19 +197,6 @@
           "SelectedChildIndex": 14,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "PagosService.cs",
-              "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\PagosService.cs",
-              "RelativeDocumentMoniker": "Services\\PagosService.cs",
-              "ToolTip": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\PagosService.cs",
-              "RelativeToolTip": "Services\\PagosService.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAnwFwAAABEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-26T18:45:04.701Z",
-              "IsPinned": true
-            },
-            {
               "$type": "Bookmark",
               "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
             },
@@ -235,15 +222,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "IVendedorService.cs",
-              "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\IVendedorService.cs",
-              "RelativeDocumentMoniker": "Services\\IVendedorService.cs",
-              "ToolTip": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\IVendedorService.cs",
-              "RelativeToolTip": "Services\\IVendedorService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAsAAAAAAAAAA==",
+              "DocumentIndex": 20,
+              "Title": "PagosService.cs",
+              "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\PagosService.cs",
+              "RelativeDocumentMoniker": "Services\\PagosService.cs",
+              "ToolTip": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\PagosService.cs",
+              "RelativeToolTip": "Services\\PagosService.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAnwFwAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T17:35:46.482Z"
+              "WhenOpened": "2025-04-26T18:45:04.701Z",
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -295,7 +283,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
@@ -307,7 +295,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "AdminService.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\AdminService.cs",
               "RelativeDocumentMoniker": "Services\\AdminService.cs",
@@ -320,7 +308,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "PedidosController.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\PedidosController.cs",
               "RelativeDocumentMoniker": "Controllers\\PedidosController.cs",
@@ -330,6 +318,31 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-26T17:31:03.842Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ProductosController.cs",
+              "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\ProductosController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ProductosController.cs",
+              "ToolTip": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\ProductosController.cs",
+              "RelativeToolTip": "Controllers\\ProductosController.cs",
+              "ViewState": "AgIAAKMAAAAAAAAAAAAiwLgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-28T01:02:26.165Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "IVendedorService.cs",
+              "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\IVendedorService.cs",
+              "RelativeDocumentMoniker": "Services\\IVendedorService.cs",
+              "ToolTip": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Services\\IVendedorService.cs",
+              "RelativeToolTip": "Services\\IVendedorService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T17:35:46.482Z"
             },
             {
               "$type": "Document",
@@ -345,7 +358,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "PerfilController.cs",
               "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\PerfilController.cs",
               "RelativeDocumentMoniker": "Controllers\\PerfilController.cs",
@@ -354,18 +367,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-06T01:25:29.091Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ProductosController.cs",
-              "DocumentMoniker": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\ProductosController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ProductosController.cs",
-              "ToolTip": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\ProductosController.cs",
-              "RelativeToolTip": "Controllers\\ProductosController.cs",
-              "ViewState": "AgIAAKMAAAAAAAAAAAAiwLUAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-28T01:02:26.165Z"
             },
             {
               "$type": "Document",

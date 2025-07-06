@@ -249,6 +249,16 @@
   },
   {
     "ContainingType": "Ferremas.Api.Controllers.AdminController",
+    "Method": "GetAllSucursales",
+    "RelativePath": "api/Admin/sucursales",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ferremas.Api.Controllers.AdminController",
     "Method": "GetAllUsuarios",
     "RelativePath": "api/Admin/usuarios",
     "HttpMethod": "GET",

@@ -26,7 +26,21 @@ namespace Ferremas.Api.Repositories
                 await connection.OpenAsync();
 
                 var sql = @"
-                    SELECT p.*, c.nombre as CategoriaNombre, m.nombre as MarcaNombre
+                    SELECT 
+                        p.id,
+                        p.codigo,
+                        p.nombre,
+                        p.descripcion,
+                        p.precio,
+                        p.categoria_id AS CategoriaId,
+                        p.marca_id AS MarcaId,
+                        p.imagen_url AS ImagenUrl,
+                        p.especificaciones,
+                        p.fecha_creacion AS FechaCreacion,
+                        p.fecha_modificacion AS FechaModificacion,
+                        p.activo AS Activo,
+                        c.nombre as CategoriaNombre,
+                        m.nombre as MarcaNombre
                     FROM productos p
                     LEFT JOIN categorias c ON p.categoria_id = c.id
                     LEFT JOIN marcas m ON p.marca_id = m.id
@@ -45,7 +59,21 @@ namespace Ferremas.Api.Repositories
                 await connection.OpenAsync();
 
                 var sql = @"
-                    SELECT p.*, c.nombre as CategoriaNombre, m.nombre as MarcaNombre
+                    SELECT 
+                        p.id,
+                        p.codigo,
+                        p.nombre,
+                        p.descripcion,
+                        p.precio,
+                        p.categoria_id AS CategoriaId,
+                        p.marca_id AS MarcaId,
+                        p.imagen_url AS ImagenUrl,
+                        p.especificaciones,
+                        p.fecha_creacion AS FechaCreacion,
+                        p.fecha_modificacion AS FechaModificacion,
+                        p.activo AS Activo,
+                        c.nombre as CategoriaNombre,
+                        m.nombre as MarcaNombre
                     FROM productos p
                     LEFT JOIN categorias c ON p.categoria_id = c.id
                     LEFT JOIN marcas m ON p.marca_id = m.id

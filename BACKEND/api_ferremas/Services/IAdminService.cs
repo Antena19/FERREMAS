@@ -11,6 +11,7 @@ namespace Ferremas.Api.Services
         Task<IEnumerable<Vendedor>> GetAllVendedores();
         Task<IEnumerable<Bodeguero>> GetAllBodegueros();
         Task<IEnumerable<Contador>> GetAllContadores();
+        Task<IEnumerable<Sucursal>> GetAllSucursales();
 
         // Obtener usuario específico
         Task<Usuario> GetUsuarioById(int id);

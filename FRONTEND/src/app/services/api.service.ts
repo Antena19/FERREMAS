@@ -202,4 +202,29 @@ export class ApiService {
     return this.http.post(`${this.baseUrl}/Auth/recuperar-contrasena`, data);
   }
 
+  /** ✅ Obtener todas las categorías */
+  getCategorias(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/categorias`);
+  }
+
+  /** ✅ Obtener todas las sucursales */
+  getSucursales(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/admin/sucursales`);
+  }
+
+  /** Obtener inventario de un producto en una sucursal */
+  getInventarioPorProductoYSucursal(productoId: number, sucursalId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/inventario/producto/${productoId}/sucursal/${sucursalId}`);
+  }
+
+  /** ✅ Obtener todas las marcas */
+  getMarcas(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/marcas`);
+  }
+
+  /** ✅ Actualizar producto */
+  actualizarProducto(id: number, producto: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/productos/${id}`, producto);
+  }
+
 }

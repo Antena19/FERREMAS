@@ -71,7 +71,7 @@ namespace Ferremas.Api.Controllers
 
         // POST: api/Productos
         [HttpPost]
-        [Authorize(Roles = "administrador")]
+        [Authorize(Roles = "Administrador,administrador")]
         [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CrearProducto([FromBody] ProductoCreateDTO productoDTO)
@@ -98,7 +98,7 @@ namespace Ferremas.Api.Controllers
 
         // PUT: api/Productos/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "administrador")]
+        [Authorize(Roles = "Administrador,administrador")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -121,7 +121,7 @@ namespace Ferremas.Api.Controllers
 
         // DELETE: api/Productos/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "administrador")]
+        [Authorize(Roles = "Administrador,administrador")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> EliminarProducto(int id)
@@ -153,7 +153,7 @@ namespace Ferremas.Api.Controllers
         }
         // PUT: api/Productos/1/inventario
         [HttpPut("{id}/inventario")]
-        [Authorize(Roles = "administrador,vendedor")]
+        [Authorize(Roles = "Administrador,administrador,vendedor")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

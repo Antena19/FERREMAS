@@ -1286,5 +1286,31 @@ namespace Ferremas.Api.Services
                 }
             }
         }
+
+        public async Task<IEnumerable<Sucursal>> GetAllSucursales()
+        {
+            var sucursales = new List<Sucursal>();
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using var command = new MySqlCommand("SELECT * FROM sucursales WHERE activo = 1", connection);
+                using var reader = await command.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    sucursales.Add(new Sucursal
+                    {
+                        Id = reader.GetInt32("id"),
+                        Nombre = reader.GetString("nombre"),
+                        Direccion = reader.GetString("direccion"),
+                        Comuna = reader.GetString("comuna"),
+                        Region = reader.GetString("region"),
+                        Telefono = reader.IsDBNull(reader.GetOrdinal("telefono")) ? null : reader.GetString("telefono"),
+                        EsPrincipal = reader.GetBoolean("es_principal"),
+                        Activo = reader.GetBoolean("activo")
+                    });
+                }
+            }
+            return sucursales;
+        }
     }
 } 

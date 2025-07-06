@@ -2,24 +2,24 @@
 
   <!-- 🔷 CATEGORÍAS -->
   <section class="categorias-section">
-    <h2>Categorías</h2>
-
-    <!-- 🧱 Grilla de categorías visibles en el Home -->
-    <div class="categorias-grid">
-      <!-- 🔁 Recorremos el array de categorías -->
-      <a *ngFor="let categoria of categorias"
-         [routerLink]="['/productos']"
-         [queryParams]="{ categoria: categoria.nombre }"
-         class="categoria-item">
-        <i [class]="categoria.icono"></i>     <!-- ✅ Ícono asociado a la categoría -->
-        <span>{{ categoria.nombre }}</span>  <!-- ✅ Nombre visible de la categoría -->
-      </a>
+    <div class="categorias-cloud">
+      <!-- Botón para ver todos los productos -->
+      <span (click)="verTodos()" class="categoria-palabra ver-todos" style="cursor:pointer;">
+        Ver todos
+      </span>
+      <!-- Categorías dinámicas -->
+      <span *ngFor="let categoria of categorias"
+            (click)="verCategoria(categoria)"
+            class="categoria-palabra"
+            style="cursor:pointer;">
+        {{ categoria.nombre }}
+      </span>
     </div>
   </section>
 
   <!-- 🔶 PRODUCTOS DESTACADOS -->
   <section class="productos-section">
-    <h2>Productos destacados</h2>
+    <h2>Productos Destacados</h2>
 
     <!-- ⏳ Spinner mientras se cargan los productos -->
     <div *ngIf="cargando" class="spinner-center">
@@ -28,17 +28,24 @@
 
     <!-- 🧱 Grilla de productos destacados (máx. 8) -->
     <div *ngIf="!cargando && productos.length > 0" class="productos-grid">
-      <!-- 🔁 Recorremos el array de productos -->
-      <div *ngFor="let producto of productos" class="producto-card">
-        <!-- 🖼 Imagen del producto -->
-        <img [src]="'assets/img/' + producto.imagen_url" [alt]="producto.nombre">
-        <!-- 🔤 Nombre del producto -->
+      <button class="carrusel-flecha izq" (click)="anteriorProducto()" aria-label="Anterior">
+        <svg viewBox="0 0 24 24"><polyline points="15 5 8 12 15 19"/></svg>
+      </button>
+
+      <div *ngFor="let producto of productos; let i = index" class="producto-card"
+           [ngStyle]="{'transform': getCarruselTransform(i), 'z-index': getCarruselZIndex(i), 'opacity': getCarruselOpacity(i)}">
+        <img [src]="getImagePath(producto)" [alt]="producto.nombre">
         <h5>{{ producto.nombre }}</h5>
-        <!-- 💲 Precio formateado -->
         <p>${{ producto.precio | number:'1.0-0' }}</p>
-        <!-- 🛒 Botón de acción -->
-        <button (click)="agregarAlCarrito(producto)">Agregar al carrito</button>
+        <ng-container *ngIf="i === productoActual">
+          <button (click)="agregarAlCarrito(producto)">Agregar al carrito</button>
+          <button class="detalle-btn" (click)="verDetalle(producto)">Ver detalle</button>
+        </ng-container>
       </div>
+
+      <button class="carrusel-flecha der" (click)="siguienteProducto()" aria-label="Siguiente">
+        <svg viewBox="0 0 24 24"><polyline points="9 5 16 12 9 19"/></svg>
+      </button>
     </div>
 
     <!-- 📎 Botón para ver más productos -->

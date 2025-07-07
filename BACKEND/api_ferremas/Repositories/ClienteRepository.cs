@@ -24,9 +24,12 @@ namespace Ferremas.Api.Repositories
                 await connection.OpenAsync();
 
                 var sql = @"
-                    SELECT * FROM clientes
-                    WHERE estado = 'activo'
-                    ORDER BY nombre, apellido";
+                    SELECT c.*, 
+                           COALESCE(c.correo_electronico, u.email) AS CorreoElectronico
+                    FROM clientes c
+                    LEFT JOIN usuarios u ON c.rut = u.rut
+                    WHERE c.estado = 'activo'
+                    ORDER BY c.nombre, c.apellido";
 
                 var clientes = await connection.QueryAsync<Cliente>(sql);
 

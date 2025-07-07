@@ -26,8 +26,9 @@ export class ApiService {
   // ============================
 
   /** ✅ Obtener todos los productos */
-  getProductos(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/productos`);
+  getProductos(todos: boolean = false): Observable<any[]> {
+    const url = todos ? `${this.baseUrl}/productos?todos=true` : `${this.baseUrl}/productos`;
+    return this.http.get<any[]>(url);
   }
 
   /** ✅ Obtener un producto por ID */
@@ -225,6 +226,23 @@ export class ApiService {
   /** ✅ Actualizar producto */
   actualizarProducto(id: number, producto: any): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/productos/${id}`, producto);
+  }
+
+  /** Subir imagen de producto */
+  subirImagenProducto(idProducto: number, formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/productos/${idProducto}/subir-imagen`, formData);
+  }
+
+  /** Carga masiva de productos desde archivo CSV */
+  cargarProductosCsv(archivo: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('archivoCsv', archivo);
+    return this.http.post<any>(`${this.baseUrl}/productos/carga-masiva`, formData);
+  }
+
+  /** Crear producto */
+  crearProducto(producto: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/productos`, producto);
   }
 
 }

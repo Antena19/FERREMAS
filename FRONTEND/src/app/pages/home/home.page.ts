@@ -98,7 +98,10 @@ export class HomePage implements OnInit, OnDestroy {
 
   // 🖼 Obtener la ruta correcta de la imagen
   getImagePath(producto: any): string {
-    return 'assets/img/' + producto.imagenUrl;
+    if (producto.imagenUrl && producto.imagenUrl.includes('-') && producto.imagenUrl.match(/\.(jpg|jpeg|png|webp|gif)$/i)) {
+      return 'https://localhost:7091/img/' + producto.imagenUrl;
+    }
+    return 'assets/img/' + (producto.imagenUrl || producto.imagen_url || 'default.png');
   }
 
   // Ir al detalle del producto

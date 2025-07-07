@@ -44,7 +44,8 @@ namespace Ferremas.Api.Services
                             Id = reader.GetInt32("producto_id"),
                             Nombre = reader.GetString("nombre"),
                             Descripcion = reader.GetString("descripcion"),
-                            Precio = reader.GetDecimal("precio")
+                            Precio = reader.GetDecimal("precio"),
+                            ImagenUrl = reader.IsDBNull(reader.GetOrdinal("imagen_url")) ? null : reader.GetString("imagen_url")
                         }
                     });
                 }
@@ -83,7 +84,8 @@ namespace Ferremas.Api.Services
                             Id = reader.GetInt32("producto_id"),
                             Nombre = reader.GetString("nombre"),
                             Descripcion = reader.GetString("descripcion"),
-                            Precio = reader.GetDecimal("precio")
+                            Precio = reader.GetDecimal("precio"),
+                            ImagenUrl = reader.IsDBNull(reader.GetOrdinal("imagen_url")) ? null : reader.GetString("imagen_url")
                         }
                     };
                 }
@@ -191,7 +193,8 @@ namespace Ferremas.Api.Services
                             Id = reader.GetInt32("producto_id"),
                             Nombre = reader.GetString("nombre"),
                             Descripcion = reader.GetString("descripcion"),
-                            Precio = reader.GetDecimal("precio")
+                            Precio = reader.GetDecimal("precio"),
+                            ImagenUrl = reader.IsDBNull(reader.GetOrdinal("imagen_url")) ? null : reader.GetString("imagen_url")
                         }
                     });
                 }
@@ -231,7 +234,8 @@ namespace Ferremas.Api.Services
                             Id = reader.GetInt32("producto_id"),
                             Nombre = reader.GetString("nombre"),
                             Descripcion = reader.GetString("descripcion"),
-                            Precio = reader.GetDecimal("precio")
+                            Precio = reader.GetDecimal("precio"),
+                            ImagenUrl = reader.IsDBNull(reader.GetOrdinal("imagen_url")) ? null : reader.GetString("imagen_url")
                         }
                     });
                 }

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';                // ✅ Para usar 
 import { IonicModule } from '@ionic/angular';                  // ✅ Componentes de Ionic
 import { RouterModule } from '@angular/router';                // ✅ Para usar routerLink
 import { FormsModule } from '@angular/forms';                  // ✅ Para ngModel en el buscador
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-productos',
@@ -27,11 +28,15 @@ export class ProductosPage implements OnInit {
   productosCargados = false;
   categoriasCargadas = false;
   marcasCargadas = false;
+  esAdmin: boolean = false;
+  mensajeCarga: string = '';
+  erroresCarga: string[] = [];
 
   constructor(
     private api: ApiService,              // 📡 Servicio de productos
     private router: Router,               // 🔁 Para ir al detalle
-    private route: ActivatedRoute         // 📥 Para leer parámetros como ?categoria=
+    private route: ActivatedRoute,         // 📥 Para leer parámetros como ?categoria=
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +51,9 @@ export class ProductosPage implements OnInit {
       this.marcasCargadas = true;
       this.intentarFiltrar();
     });
-    this.api.getProductos().subscribe({
+    const usuario = this.auth.obtenerUsuario();
+    this.esAdmin = usuario && usuario.rol && usuario.rol.toLowerCase().includes('admin');
+    this.api.getProductos(this.esAdmin).subscribe({
       next: (data) => {
         this.productos = data;
         this.productosCargados = true;
@@ -94,6 +101,9 @@ export class ProductosPage implements OnInit {
   }
 
   getImagePath(producto: any): string {
+    if (producto.imagenUrl && producto.imagenUrl.includes('-') && producto.imagenUrl.match(/\.(jpg|jpeg|png|webp|gif)$/i)) {
+      return 'https://localhost:7091/img/' + producto.imagenUrl;
+    }
     return 'assets/img/' + (producto.imagenUrl || producto.imagen_url || 'default.png');
   }
 
@@ -109,5 +119,48 @@ export class ProductosPage implements OnInit {
 
   agregarAlCarrito(producto: any): void {
     console.log('Agregar al carrito:', producto);
+  }
+
+  cargarCsv(event: any) {
+    const archivo = event.target.files[0];
+    if (!archivo) return;
+    this.mensajeCarga = '';
+    this.erroresCarga = [];
+    this.api.cargarProductosCsv(archivo).subscribe({
+      next: (res) => {
+        if (res.productosCreados && res.productosCreados.length > 0) {
+          this.mensajeCarga = `Productos creados: ${res.productosCreados.join(', ')}`;
+        }
+        if (res.errores && res.errores.length > 0) {
+          this.erroresCarga = res.errores;
+        }
+        // Refrescar productos
+        this.api.getProductos(this.esAdmin).subscribe(data => {
+          this.productos = data;
+          this.intentarFiltrar();
+        });
+      },
+      error: (err) => {
+        this.mensajeCarga = 'Error al cargar el archivo.';
+      }
+    });
+  }
+
+  irACrearProducto() {
+    this.router.navigate(['/detalle-producto', 'nuevo']);
+  }
+
+  eliminarProducto(producto: any) {
+    if (!confirm('¿Estás seguro de que deseas eliminar este producto? Se marcará como inactivo y no podrá ser comprado.')) return;
+    const data = { ...producto, activo: false };
+    this.api.actualizarProducto(producto.id, data).subscribe({
+      next: () => {
+        producto.activo = false;
+        this.filtrarProductos();
+      },
+      error: () => {
+        alert('Error al eliminar el producto');
+      }
+    });
   }
 }

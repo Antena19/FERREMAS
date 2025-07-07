@@ -29,6 +29,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   carritoCantidad: number = 0;     // 🛒 Número total de productos en el carrito
   usuarioNombre: string = '';      // 👤 Nombre del usuario logueado (si aplica)
+  esAdmin: boolean = false;        // 🛡️ Indica si el usuario es administrador
   private authSubscription?: Subscription; // 🔄 Suscripción para cambios de autenticación
 
   constructor(
@@ -58,6 +59,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     if (usuario && usuario.id) {
       // ✅ Usuario logueado
       this.usuarioNombre = usuario.nombre || 'Usuario';
+      this.esAdmin = usuario.rol && usuario.rol.toLowerCase().includes('admin');
       
       // 📊 Consultar carrito del usuario
       this.api.getCarritoPorUsuario(usuario.id).subscribe({
@@ -70,6 +72,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     } else {
       // 👤 Usuario NO logueado
       this.usuarioNombre = '';
+      this.esAdmin = false;
       this.carritoCantidad = 0;
     }
   }

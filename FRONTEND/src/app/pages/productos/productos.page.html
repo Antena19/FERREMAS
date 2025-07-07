@@ -33,13 +33,25 @@
 
   <!-- Contenido principal: grilla de productos -->
   <div class="productos-main">
-    <h2>Todos los productos</h2>
+    <h2 class="titulo-productos">Todos los productos</h2>
+    <div *ngIf="esAdmin" class="carga-masiva-box">
+      <div class="fila-botones-admin">
+        <button class="btn-crear" (click)="irACrearProducto()">Crear producto</button>
+        <label for="csvInput" class="btn-csv">Cargar productos por CSV</label>
+        <input id="csvInput" type="file" accept=".csv" (change)="cargarCsv($event)" style="display:none">
+      </div>
+      <div *ngIf="mensajeCarga" class="mensaje-exito">{{ mensajeCarga }}</div>
+      <div *ngIf="erroresCarga.length > 0" class="mensaje-error">
+        <div *ngFor="let err of erroresCarga">{{ err }}</div>
+      </div>
+      <small>Formato: codigo,nombre,descripcion,precio,categoriaId,marcaId[,imagenUrl,especificaciones]</small>
+    </div>
     <div *ngIf="productosFiltrados.length === 0" class="mensaje-vacio">
       <ion-spinner name="crescent"></ion-spinner>
       <p>No se encontraron productos.</p>
     </div>
     <div class="productos-grid" *ngIf="productosFiltrados.length > 0">
-      <div *ngFor="let producto of productosFiltrados" class="producto-card">
+      <div *ngFor="let producto of productosFiltrados" class="producto-card" [class.inactivo]="!producto.activo">
         <img [src]="getImagePath(producto)" [alt]="producto.nombre">
         <h5>{{ producto.nombre }}</h5>
         <p class="precio">${{ producto.precio | number:'1.0-0' }}</p>
@@ -47,8 +59,10 @@
           <span><b>Marca:</b> {{ getMarcaNombre(producto.marcaId) }}</span><br>
           <span><b>Categoría:</b> {{ getCategoriaNombre(producto.categoriaId) }}</span>
         </div>
-        <button class="btn-carrito" (click)="agregarAlCarrito(producto)">Agregar al carrito</button>
+        <button *ngIf="!esAdmin && producto.activo" class="btn-carrito" (click)="agregarAlCarrito(producto)">Agregar al carrito</button>
         <button class="btn-detalle" (click)="verDetalle(producto.id)">Ver detalle</button>
+        <button *ngIf="esAdmin" class="btn-eliminar" (click)="eliminarProducto(producto)">Eliminar</button>
+        <span *ngIf="esAdmin && !producto.activo" class="badge-inactivo">INACTIVO</span>
       </div>
     </div>
   </div>

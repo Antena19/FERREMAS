@@ -1,12 +1,846 @@
 {
   "Version": 1,
-  "Hash": "kqlHnQ5mi/aYFxVaaQKvTFmvwE8RL4leqYP+PZgEsfk=",
+  "Hash": "go3hnhkot+afgy3vM4AyGR4QUHSFhxEInrGMFM5izQ0=",
   "Source": "Ferremas.Api",
   "BasePath": "_content/Ferremas.Api",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "Ferremas.Api\\wwwroot",
+      "Source": "Ferremas.Api",
+      "ContentRoot": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\",
+      "BasePath": "_content/Ferremas.Api",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\02d342e2-c579-402f-8760-d5ebd3a6f9c6_Cerámica_Blanca_30x30cm.webp",
+      "SourceId": "Ferremas.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\",
+      "BasePath": "_content/Ferremas.Api",
+      "RelativePath": "img/02d342e2-c579-402f-8760-d5ebd3a6f9c6_Cerámica_Blanca_30x30cm#[.{fingerprint}]?.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6s0carnian",
+      "Integrity": "CusWF8N+5xa4LA2mVoAgK+a9OGfLD4tBmDTc/+kBkw0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\02d342e2-c579-402f-8760-d5ebd3a6f9c6_Cerámica_Blanca_30x30cm.webp"
+    },
+    {
+      "Identity": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\7ceb605d-9331-4a57-9027-97c0486eec7d_prueba.png",
+      "SourceId": "Ferremas.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\",
+      "BasePath": "_content/Ferremas.Api",
+      "RelativePath": "img/7ceb605d-9331-4a57-9027-97c0486eec7d_prueba#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hvjyaqmpe2",
+      "Integrity": "HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\7ceb605d-9331-4a57-9027-97c0486eec7d_prueba.png"
+    },
+    {
+      "Identity": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\8367d20c-fd56-4d42-bfaf-3aaf8eced6ea_prueba.png",
+      "SourceId": "Ferremas.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\",
+      "BasePath": "_content/Ferremas.Api",
+      "RelativePath": "img/8367d20c-fd56-4d42-bfaf-3aaf8eced6ea_prueba#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hvjyaqmpe2",
+      "Integrity": "HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\8367d20c-fd56-4d42-bfaf-3aaf8eced6ea_prueba.png"
+    },
+    {
+      "Identity": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\8dd85146-9068-4dcd-9315-0e5ab8ded6e2_prueba.png",
+      "SourceId": "Ferremas.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\",
+      "BasePath": "_content/Ferremas.Api",
+      "RelativePath": "img/8dd85146-9068-4dcd-9315-0e5ab8ded6e2_prueba#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hvjyaqmpe2",
+      "Integrity": "HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\8dd85146-9068-4dcd-9315-0e5ab8ded6e2_prueba.png"
+    },
+    {
+      "Identity": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\af416ae3-cffe-4818-91dd-f018d1ecbfee_Arena_Fina_40kg.webp",
+      "SourceId": "Ferremas.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\",
+      "BasePath": "_content/Ferremas.Api",
+      "RelativePath": "img/af416ae3-cffe-4818-91dd-f018d1ecbfee_Arena_Fina_40kg#[.{fingerprint}]?.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "pt7fq1bu9c",
+      "Integrity": "XQNqFGRHsfxnjYWy7/c7Rqvv3rCoWQEinKeJ37r86/s=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\af416ae3-cffe-4818-91dd-f018d1ecbfee_Arena_Fina_40kg.webp"
+    },
+    {
+      "Identity": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\b0600cbf-8f4c-43d4-87d0-b67748786560_prueba.png",
+      "SourceId": "Ferremas.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\",
+      "BasePath": "_content/Ferremas.Api",
+      "RelativePath": "img/b0600cbf-8f4c-43d4-87d0-b67748786560_prueba#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hvjyaqmpe2",
+      "Integrity": "HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\b0600cbf-8f4c-43d4-87d0-b67748786560_prueba.png"
+    },
+    {
+      "Identity": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\cf778f17-a3d5-492b-9fbd-7ba1e7a6839e_prueba.png",
+      "SourceId": "Ferremas.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\",
+      "BasePath": "_content/Ferremas.Api",
+      "RelativePath": "img/cf778f17-a3d5-492b-9fbd-7ba1e7a6839e_prueba#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hvjyaqmpe2",
+      "Integrity": "HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\cf778f17-a3d5-492b-9fbd-7ba1e7a6839e_prueba.png"
+    },
+    {
+      "Identity": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\e462e624-707c-45f1-9e9f-c5354e92984b_prueba.png",
+      "SourceId": "Ferremas.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\",
+      "BasePath": "_content/Ferremas.Api",
+      "RelativePath": "img/e462e624-707c-45f1-9e9f-c5354e92984b_prueba#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hvjyaqmpe2",
+      "Integrity": "HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\e462e624-707c-45f1-9e9f-c5354e92984b_prueba.png"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "img/02d342e2-c579-402f-8760-d5ebd3a6f9c6_Cerámica_Blanca_30x30cm.6s0carnian.webp",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\02d342e2-c579-402f-8760-d5ebd3a6f9c6_Cerámica_Blanca_30x30cm.webp",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1772"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/webp"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"CusWF8N+5xa4LA2mVoAgK+a9OGfLD4tBmDTc/+kBkw0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 15:46:30 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6s0carnian"
+        },
+        {
+          "Name": "label",
+          "Value": "img/02d342e2-c579-402f-8760-d5ebd3a6f9c6_Cerámica_Blanca_30x30cm.webp"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-CusWF8N+5xa4LA2mVoAgK+a9OGfLD4tBmDTc/+kBkw0="
+        }
+      ]
+    },
+    {
+      "Route": "img/02d342e2-c579-402f-8760-d5ebd3a6f9c6_Cerámica_Blanca_30x30cm.webp",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\02d342e2-c579-402f-8760-d5ebd3a6f9c6_Cerámica_Blanca_30x30cm.webp",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1772"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/webp"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"CusWF8N+5xa4LA2mVoAgK+a9OGfLD4tBmDTc/+kBkw0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 15:46:30 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-CusWF8N+5xa4LA2mVoAgK+a9OGfLD4tBmDTc/+kBkw0="
+        }
+      ]
+    },
+    {
+      "Route": "img/7ceb605d-9331-4a57-9027-97c0486eec7d_prueba.hvjyaqmpe2.png",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\7ceb605d-9331-4a57-9027-97c0486eec7d_prueba.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4396"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 15:20:50 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hvjyaqmpe2"
+        },
+        {
+          "Name": "label",
+          "Value": "img/7ceb605d-9331-4a57-9027-97c0486eec7d_prueba.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc="
+        }
+      ]
+    },
+    {
+      "Route": "img/7ceb605d-9331-4a57-9027-97c0486eec7d_prueba.png",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\7ceb605d-9331-4a57-9027-97c0486eec7d_prueba.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4396"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 15:20:50 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc="
+        }
+      ]
+    },
+    {
+      "Route": "img/8367d20c-fd56-4d42-bfaf-3aaf8eced6ea_prueba.hvjyaqmpe2.png",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\8367d20c-fd56-4d42-bfaf-3aaf8eced6ea_prueba.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4396"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 15:29:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hvjyaqmpe2"
+        },
+        {
+          "Name": "label",
+          "Value": "img/8367d20c-fd56-4d42-bfaf-3aaf8eced6ea_prueba.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc="
+        }
+      ]
+    },
+    {
+      "Route": "img/8367d20c-fd56-4d42-bfaf-3aaf8eced6ea_prueba.png",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\8367d20c-fd56-4d42-bfaf-3aaf8eced6ea_prueba.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4396"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 15:29:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc="
+        }
+      ]
+    },
+    {
+      "Route": "img/8dd85146-9068-4dcd-9315-0e5ab8ded6e2_prueba.hvjyaqmpe2.png",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\8dd85146-9068-4dcd-9315-0e5ab8ded6e2_prueba.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4396"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 15:31:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hvjyaqmpe2"
+        },
+        {
+          "Name": "label",
+          "Value": "img/8dd85146-9068-4dcd-9315-0e5ab8ded6e2_prueba.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc="
+        }
+      ]
+    },
+    {
+      "Route": "img/8dd85146-9068-4dcd-9315-0e5ab8ded6e2_prueba.png",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\8dd85146-9068-4dcd-9315-0e5ab8ded6e2_prueba.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4396"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 15:31:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc="
+        }
+      ]
+    },
+    {
+      "Route": "img/af416ae3-cffe-4818-91dd-f018d1ecbfee_Arena_Fina_40kg.pt7fq1bu9c.webp",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\af416ae3-cffe-4818-91dd-f018d1ecbfee_Arena_Fina_40kg.webp",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "35234"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/webp"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"XQNqFGRHsfxnjYWy7/c7Rqvv3rCoWQEinKeJ37r86/s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 15:44:27 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "pt7fq1bu9c"
+        },
+        {
+          "Name": "label",
+          "Value": "img/af416ae3-cffe-4818-91dd-f018d1ecbfee_Arena_Fina_40kg.webp"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-XQNqFGRHsfxnjYWy7/c7Rqvv3rCoWQEinKeJ37r86/s="
+        }
+      ]
+    },
+    {
+      "Route": "img/af416ae3-cffe-4818-91dd-f018d1ecbfee_Arena_Fina_40kg.webp",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\af416ae3-cffe-4818-91dd-f018d1ecbfee_Arena_Fina_40kg.webp",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "35234"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/webp"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"XQNqFGRHsfxnjYWy7/c7Rqvv3rCoWQEinKeJ37r86/s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 15:44:27 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-XQNqFGRHsfxnjYWy7/c7Rqvv3rCoWQEinKeJ37r86/s="
+        }
+      ]
+    },
+    {
+      "Route": "img/b0600cbf-8f4c-43d4-87d0-b67748786560_prueba.hvjyaqmpe2.png",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\b0600cbf-8f4c-43d4-87d0-b67748786560_prueba.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4396"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 15:46:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hvjyaqmpe2"
+        },
+        {
+          "Name": "label",
+          "Value": "img/b0600cbf-8f4c-43d4-87d0-b67748786560_prueba.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc="
+        }
+      ]
+    },
+    {
+      "Route": "img/b0600cbf-8f4c-43d4-87d0-b67748786560_prueba.png",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\b0600cbf-8f4c-43d4-87d0-b67748786560_prueba.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4396"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 15:46:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc="
+        }
+      ]
+    },
+    {
+      "Route": "img/cf778f17-a3d5-492b-9fbd-7ba1e7a6839e_prueba.hvjyaqmpe2.png",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\cf778f17-a3d5-492b-9fbd-7ba1e7a6839e_prueba.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4396"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 16:51:05 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hvjyaqmpe2"
+        },
+        {
+          "Name": "label",
+          "Value": "img/cf778f17-a3d5-492b-9fbd-7ba1e7a6839e_prueba.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc="
+        }
+      ]
+    },
+    {
+      "Route": "img/cf778f17-a3d5-492b-9fbd-7ba1e7a6839e_prueba.png",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\cf778f17-a3d5-492b-9fbd-7ba1e7a6839e_prueba.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4396"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 16:51:05 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc="
+        }
+      ]
+    },
+    {
+      "Route": "img/e462e624-707c-45f1-9e9f-c5354e92984b_prueba.hvjyaqmpe2.png",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\e462e624-707c-45f1-9e9f-c5354e92984b_prueba.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4396"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 17:22:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hvjyaqmpe2"
+        },
+        {
+          "Name": "label",
+          "Value": "img/e462e624-707c-45f1-9e9f-c5354e92984b_prueba.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc="
+        }
+      ]
+    },
+    {
+      "Route": "img/e462e624-707c-45f1-9e9f-c5354e92984b_prueba.png",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\e462e624-707c-45f1-9e9f-c5354e92984b_prueba.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4396"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Jul 2025 17:22:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc="
+        }
+      ]
+    }
+  ]
 }

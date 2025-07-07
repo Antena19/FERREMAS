@@ -17,10 +17,15 @@ namespace Ferremas.Api.Services
             _productoRepository = productoRepository;
         }
 
+        public async Task<IEnumerable<ProductoDTO>> ObtenerTodosAsync(bool incluirInactivos = false)
+        {
+            var productos = await _productoRepository.ObtenerTodosAsync(incluirInactivos);
+            return productos.Select(p => MapearADTO(p));
+        }
+
         public async Task<IEnumerable<ProductoDTO>> ObtenerTodosAsync()
         {
-            var productos = await _productoRepository.ObtenerTodosAsync();
-            return productos.Select(p => MapearADTO(p));
+            return await ObtenerTodosAsync(false);
         }
 
         public async Task<ProductoDTO> ObtenerPorIdAsync(int id)
@@ -118,6 +123,33 @@ namespace Ferremas.Api.Services
                 inventarioDTO.SucursalId,
                 inventarioDTO.Stock
             );
+        }
+
+        public async Task<bool> ActualizarImagenAsync(int id, string nombreArchivo)
+        {
+            var producto = await _productoRepository.ObtenerPorIdAsync(id);
+            if (producto == null)
+                return false;
+            producto.ImagenUrl = nombreArchivo;
+            await _productoRepository.ActualizarProductoAsync(producto);
+            return true;
+        }
+
+        public async Task<bool> CategoriaExisteAsync(int categoriaId)
+        {
+            // Suponiendo que hay un método en el repositorio de categorías
+            return await _productoRepository.CategoriaExisteAsync(categoriaId);
+        }
+
+        public async Task<bool> MarcaExisteAsync(int marcaId)
+        {
+            // Suponiendo que hay un método en el repositorio de marcas
+            return await _productoRepository.MarcaExisteAsync(marcaId);
+        }
+
+        public async Task<bool> ProductoCodigoExisteAsync(string codigo)
+        {
+            return await _productoRepository.ProductoExisteAsync(codigo);
         }
 
         // Método auxiliar para mapear de Modelo a DTO

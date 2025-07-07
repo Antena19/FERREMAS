@@ -23,6 +23,9 @@ export class DetalleProductoPage implements OnInit {
   inventario: any = null;       // Inventario del producto
   categorias: any[] = [];
   marcas: any[] = [];
+  cantidad: number = 1; // <--- Nueva variable para la cantidad
+  modoCreacion: boolean = false;
+  imagenSeleccionada: File | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,7 +45,21 @@ export class DetalleProductoPage implements OnInit {
     this.api.getMarcas().subscribe(marcas => this.marcas = marcas);
 
     const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
+    if (id === 'nuevo') {
+      this.modoCreacion = true;
+      this.cargando = false;
+      this.producto = {
+        codigo: '',
+        nombre: '',
+        descripcion: '',
+        precio: 0,
+        categoriaId: '',
+        marcaId: '',
+        imagenUrl: '',
+        especificaciones: '',
+        activo: true
+      };
+    } else if (id) {
       this.api.getProductoPorId(+id).subscribe({
         next: (res) => {
           this.producto = res;
@@ -63,10 +80,10 @@ export class DetalleProductoPage implements OnInit {
   cargarSucursalesYInventario(productoId: number) {
     this.api.getSucursales().subscribe({
       next: (sucursales) => {
-        this.sucursales = sucursales;
-        if (sucursales.length > 0) {
-          this.sucursalSeleccionada = sucursales[0];
-          this.cargarInventario(productoId, sucursales[0].id);
+        this.sucursales = sucursales.data;
+        if (this.sucursales.length > 0) {
+          this.sucursalSeleccionada = this.sucursales[0];
+          this.cargarInventario(productoId, this.sucursales[0].id);
         }
       },
       error: () => {
@@ -88,36 +105,103 @@ export class DetalleProductoPage implements OnInit {
   }
 
   agregarAlCarrito(): void {
-    console.log('🛒 Agregado al carrito:', this.producto?.nombre);
+    if (this.cantidad < 1) return;
+    // Aquí deberías llamar a tu servicio de carrito, pasando el producto y la cantidad
+    console.log('🛒 Agregado al carrito:', this.producto?.nombre, 'Cantidad:', this.cantidad);
+  }
+
+  sumarCantidad() {
+    this.cantidad++;
+  }
+
+  restarCantidad() {
+    if (this.cantidad > 1) this.cantidad--;
   }
 
   getImagePath(producto: any): string {
+    // Si la imagen es una subida al backend (nombre generado con guion y extensión)
+    if (producto.imagenUrl && producto.imagenUrl.includes('-') && producto.imagenUrl.match(/\.(jpg|jpeg|png|webp|gif)$/i)) {
+      return 'https://localhost:7091/img/' + producto.imagenUrl;
+    }
+    // Si es una imagen antigua o por defecto
     return 'assets/img/' + (producto.imagenUrl || producto.imagen_url || 'default.png');
   }
 
   guardarCambios() {
     if (!this.producto) return;
-
-    const productoActualizado = {
+    const productoData = {
+      codigo: this.producto.codigo,
       nombre: this.producto.nombre,
       descripcion: this.producto.descripcion,
       precio: this.producto.precio,
       categoriaId: this.producto.categoriaId,
       marcaId: this.producto.marcaId,
       imagenUrl: this.producto.imagenUrl,
-      especificaciones: this.producto.especificaciones,
+      especificaciones: this.producto.especificaciones ? this.producto.especificaciones : "Sin especificaciones",
       activo: this.producto.activo
     };
+    if (this.modoCreacion) {
+      this.api.crearProducto(productoData).subscribe({
+        next: (res) => {
+          const nuevoId = res.id || res;
+          if (this.imagenSeleccionada) {
+            const formData = new FormData();
+            formData.append('imagen', this.imagenSeleccionada);
+            this.api.subirImagenProducto(nuevoId, formData).subscribe({
+              next: () => {
+                alert('Producto creado exitosamente');
+                window.location.href = '/productos';
+              },
+              error: () => {
+                alert('Producto creado, pero error al subir la imagen');
+                window.location.href = '/productos';
+              }
+            });
+          } else {
+            alert('Producto creado exitosamente');
+            window.location.href = '/productos';
+          }
+        },
+        error: () => {
+          alert('Error al crear el producto');
+        }
+      });
+    } else {
+      this.api.actualizarProducto(this.producto.id, productoData).subscribe({
+        next: () => {
+          alert('Producto actualizado exitosamente');
+        },
+        error: () => {
+          alert('Error al actualizar el producto');
+        }
+      });
+    }
+  }
 
-    this.api.actualizarProducto(this.producto.id, productoActualizado).subscribe({
-      next: () => {
-        console.log('✅ Producto actualizado exitosamente');
-        // Aquí podrías mostrar un toast o alert de éxito
-        alert('Producto actualizado exitosamente');
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      if (this.modoCreacion) {
+        this.imagenSeleccionada = file;
+      } else {
+        this.subirImagen(file);
+      }
+    }
+  }
+
+  subirImagen(file: File) {
+    const formData = new FormData();
+    formData.append('imagen', file);
+
+    this.api.subirImagenProducto(this.producto.id, formData).subscribe({
+      next: (res) => {
+        // res debe contener el nombre de la imagen guardada
+        this.producto.imagenUrl = res.nombreArchivo || res.imagenUrl;
+        // Ya no se llama a this.guardarCambios() aquí
       },
-      error: (error) => {
-        console.error('❌ Error al actualizar producto:', error);
-        alert('Error al actualizar el producto');
+      error: (err) => {
+        alert('Error al subir la imagen');
+        console.error(err);
       }
     });
   }

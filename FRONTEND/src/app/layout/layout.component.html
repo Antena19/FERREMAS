@@ -18,20 +18,31 @@
         <!-- 🏠 Enlace Home (siempre visible) -->
         <a routerLink="/home" class="nav-link">HOME</a>
 
-        <!-- 🔐 Enlace Login (solo si no hay usuario logueado - VISTA PÚBLICA) -->
-        <a *ngIf="!usuarioNombre" routerLink="/login" class="nav-link">INICIAR SESIÓN</a>
+        <!-- Enlaces solo para ADMIN -->
+        <ng-container *ngIf="esAdmin">
+          <a routerLink="/clientes" class="nav-link">CLIENTES</a>
+          <a routerLink="/productos" class="nav-link">PRODUCTOS</a>
+          <a routerLink="/inventario" class="nav-link">INVENTARIO</a>
+          <a routerLink="/pedidos" class="nav-link">PEDIDOS</a>
+        </ng-container>
 
-        <!-- 👤 Enlace Mi Perfil (solo si hay sesión - VISTA AUTENTICADA) -->
-        <a *ngIf="usuarioNombre" routerLink="/editar-perfil" class="nav-link">MI PERFIL</a>
+        <!-- Enlaces para usuarios NO admin -->
+        <ng-container *ngIf="!esAdmin">
+          <!-- 🔐 Enlace Login (solo si no hay usuario logueado - VISTA PÚBLICA) -->
+          <a *ngIf="!usuarioNombre" routerLink="/login" class="nav-link">INICIAR SESIÓN</a>
 
-        <!-- 📦 Enlace Pedidos (solo visible si hay sesión - VISTA AUTENTICADA) -->
-        <a *ngIf="usuarioNombre" routerLink="/pedidos" class="nav-link">PEDIDOS</a>
+          <!-- 👤 Enlace Mi Perfil (solo si hay sesión - VISTA AUTENTICADA) -->
+          <a *ngIf="usuarioNombre" routerLink="/editar-perfil" class="nav-link">MI PERFIL</a>
+
+          <!-- 📦 Enlace Pedidos (solo visible si hay sesión - VISTA AUTENTICADA) -->
+          <a *ngIf="usuarioNombre" routerLink="/pedidos" class="nav-link">PEDIDOS</a>
+        </ng-container>
 
         <!-- 🔓 Enlace Logout (solo si hay usuario logueado - VISTA AUTENTICADA) -->
         <a *ngIf="usuarioNombre" (click)="logout()" class="nav-link">SALIR</a>
 
-        <!-- 🛒 Icono Carrito al final (siempre visible, solo icono y badge) -->
-        <a routerLink="/carrito" class="nav-cart-link">
+        <!-- 🛒 Icono Carrito al final (solo si NO es admin) -->
+        <a *ngIf="!esAdmin" routerLink="/carrito" class="nav-cart-link">
           <ion-icon name="cart-outline"></ion-icon>
           <ion-badge *ngIf="carritoCantidad > 0" color="danger">{{ carritoCantidad }}</ion-badge>
         </a>

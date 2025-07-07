@@ -1,65 +1,226 @@
-.productos-container {
-  padding: 1rem;                            // 📦 Espacio interior general
-  background-color: #f5f5f5;                // 🎨 Fondo gris claro
-  max-width: 1200px;                        // 📐 Ancho máximo para pantallas grandes
-  margin: auto;                             // 🎯 Centrado horizontal
-
-  h2 {
-    font-size: 1.5rem;                      // 🔠 Tamaño del título
-    margin-bottom: 1rem;                    // 📏 Espacio debajo del título
-    text-align: center;                     // 📍 Centrado del texto
-  }
-
-  .mensaje-vacio {
-    text-align: center;                     // 📍 Centrado del texto de carga
-    color: #555;                            // 🎨 Color de texto gris
-    padding: 2rem 0;                        // 📦 Espaciado vertical
-
-    p {
-      margin-top: 0.5rem;                   // 📏 Separación entre el spinner y el texto
-    }
-  }
-
+.productos-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: auto;
+  background: #f5f5f5;
+  min-height: 80vh;
+}
+.sidebar-filtros {
+  width: 260px;
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 12px rgba(44,62,80,0.07);
+  padding: 2rem 1.2rem 1.2rem 1.2rem;
+  margin: 2rem 1.5rem 2rem 0;
+  position: sticky;
+  top: 2rem;
+  min-height: 400px;
+  z-index: 10;
+  transition: left 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.sidebar-titulo {
+  font-size: 1.3rem;
+  color: #388e3c;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+  text-align: left;
+}
+.filtros-contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.filtro-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.filtro-group label {
+  font-size: 1.05rem;
+  color: #263238;
+  font-weight: 600;
+}
+.filtro-group select, .buscador {
+  padding: 0.6rem 1rem;
+  border-radius: 0.7rem;
+  border: 1.5px solid #4CAF50;
+  font-size: 1.08rem;
+  background: #fff;
+  color: #222;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.buscador {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.cerrar-sidebar {
+  display: none;
+}
+.abrir-sidebar {
+  display: none;
+}
+.productos-main {
+  flex: 1;
+  padding: 2rem 1rem 2rem 0;
+  width: 100%;
+  max-width: 100%;
+}
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  gap: 1.5rem 1.2rem;
+  justify-items: center;
+  align-items: stretch;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+.producto-card {
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 8px rgba(56,142,60,0.10);
+  padding: 1.2rem 1rem 1.5rem 1rem;
+  text-align: center;
+  min-width: 0;
+  width: 100%;
+  max-width: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  transition: box-shadow 0.3s;
+  margin-bottom: 0.5rem;
+}
+.producto-card img {
+  width: 100%;
+  height: 110px;
+  object-fit: contain;
+  margin-bottom: 0.7rem;
+  border-radius: 0.7rem;
+  background: #f5f5f5;
+}
+.producto-card h5 {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #222;
+  margin: 1.1rem 0 0.5rem 0;
+}
+.producto-card .precio {
+  color: #388e3c;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 1.1rem;
+}
+.producto-card .btn-carrito, .producto-card .btn-detalle {
+  white-space: nowrap;
+  font-size: 1.08rem;
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+}
+.producto-card .btn-carrito {
+  background-color: #388e3c;
+  color: #fff;
+  border: none;
+  border-radius: 1.2rem;
+  padding: 0.9rem 0;
+  font-weight: 700;
+  width: 100%;
+  margin: 0.5rem 0 0.3rem 0;
+  box-shadow: 0 2px 8px rgba(56,142,60,0.13);
+  transition: background 0.18s, transform 0.18s;
+  cursor: pointer;
+}
+.producto-card .btn-carrito:hover {
+  background: #2e7031;
+  transform: scale(1.04);
+}
+.producto-card .btn-detalle {
+  background: #fff;
+  color: #388e3c;
+  border: 2px solid #388e3c;
+  border-radius: 1.2rem;
+  padding: 0.9rem 0;
+  font-weight: 700;
+  width: 100%;
+  margin: 0.1rem 0 0.2rem 0;
+  box-shadow: 0 2px 8px rgba(56,142,60,0.07);
+  transition: background 0.18s, color 0.18s, border 0.18s;
+  cursor: pointer;
+}
+.producto-card .btn-detalle:hover {
+  background: #388e3c;
+  color: #fff;
+  border-color: #388e3c;
+}
+@media (max-width: 1200px) {
   .productos-grid {
-    display: flex;                          // 🔳 Usa Flexbox para la grilla
-    flex-wrap: wrap;                        // ↪️ Permite que los elementos bajen a la siguiente fila
-    justify-content: center;                // 🎯 Centra horizontalmente
-    gap: 1rem;                              // 📏 Espacio entre las tarjetas
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
   }
-
+}
+@media (max-width: 900px) {
+  .productos-grid {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
   .producto-card {
-    background-color: white;               // 🎨 Fondo blanco para las tarjetas
-    border-radius: 0.5rem;                 // 🟢 Bordes redondeados
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // 🌫️ Sombra ligera
-    width: 220px;                          // 📐 Ancho fijo de cada tarjeta
-    padding: 1rem;                         // 📦 Espacio interno
-    text-align: center;                    // 📍 Texto centrado
+    padding: 1rem 0.5rem 1.2rem 0.5rem;
+    max-width: 98vw;
+  }
+}
 
-    img {
-      width: 100%;                         // 📸 Imagen ocupa todo el ancho de la tarjeta
-      height: 120px;                       // 📐 Altura fija
-      object-fit: contain;                // 🧩 La imagen se ajusta sin deformarse
-      margin-bottom: 0.5rem;               // 📏 Espacio debajo de la imagen
-    }
-
-    h5 {
-      font-size: 1rem;                     // 🔠 Tamaño del nombre del producto
-      margin-bottom: 0.5rem;               // 📏 Separación inferior
-    }
-
-    .precio {
-      color: #4CAF50;                      // 🎨 Verde institucional
-      font-weight: bold;                   // 🅱️ Negrita
-      margin-bottom: 0.5rem;               // 📏 Separación debajo del precio
-    }
-
-    button {
-      background-color: #4CAF50;           // 🎨 Fondo verde del botón
-      color: white;                        // ✨ Texto blanco
-      border: none;                        // 🚫 Sin borde
-      padding: 0.4rem 1rem;                // 📏 Espaciado interno del botón
-      border-radius: 0.3rem;               // 🟢 Bordes redondeados
-      cursor: pointer;                     // 🖱️ Cambia el cursor al pasar encima
-    }
+@media (max-width: 900px) {
+  .sidebar-filtros {
+    position: fixed;
+    left: -100vw;
+    top: 0;
+    z-index: 100;
+    height: 100vh;
+    min-height: unset;
+    margin: 0;
+    border-radius: 0 1.2rem 1.2rem 0;
+    box-shadow: 2px 0 16px rgba(44,62,80,0.13);
+    transition: left 0.3s;
+  }
+  .sidebar-filtros.abierto {
+    left: 0;
+  }
+  .cerrar-sidebar {
+    display: block;
+    margin-top: 2rem;
+    background: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 0.7rem;
+    padding: 0.7rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+  }
+  .abrir-sidebar {
+    display: block;
+    position: fixed;
+    top: 1.2rem;
+    left: 1.2rem;
+    z-index: 101;
+    background: #388e3c;
+    color: #fff;
+    border: none;
+    border-radius: 0.7rem;
+    padding: 0.7rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(56,142,60,0.08);
   }
 }

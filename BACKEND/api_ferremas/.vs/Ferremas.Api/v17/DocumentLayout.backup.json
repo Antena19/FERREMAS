@@ -303,8 +303,7 @@
               "RelativeToolTip": "Services\\AdminService.cs",
               "ViewState": "AgIAAGsEAAAAAAAAAAAswIMEAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T17:36:54.608Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-30T17:36:54.608Z"
             },
             {
               "$type": "Document",
@@ -316,8 +315,7 @@
               "RelativeToolTip": "Controllers\\PedidosController.cs",
               "ViewState": "AgIAAEAAAAAAAAAAAAAawEsAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-26T17:31:03.842Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-26T17:31:03.842Z"
             },
             {
               "$type": "Document",
@@ -327,7 +325,7 @@
               "RelativeDocumentMoniker": "Controllers\\ProductosController.cs",
               "ToolTip": "C:\\FERREMAS\\BACKEND\\api_ferremas\\Controllers\\ProductosController.cs",
               "RelativeToolTip": "Controllers\\ProductosController.cs",
-              "ViewState": "AgIAAKMAAAAAAAAAAAAiwLUAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAKMAAAAAAAAAAAAiwLgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-28T01:02:26.165Z",
               "EditorCaption": ""

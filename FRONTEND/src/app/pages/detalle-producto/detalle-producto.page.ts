@@ -18,7 +18,7 @@ export class DetalleProductoPage implements OnInit {
   producto: any = null;       // 🧩 Producto cargado
   cargando: boolean = true;   // ⏳ Spinner mientras carga
   esAdmin: boolean = false;    // Cambia esto por tu lógica real de autenticación
-  sucursales: any[] = [];
+  sucursales: any[] = [];     // Lista de sucursales
   sucursalSeleccionada: any = null;
   inventario: any = null;       // Inventario del producto
   categorias: any[] = [];
@@ -62,11 +62,11 @@ export class DetalleProductoPage implements OnInit {
 
   cargarSucursalesYInventario(productoId: number) {
     this.api.getSucursales().subscribe({
-      next: (res) => {
-        this.sucursales = res.data;
-        if (this.sucursales.length > 0) {
-          this.sucursalSeleccionada = this.sucursales[0];
-          this.cargarInventario(productoId, this.sucursales[0].id);
+      next: (sucursales) => {
+        this.sucursales = sucursales;
+        if (sucursales.length > 0) {
+          this.sucursalSeleccionada = sucursales[0];
+          this.cargarInventario(productoId, sucursales[0].id);
         }
       },
       error: () => {

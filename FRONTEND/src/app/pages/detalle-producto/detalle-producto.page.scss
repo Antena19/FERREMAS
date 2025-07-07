@@ -176,6 +176,24 @@ h2 {
   background: #388e3c;
 }
 
+.btn-principal {
+  background-color: #388e3c;
+  color: #fff;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0.3rem 0.3rem 0 0.3rem;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.18s;
+  box-shadow: 0 2px 8px rgba(56,142,60,0.08);
+}
+.btn-principal:hover {
+  background: #2e7031;
+  transform: scale(1.06);
+}
+
 @media (max-width: 700px) {
   .detalle-container {
     max-width: 98vw;

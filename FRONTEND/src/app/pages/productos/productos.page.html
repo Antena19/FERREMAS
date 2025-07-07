@@ -1,30 +1,55 @@
-<div class="productos-container">
+<div class="productos-layout">
+  <!-- Sidebar de filtros -->
+  <aside class="sidebar-filtros" [class.abierto]="sidebarAbierto">
+    <h3 class="sidebar-titulo">Filtrar productos</h3>
+    <div class="filtros-contenido">
+      <input
+        type="text"
+        [(ngModel)]="terminoBusqueda"
+        (input)="filtrarProductos()"
+        placeholder="Buscar por nombre..."
+        class="buscador"
+      />
+      <div class="filtro-group">
+        <label for="cat-select">Categoría:</label>
+        <select id="cat-select" [(ngModel)]="categoriaFiltro" (change)="filtrarProductos()">
+          <option value="">Todas</option>
+          <option *ngFor="let cat of categorias" [value]="cat.id">{{ cat.nombre }}</option>
+        </select>
+      </div>
+      <div class="filtro-group">
+        <label for="marca-select">Marca:</label>
+        <select id="marca-select" [(ngModel)]="marcaFiltro" (change)="filtrarProductos()">
+          <option value="">Todas</option>
+          <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nombre }}</option>
+        </select>
+      </div>
+    </div>
+    <button class="cerrar-sidebar" type="button" (click)="sidebarAbierto = false">Cerrar</button>
+  </aside>
 
-  <h2>Todos los productos</h2>
+  <!-- Botón para abrir sidebar en móvil -->
+  <button class="abrir-sidebar" type="button" (click)="sidebarAbierto = true">Filtros</button>
 
-  <!-- 🔎 Campo de búsqueda -->
-  <input
-    type="text"
-    [(ngModel)]="terminoBusqueda"
-    (input)="filtrarProductos()"
-    placeholder="Buscar productos..."
-    class="buscador"
-  />
-
-  <!-- 🌀 Cargando o vacío -->
-  <div *ngIf="productosFiltrados.length === 0" class="mensaje-vacio">
-    <ion-spinner name="crescent"></ion-spinner>
-    <p>No se encontraron productos.</p>
-  </div>
-
-  <!-- 🧱 Grilla de productos -->
-  <div class="productos-grid" *ngIf="productosFiltrados.length > 0">
-    <div *ngFor="let producto of productosFiltrados" class="producto-card">
-      <img [src]="'assets/img/' + producto.imagen_url" [alt]="producto.nombre">
-      <h5>{{ producto.nombre }}</h5>
-      <p class="precio">${{ producto.precio | number:'1.0-0' }}</p>
-      <button (click)="verDetalle(producto.id)">Ver detalle</button>
+  <!-- Contenido principal: grilla de productos -->
+  <div class="productos-main">
+    <h2>Todos los productos</h2>
+    <div *ngIf="productosFiltrados.length === 0" class="mensaje-vacio">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>No se encontraron productos.</p>
+    </div>
+    <div class="productos-grid" *ngIf="productosFiltrados.length > 0">
+      <div *ngFor="let producto of productosFiltrados" class="producto-card">
+        <img [src]="getImagePath(producto)" [alt]="producto.nombre">
+        <h5>{{ producto.nombre }}</h5>
+        <p class="precio">${{ producto.precio | number:'1.0-0' }}</p>
+        <div class="info-extra">
+          <span><b>Marca:</b> {{ getMarcaNombre(producto.marcaId) }}</span><br>
+          <span><b>Categoría:</b> {{ getCategoriaNombre(producto.categoriaId) }}</span>
+        </div>
+        <button class="btn-carrito" (click)="agregarAlCarrito(producto)">Agregar al carrito</button>
+        <button class="btn-detalle" (click)="verDetalle(producto.id)">Ver detalle</button>
+      </div>
     </div>
   </div>
-
 </div>

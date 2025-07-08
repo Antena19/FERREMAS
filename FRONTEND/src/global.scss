@@ -1,0 +1,93 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component.
+ */
+
+/* Core CSS required for Ionic components */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional Ionic utilities */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* Dark Mode (opcional) */
+// @import "@ionic/angular/css/palettes/dark.always.css";
+// @import "@ionic/angular/css/palettes/dark.class.css";
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+/* ------------------------ */
+/* 🎨 Estilos personalizados */
+/* ------------------------ */
+
+/* Fondo blanco general */
+body {
+  background-color: #ffffff !important;
+  color: #2c3e50;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 16px;
+}
+
+/* Fondo blanco para ion-content */
+ion-content {
+  --background: #ffffff !important;
+}
+
+/* Títulos */
+h1, h2, h3 {
+  color: #2c3e50;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Botones principales */
+ion-button {
+  --background: #2ecc71;
+  --color: white;
+  --border-radius: 10px;
+  font-weight: 500;
+}
+
+/* Botones secundarios */
+ion-button[color="medium"] {
+  --background: #bdc3c7;
+  --color: #2c3e50;
+}
+
+/* Botones oscuros */
+ion-button[color="dark"] {
+  --background: #333;
+  --color: white;
+}
+
+/* Imágenes responsivas */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Cards */
+ion-card {
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor general para secciones destacadas */
+.section-container {
+  padding: 1.5rem 1rem;
+  background-color: #f5f5f5;
+  border-radius: 0.75rem;
+  margin-top: 1.5rem;
+}

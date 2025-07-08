@@ -443,10 +443,81 @@ namespace Ferremas.Api.Repositories
                     LEFT JOIN sucursales s ON p.sucursal_id = s.id
                     LEFT JOIN usuarios v ON p.vendedor_id = v.id
                     LEFT JOIN usuarios b ON p.bodeguero_id = b.id
-                    WHERE p.estado = 'pendiente'
+                    WHERE p.estado IN ('pendiente', 'confirmado', 'asignado_vendedor', 'en_bodega', 'preparado', 'en_entrega')
                     ORDER BY p.fecha_pedido DESC";
 
                 var pedidos = await connection.QueryAsync<Pedido>(sql);
+
+                foreach (var pedido in pedidos)
+                {
+                    var items = await GetPedidoItemsAsync(pedido.Id);
+                    pedido.Items = items as ICollection<PedidoItem>;
+                }
+
+                return pedidos;
+            }
+        }
+
+        public async Task<IEnumerable<Pedido>> GetHistorialComprasClienteAsync(int clienteId)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var sql = @"
+                    SELECT 
+                        p.*,
+                        u.nombre as UsuarioNombre,
+                        s.nombre as SucursalNombre,
+                        v.nombre as VendedorNombre,
+                        b.nombre as BodegueroNombre
+                    FROM pedidos p
+                    LEFT JOIN usuarios u ON p.usuario_id = u.id
+                    LEFT JOIN sucursales s ON p.sucursal_id = s.id
+                    LEFT JOIN usuarios v ON p.vendedor_id = v.id
+                    LEFT JOIN usuarios b ON p.bodeguero_id = b.id
+                    WHERE p.usuario_id IN (
+                        SELECT u.id 
+                        FROM usuarios u 
+                        INNER JOIN clientes c ON u.rut = c.rut 
+                        WHERE c.id = @ClienteId
+                    )
+                    ORDER BY p.fecha_pedido DESC";
+
+                var pedidos = await connection.QueryAsync<Pedido>(sql, new { ClienteId = clienteId });
+
+                foreach (var pedido in pedidos)
+                {
+                    var items = await GetPedidoItemsAsync(pedido.Id);
+                    pedido.Items = items as ICollection<PedidoItem>;
+                }
+
+                return pedidos;
+            }
+        }
+
+        public async Task<IEnumerable<Pedido>> GetHistorialComprasUsuarioAsync(int usuarioId)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var sql = @"
+                    SELECT 
+                        p.*,
+                        u.nombre as UsuarioNombre,
+                        s.nombre as SucursalNombre,
+                        v.nombre as VendedorNombre,
+                        b.nombre as BodegueroNombre
+                    FROM pedidos p
+                    LEFT JOIN usuarios u ON p.usuario_id = u.id
+                    LEFT JOIN sucursales s ON p.sucursal_id = s.id
+                    LEFT JOIN usuarios v ON p.vendedor_id = v.id
+                    LEFT JOIN usuarios b ON p.bodeguero_id = b.id
+                    WHERE p.usuario_id = @UsuarioId
+                    ORDER BY p.fecha_pedido DESC";
+
+                var pedidos = await connection.QueryAsync<Pedido>(sql, new { UsuarioId = usuarioId });
 
                 foreach (var pedido in pedidos)
                 {

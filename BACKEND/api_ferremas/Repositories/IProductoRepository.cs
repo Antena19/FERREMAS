@@ -8,6 +8,7 @@ namespace Ferremas.Api.Repositories
     public interface IProductoRepository
     {
         Task<IEnumerable<Producto>> ObtenerTodosAsync();
+        Task<IEnumerable<Producto>> ObtenerTodosAsync(bool incluirInactivos);
         Task<Producto> ObtenerPorIdAsync(int id);
         Task<IEnumerable<Producto>> ObtenerPorCategoriaAsync(int categoriaId);
         Task<IEnumerable<Producto>> BuscarProductosAsync(string termino, int? categoriaId, decimal? precioMin, decimal? precioMax);
@@ -18,6 +19,7 @@ namespace Ferremas.Api.Repositories
         Task<bool> ProductoExisteAsync(string codigo);
         Task<bool> ProductoExisteAsync(int id);
         Task<bool> ActualizarInventarioAsync(int productoId, int sucursalId, int stock);
-        
+        Task<bool> CategoriaExisteAsync(int categoriaId);
+        Task<bool> MarcaExisteAsync(int marcaId);
     }
 }

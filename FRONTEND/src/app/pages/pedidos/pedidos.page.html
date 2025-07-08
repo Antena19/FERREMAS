@@ -1,0 +1,37 @@
+<div class="pedidos-container">
+  <h1 class="pedidos-title">
+    <ion-icon name="bag-outline"></ion-icon>
+    Mi Historial de Compras
+  </h1>
+
+  <!-- Spinner de carga -->
+  <div *ngIf="cargando" class="spinner-center">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando...</p>
+  </div>
+
+  <!-- Mensaje vacío -->
+  <div *ngIf="!cargando && pedidos.length === 0" class="mensaje-vacio-centrado">
+    <div class="mensaje-card">
+      <ion-icon name="bag-outline" class="mensaje-icon-grande"></ion-icon>
+      <h2>¡Bienvenido a tu historial de compras!</h2>
+      <p>Aquí verás todas tus compras realizadas. Cuando compres, aparecerán aquí tus pedidos y sus detalles.</p>
+      <button class="btn-explorar-grande" routerLink="/home">
+        <ion-icon name="home-outline"></ion-icon>
+        Explorar Productos
+      </button>
+    </div>
+  </div>
+
+  <!-- Historial de pedidos -->
+  <div *ngIf="!cargando && pedidos.length > 0" class="historial-container">
+    <div *ngFor="let pedido of pedidos" class="pedido-card">
+      <!-- Aquí puedes renderizar los detalles del pedido -->
+      <h3>Pedido #{{ pedido.id }}</h3>
+      <p>Estado: {{ pedido.estado }}</p>
+      <p>Total: ${{ pedido.total | number:'1.0-0' }}</p>
+    </div>
+  </div>
+
+  <!-- Botón flotante de carrito eliminado -->
+</div>

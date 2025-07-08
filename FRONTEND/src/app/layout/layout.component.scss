@@ -1,0 +1,308 @@
+/* =============================== */
+/* 🔝 NAVBAR SUPERIOR FIJO         */
+/* =============================== */
+
+.navbar-superior {
+  background-color: #353535;        // 🎨 Fondo gris oscuro
+  padding: 0.5rem 1rem;             // 📏 Espaciado interno
+  display: flex;                    // 🧱 Flexbox para estructura horizontal
+  justify-content: center;         // 🎯 Centra el contenido dentro del navbar
+  border-bottom: 1px solid #4caf50; // 🟢 Línea verde debajo del navbar
+  position: sticky;                // 📌 Fija el navbar en la parte superior
+  top: 0;                          // ⬆️ Posicionado arriba
+  z-index: 1000;                   // 📊 Asegura visibilidad sobre todo lo demás
+}
+
+.navbar-container {
+  display: flex;                   // 🔃 Estructura en línea
+  align-items: center;            // ↕️ Centra verticalmente los ítems
+  justify-content: space-between; // ↔️ Separa logo y acciones a los extremos
+  width: 100%;                    // 📏 Ancho completo
+  max-width: 1200px;              // 📐 Ancho máximo para centrar el contenido
+}
+
+.nav-item {
+  display: flex;                  // 🔃 Ítems en línea
+  align-items: center;           // ↕️ Centrado vertical
+  color: white;                  // ⚪ Color blanco por defecto
+}
+
+.nav-logo {
+  font-size: 1.2rem;              // 🔠 Tamaño de fuente grande
+  font-weight: bold;             // 💪 Texto en negrita
+  color: #4caf50;                // 🟢 Color verde institucional
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-actions .nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  padding: 0 1rem;
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  transition: color 0.2s;
+}
+
+.nav-actions .nav-link:hover,
+.nav-actions .nav-link:focus {
+  color: #4caf50;
+  text-decoration: underline;
+}
+
+.nav-actions .nav-button {
+  margin: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+.nav-actions .nav-button span {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+}
+
+
+/* =============================== */
+/* 🏠 BOTÓN INICIO EN NAVBAR       */
+/* =============================== */
+
+.inicio-icono {
+  display: flex;                 // 🔃 Ícono + texto en línea
+  align-items: center;          // ↕️ Alineación vertical centrada
+  font-weight: bold;            // 💪 Negrita para el nombre
+  font-size: 1.2rem;            // 🔠 Tamaño de texto
+  color: #4caf50;               // 🟢 Verde
+  text-decoration: none;        // 🚫 Sin subrayado
+
+  i {
+    font-size: 1.2rem;          // 🔧 Tamaño del ícono
+    margin-right: 0.4rem;       // 📏 Separación entre ícono y texto
+  }
+
+  &:hover {
+    color: #81c784;             // 🌿 Verde claro al pasar el mouse
+  }
+}
+
+
+/* =============================== */
+/* 🎨 ESTILOS DE LOS BOTONES DE NAVEGACIÓN */
+/* =============================== */
+
+.nav-actions .nav-button:hover,
+.nav-actions .nav-button:focus {
+  --color: #4caf50;
+  background: rgba(76, 175, 80, 0.08);
+}
+
+.nav-actions .nav-button ion-icon {
+  margin-right: 0.4rem;
+  font-size: 1.2rem !important;
+  color: #fff !important;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.nav-actions .nav-button ion-badge {
+  margin-left: 0.3rem;
+  font-size: 0.7rem;
+}
+
+
+/* =============================== */
+/* 🎨 ESTILOS DEL FOOTER GLOBAL    */
+/* =============================== */
+
+.footer-global {
+  background-color: #353535;        // 🎨 Fondo gris oscuro
+  padding: 2rem 1rem;               // 📏 Espaciado superior e inferior
+  font-size: 14px;                  // 🔠 Tamaño de texto base
+  border-top: 1px solid #ddd;      // 📏 Línea clara en la parte superior
+}
+
+.footer-container {
+  max-width: 1200px;                // 📐 Ancho máximo centrado
+  margin: 0 auto;                   // ↔️ Centrado horizontal
+}
+
+.footer-row {
+  display: flex;                    // 🧱 Flexbox para columnas
+  flex-wrap: wrap;                  // 🔁 Permite responsividad
+  justify-content: space-between;  // ↔️ Distribución uniforme
+  gap: 2rem;                        // 📏 Espaciado entre columnas
+}
+
+.footer-col {
+  flex: 1 1 200px;                  // 🔳 Ancho flexible mínimo 200px
+  min-width: 180px;                // 📏 Evita que colapse en móviles
+}
+
+.footer-title {
+  font-weight: bold;               // 💪 Título destacado
+  margin-bottom: 1rem;             // 📏 Espaciado inferior
+  color: white;                    // ⚪ Color del texto
+}
+
+.footer-text {
+  color: #dddddd;                  // 🎨 Texto gris claro
+  line-height: 1.6;                // 📏 Altura de línea legible
+}
+
+.footer-links {
+  list-style: none;                // 🚫 Sin viñetas
+  padding: 0;                      // 🚫 Sin espacio lateral
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem;           // 📏 Separación entre enlaces
+  color: white;                    // ⚪ Texto blanco
+}
+
+.footer-links a {
+  color: #4caf50;                  // 🟢 Verde institucional
+  text-decoration: none;           // 🚫 Sin subrayado
+}
+
+.footer-links a:hover {
+  text-decoration: underline;      // 🔽 Subrayado al pasar
+  color: #81c784;                  // 🌿 Verde claro
+}
+
+.social-links {
+  display: flex;                   // 🔃 Íconos en línea
+  gap: 1rem;                       // 📏 Espaciado entre íconos
+  font-size: 1.5rem;               // 🔠 Tamaño de íconos
+}
+
+.footer-col:nth-child(4) ion-icon {
+  color: white;                    // ⚪ Color base
+  cursor: pointer;                 // 👆 Cursor tipo botón
+  transition: color 0.3s ease;     // 🎞️ Transición suave
+}
+
+.footer-col:nth-child(4) ion-icon:hover {
+  color: #4caf50;                  // 🟢 Verde al pasar
+}
+
+.footer-col:nth-child(3) .footer-links li {
+  color: white;                    // ⚪ Enlaces blancos para contacto
+}
+
+
+/* =============================== */
+/* ⚙️ AJUSTES GENERALES            */
+/* =============================== */
+
+html, body, .layout-wrapper {
+  height: 100%;                    // 📏 Altura completa
+  margin: 0;                       // 🚫 Sin márgenes
+  padding: 0;                      // 🚫 Sin relleno
+  overflow-x: hidden;             // ❌ Elimina scroll horizontal
+  background-color: #f5f5f5;      // 🌫️ Fondo gris claro general
+}
+
+.layout-wrapper {
+  display: flex;                   // 🔃 Estructura vertical
+  flex-direction: column;         // 🔽 De arriba a abajo
+  min-height: 100vh;              // ⬇️ Para forzar footer al fondo
+}
+
+router-outlet {
+  flex: 1;                         // 🧩 Expande para llenar espacio restante
+}
+
+
+/* =============================== */
+/* 📱 MEDIA QUERIES RESPONSIVAS    */
+/* =============================== */
+
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;       // 📐 Columnas en móvil
+    align-items: flex-start;      // 🔽 Alineación izquierda
+    gap: 0.5rem;                  // 🧍 Espaciado en vertical
+  }
+
+  .footer-row {
+    flex-direction: column;       // 📐 Footer en columna en móvil
+    gap: 1.5rem;                  // 🧍 Espacio entre secciones
+  }
+
+  .nav-actions {
+    justify-content: flex-start;  // ⬅️ Acciones alineadas a la izquierda
+    flex-wrap: wrap;              // 🔁 Permite saltar de línea
+    gap: 0.3rem;                  // 📏 Espaciado reducido en móvil
+  }
+
+  .nav-actions .nav-button {
+    font-size: 0.85rem;            // 🔠 Texto más pequeño en móvil
+    padding: 0.4rem 0.6rem;       // 📏 Padding reducido
+  }
+
+  .inicio-icono {
+    margin-bottom: 0.5rem;        // 📏 Espacio para móviles
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-actions {
+    gap: 0.2rem;                  // 📏 Espaciado aún más reducido en móviles pequeños
+  }
+
+  .nav-actions .nav-button {
+    font-size: 0.75rem;           // 🔠 Texto aún más pequeño
+    padding: 0.3rem 0.5rem;       // 📏 Padding mínimo
+  }
+
+  .nav-actions .nav-button ion-icon {
+    font-size: 1rem;              // 🔠 Íconos más pequeños
+    margin-right: 0.2rem;         // 📏 Espacio reducido
+  }
+}
+
+.nav-cart-link {
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0 0.7rem;
+  margin: 0;
+  cursor: pointer;
+  text-decoration: none;
+  height: 40px;
+}
+
+.nav-cart-link ion-icon {
+  font-size: 1.7rem;
+  color: #fff;
+  vertical-align: middle;
+}
+
+.nav-cart-link ion-badge {
+  position: absolute;
+  top: 2px;
+  right: 0.2rem;
+  font-size: 0.7rem;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}

@@ -17,7 +17,7 @@ namespace Ferremas.Api.DTOs
 
         public string TipoCliente { get; set; }
 
-        public string Estado { get; set; }
+        public string Estado { get; set; } = "activo";
 
         public bool Newsletter { get; set; }
     }

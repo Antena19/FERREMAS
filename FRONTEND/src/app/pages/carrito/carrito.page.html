@@ -1,0 +1,67 @@
+<!-- ✅ CONTENEDOR PRINCIPAL DEL CARRITO -->
+<div class="carrito-container">
+
+  <!-- ⏳ LOADER MIENTRAS CARGA EL CARRITO -->
+  <div *ngIf="cargando" class="spinner-center">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <!-- 📭 MENSAJE CUANDO EL CARRITO ESTÁ VACÍO -->
+  <div *ngIf="!cargando && productos.length === 0" class="mensaje-vacio">
+    <ion-icon name="cart-outline" size="large"></ion-icon>
+    
+    <!-- 👤 Mensaje para usuario no logueado -->
+    <div *ngIf="!usuarioLogeado" class="mensaje-no-login">
+      <p>Para ver tu carrito, debes iniciar sesión</p>
+      <ion-button routerLink="/login" color="success">
+        Iniciar sesión
+      </ion-button>
+    </div>
+    
+    <!-- 🛒 Mensaje para carrito vacío de usuario logueado -->
+    <div *ngIf="usuarioLogeado">
+      <p>Tu carrito está vacío</p>
+      <ion-button routerLink="/productos" color="success">
+        Ver productos
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- 🛒 LISTADO DE PRODUCTOS DEL CARRITO -->
+  <div *ngIf="!cargando && productos.length > 0" class="lista-productos">
+
+    <!-- 🔁 RECORRIDO DE PRODUCTOS EN EL CARRITO -->
+    <div class="producto-item" *ngFor="let producto of productos">
+      
+      <!-- 🖼️ Imagen del producto -->
+      <img
+        *ngIf="producto.producto_imagen"
+        [src]="'assets/img/' + producto.producto_imagen"
+        alt="Imagen producto"
+        class="producto-imagen" />
+
+      <!-- 📋 Información del producto -->
+      <div class="info-producto">
+        <h4>{{ producto.producto_nombre }}</h4>
+        <p class="precio">${{ producto.precio_unitario }}</p>
+        <p class="cantidad">Cantidad: {{ producto.cantidad }}</p>
+      </div>
+
+      <!-- ❌ BOTÓN PARA ELIMINAR PRODUCTO -->
+      <ion-button
+        color="danger"
+        size="small"
+        (click)="eliminarProducto(producto.producto_id)">
+        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+
+    <!-- ✅ BOTÓN CONFIRMAR PEDIDO -->
+    <div class="confirmar-container">
+      <ion-button expand="block" color="success" (click)="confirmarPedido()">
+        Confirmar pedido
+      </ion-button>
+    </div>
+
+  </div>
+</div>

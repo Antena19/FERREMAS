@@ -32,7 +32,7 @@ namespace Ferremas.Api.Controllers
         }
     }
 
-    [Authorize(Roles = "Administrador")]
+    [Authorize(Roles = "Administrador,administrador")]
     [ApiController]
     [Route("api/[controller]")]
     public class AdminController : ControllerBase
@@ -163,6 +163,47 @@ namespace Ferremas.Api.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ApiResponse<bool>.Error($"Error al eliminar cliente: {ex.Message}"));
+            }
+        }
+
+        // Endpoint para obtener perfil completo del usuario
+        [HttpGet("perfil/{id}")]
+        public async Task<IActionResult> GetPerfilUsuario(int id)
+        {
+            try
+            {
+                var perfil = await _adminService.GetPerfilUsuario(id);
+                if (perfil == null)
+                    return NotFound(ApiResponse<object>.Error($"No se encontró el perfil del usuario con ID {id}"));
+                return Ok(ApiResponse<object>.Ok(perfil, "Perfil obtenido exitosamente"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ApiResponse<object>.Error($"Error al obtener perfil: {ex.Message}"));
+            }
+        }
+
+        // Endpoint público para obtener perfil del usuario autenticado
+        [HttpGet("mi-perfil")]
+        public async Task<IActionResult> GetMiPerfil()
+        {
+            try
+            {
+                // Obtener el ID del usuario desde el token JWT
+                var userIdClaim = User.FindFirst("userId");
+                if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+                {
+                    return Unauthorized(ApiResponse<object>.Error("No se pudo identificar al usuario"));
+                }
+
+                var perfil = await _adminService.GetPerfilUsuario(userId);
+                if (perfil == null)
+                    return NotFound(ApiResponse<object>.Error($"No se encontró el perfil del usuario"));
+                return Ok(ApiResponse<object>.Ok(perfil, "Perfil obtenido exitosamente"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ApiResponse<object>.Error($"Error al obtener perfil: {ex.Message}"));
             }
         }
 
@@ -358,6 +399,21 @@ namespace Ferremas.Api.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ApiResponse<bool>.Error($"Error al desactivar usuario: {ex.Message}"));
+            }
+        }
+
+        // Endpoint para obtener todas las sucursales
+        [HttpGet("sucursales")]
+        public async Task<IActionResult> GetAllSucursales()
+        {
+            try
+            {
+                var sucursales = await _adminService.GetAllSucursales();
+                return Ok(ApiResponse<IEnumerable<Sucursal>>.Ok(sucursales, "Lista de sucursales obtenida exitosamente"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ApiResponse<IEnumerable<Sucursal>>.Error($"Error al obtener sucursales: {ex.Message}"));
             }
         }
     }

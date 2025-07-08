@@ -180,5 +180,52 @@ namespace Ferremas.Api.Controllers
                     "Error al obtener los pedidos pendientes: " + ex.Message);
             }
         }
+
+        /// <summary>
+        /// Obtiene el historial de compras de un cliente
+        /// </summary>
+        [HttpGet("cliente/{clienteId}/historial")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<PedidoDTO>>> GetHistorialComprasCliente(int clienteId)
+        {
+            try
+            {
+                var historial = await _pedidosService.GetHistorialComprasClienteAsync(clienteId);
+                return Ok(historial);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    "Error al obtener el historial de compras: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Obtiene el historial de compras del usuario autenticado (si es cliente)
+        /// </summary>
+        [HttpGet("mi-historial")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<PedidoDTO>>> GetMiHistorialCompras()
+        {
+            try
+            {
+                // Obtener el ID del usuario desde el token JWT
+                var usuarioIdClaim = User.FindFirst("userId");
+                if (usuarioIdClaim == null || !int.TryParse(usuarioIdClaim.Value, out int usuarioId))
+                {
+                    return BadRequest("No se pudo identificar al usuario");
+                }
+
+                var historial = await _pedidosService.GetHistorialComprasUsuarioAsync(usuarioId);
+                return Ok(historial);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    "Error al obtener el historial de compras: " + ex.Message);
+            }
+        }
     }
 }

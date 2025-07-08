@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Detalle del Pedido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- 🔄 Cargando o sin datos -->
+  <ng-container *ngIf="pedido; else cargando">
+
+    <!-- 🧾 Información general del pedido -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Pedido #{{ pedido.id }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>Fecha:</ion-label>
+          <ion-label>{{ pedido.fecha | date:'fullDate' }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Total:</ion-label>
+          <ion-label>\${{ pedido.total }}</ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- 📦 Productos del pedido -->
+    <ion-card *ngFor="let producto of pedido.productos">
+      <ion-card-header>
+        <ion-card-title>{{ producto.nombre }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>Precio:</ion-label>
+          <ion-label>\${{ producto.precio }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Cantidad:</ion-label>
+          <ion-label>{{ producto.cantidad }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Subtotal:</ion-label>
+          <ion-label>\${{ producto.precio * producto.cantidad }}</ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <!-- ⏳ Estado de carga -->
+  <ng-template #cargando>
+    <ion-card>
+      <ion-card-content class="ion-text-center">
+        <p>Cargando pedido...</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+</ion-content>

@@ -8,6 +8,7 @@ namespace Ferremas.Api.Services
     public interface IProductoService
     {
         Task<IEnumerable<ProductoDTO>> ObtenerTodosAsync();
+        Task<IEnumerable<ProductoDTO>> ObtenerTodosAsync(bool incluirInactivos);
         Task<ProductoDTO> ObtenerPorIdAsync(int id);
         Task<IEnumerable<ProductoDTO>> ObtenerPorCategoriaAsync(int categoriaId);
         Task<IEnumerable<ProductoDTO>> BuscarProductosAsync(string termino, int? categoriaId, decimal? precioMin, decimal? precioMax);
@@ -16,5 +17,9 @@ namespace Ferremas.Api.Services
         Task<bool> EliminarProductoAsync(int id);
         Task<bool> ActualizarStockAsync(int productoId, int cantidad);
         Task<bool> ActualizarInventarioAsync(int productoId, InventarioUpdateDTO inventarioDTO);
+        Task<bool> ActualizarImagenAsync(int id, string nombreArchivo);
+        Task<bool> CategoriaExisteAsync(int categoriaId);
+        Task<bool> MarcaExisteAsync(int marcaId);
+        Task<bool> ProductoCodigoExisteAsync(string codigo);
     }
 }

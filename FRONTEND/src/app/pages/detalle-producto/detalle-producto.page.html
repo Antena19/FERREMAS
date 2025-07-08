@@ -1,0 +1,72 @@
+<div class="detalle-container" *ngIf="!cargando && producto">
+  <h1 class="detalle-titulo">Ficha Técnica Producto</h1>
+  <img class="detalle-imagen" *ngIf="!modoCreacion" [src]="getImagePath(producto) || 'assets/img/default.png'" [alt]="producto.nombre" />
+  <h2>{{ producto.nombre }}</h2>
+  <p class="descripcion">{{ producto.descripcion }}</p>
+  <p class="precio" *ngIf="!modoCreacion">${{ producto.precio | number:'1.0-0' }}</p>
+  <p *ngIf="producto.especificaciones">{{ producto.especificaciones }}</p>
+  <ng-container *ngIf="!modoCreacion && esAdmin">
+    <div class="selector-sucursal">
+      <label for="sucursal">Sucursal:</label>
+      <select id="sucursal" [(ngModel)]="sucursalSeleccionada" (change)="onSucursalChange(producto.id)">
+        <option *ngFor="let suc of sucursales" [ngValue]="suc">{{ suc.nombre }}</option>
+      </select>
+    </div>
+    <div class="stock-sucursal">
+      <ng-container *ngIf="inventario && inventario.stock != null; else sinStock">
+        Stock disponible: {{ inventario.stock }}
+      </ng-container>
+      <ng-template #sinStock>
+        Sin stock en esta sucursal
+      </ng-template>
+    </div>
+  </ng-container>
+  <div *ngIf="!esAdmin" class="agregar-carrito-cantidad">
+    <div class="selector-cantidad">
+      <button (click)="restarCantidad()" [disabled]="cantidad <= 1">-</button>
+      <input type="number" [(ngModel)]="cantidad" min="1" style="width: 50px; text-align: center;">
+      <button (click)="sumarCantidad()">+</button>
+    </div>
+    <span class="texto-cantidad">Indica cuántas unidades deseas agregar</span>
+    <button class="agregar-boton-verde" (click)="agregarAlCarrito()">Agregar al carrito</button>
+    <a routerLink="/home" class="link-seguir-comprando">Seguir comprando</a>
+  </div>
+
+  <!-- Solo para administrador -->
+  <ng-container *ngIf="esAdmin">
+    <!-- Formulario editable de datos del producto (excepto stock y sucursal) -->
+    <form class="form-editar-producto">
+      <h3 *ngIf="!modoCreacion">Editar datos del producto</h3>
+      <h3 *ngIf="modoCreacion">Crear nuevo producto</h3>
+      <label *ngIf="!modoCreacion">Código: <span>{{ producto.codigo }}</span></label>
+      <label *ngIf="modoCreacion">Código: <input [(ngModel)]="producto.codigo" name="codigo"></label>
+      <label>Nombre: <input [(ngModel)]="producto.nombre" name="nombre"></label>
+      <label>Descripción: <textarea [(ngModel)]="producto.descripcion" name="descripcion"></textarea></label>
+      <label>Precio: <input type="number" [(ngModel)]="producto.precio" name="precio"></label>
+      <label>Categoría:
+        <select [(ngModel)]="producto.categoriaId" name="categoriaId">
+          <option *ngFor="let cat of categorias" [value]="cat.id">{{ cat.nombre }}</option>
+        </select>
+      </label>
+      <label>Marca:
+        <select [(ngModel)]="producto.marcaId" name="marcaId">
+          <option [ngValue]="null">Sin marca / Otro</option>
+          <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nombre }}</option>
+        </select>
+      </label>
+      <div *ngIf="!modoCreacion" style="grid-column: 1 / -1; display: flex; align-items: center; gap: 1.2rem; margin: 0.7rem 0;">
+        <img [src]="getImagePath(producto)" [alt]="producto.nombre" style="width: 80px; height: 80px; object-fit: contain; border-radius: 0.7rem; background: #f5f5f5;">
+        <input type="file" #fileInput accept="image/*" style="display: none" (change)="onFileSelected($event)">
+        <button type="button" style="background:#e0e0e0;color:#263238;border:none;padding:0.6rem 1.2rem;border-radius:0.7rem;cursor:pointer;" (click)="fileInput.click()">Cambiar imagen</button>
+      </div>
+      <label>Especificaciones: <textarea [(ngModel)]="producto.especificaciones" name="especificaciones"></textarea></label>
+      <label>Activo: <input type="checkbox" [(ngModel)]="producto.activo" name="activo"></label>
+      <button type="button" (click)="guardarCambios()" style="background:#4CAF50;color:white;border:none;padding:0.8rem 1.5rem;border-radius:0.7rem;cursor:pointer;font-weight:500;">{{ modoCreacion ? 'Crear producto' : 'Guardar cambios' }}</button>
+    </form>
+  </ng-container>
+</div>
+
+<!-- ⏳ Spinner mientras carga -->
+<div class="spinner-center" *ngIf="cargando">
+  <ion-spinner name="crescent"></ion-spinner>
+</div>

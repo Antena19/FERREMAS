@@ -1,0 +1,281 @@
+.detalle-container {
+  padding: 2.5rem 2rem;
+  padding-top: 0.3rem;
+  max-width: 700px;
+  margin: 2.5rem auto;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 2rem;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.detalle-imagen {
+  width: 100%;
+  max-width: 320px;
+  height: 200px;
+  object-fit: contain;
+  margin: 0 auto 1.2rem auto;
+  border-radius: 1.2rem;
+  background: #f5f5f5;
+  display: block;
+}
+
+h2 {
+  font-size: 2rem;
+  margin: 0.5rem 0 0.7rem 0;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.descripcion {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 1rem;
+  padding: 0 0.5rem;
+}
+
+.precio {
+  font-size: 1.5rem;
+  color: #4CAF50;
+  font-weight: bold;
+  margin-bottom: 0.7rem;
+}
+
+.detalle-titulo {
+  font-size: 2.5rem;
+  color: #4CAF50;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.selector-sucursal {
+  margin: 1.2rem 0 0.7rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  font-size: 1.2rem;
+}
+
+.stock-sucursal {
+  text-align: center;
+  font-size: 1.15rem;
+  color: #388e3c;
+  margin-bottom: 1.2rem;
+  margin-top: 0.2rem;
+  font-weight: 600;
+}
+
+.selector-sucursal select {
+  padding: 0.6rem 1.1rem;
+  border-radius: 0.7rem;
+  border: 1.5px solid #4CAF50;
+  font-size: 1.08rem;
+  background: #fff;
+  color: #222;
+}
+
+.ficha-tecnica {
+  background: #f8faf8;
+  border-radius: 1.2rem;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(76,175,80,0.07);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.ficha-tecnica h3 {
+  color: #388e3c;
+  font-size: 1.25rem;
+  margin-bottom: 0.7rem;
+  font-weight: bold;
+}
+.ficha-tecnica ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.ficha-tecnica li {
+  font-size: 1.08rem;
+  color: #263238;
+  margin-bottom: 0.4rem;
+}
+
+.form-editar-producto {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem 1.5rem;
+  background: #f5f5f5;
+  border-radius: 1.2rem;
+  padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+  margin-top: -1.7rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+.form-editar-producto h3 {
+  grid-column: 1 / -1;
+  color: #263238;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 0.7rem;
+  text-align: center;
+}
+.form-editar-producto label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.08rem;
+  color: #263238;
+  font-weight: 600;
+  gap: 0.3rem;
+}
+.form-editar-producto input,
+.form-editar-producto textarea,
+.form-editar-producto select {
+  background: #fff;
+  color: #222;
+  border: 1.5px solid #4CAF50;
+  border-radius: 0.7rem;
+  font-size: 1.08rem;
+  padding: 0.7rem 1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  resize: vertical;
+}
+.form-editar-producto input[type="checkbox"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0.3rem 0 0 0;
+  accent-color: #4CAF50;
+}
+.form-editar-producto button {
+  grid-column: 1 / -1;
+  background: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.9rem 0;
+  font-size: 1.08rem;
+  font-weight: bold;
+  letter-spacing: 1.2px;
+  margin-top: 0.7rem;
+  margin-bottom: 0.2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: background 0.2s, color 0.2s;
+}
+.form-editar-producto button:hover {
+  background: #388e3c;
+}
+
+.btn-principal {
+  background-color: #388e3c;
+  color: #fff;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0.3rem 0.3rem 0 0.3rem;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.18s;
+  box-shadow: 0 2px 8px rgba(56,142,60,0.08);
+}
+.btn-principal:hover {
+  background: #2e7031;
+  transform: scale(1.06);
+}
+
+@media (max-width: 700px) {
+  .detalle-container {
+    max-width: 98vw;
+    padding: 1.2rem 0.2rem;
+  }
+  .form-editar-producto {
+    grid-template-columns: 1fr;
+    padding: 1.2rem 0.5rem;
+  }
+}
+
+.agregar-carrito-cantidad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.agregar-carrito-cantidad .selector-cantidad {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.5rem;
+}
+.agregar-carrito-cantidad button {
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: #e0e0e0;
+  color: #263238;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.agregar-carrito-cantidad button:active {
+  background: #bdbdbd;
+}
+.agregar-carrito-cantidad input[type="number"] {
+  width: 50px;
+  text-align: center;
+  font-size: 1.1rem;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.2rem;
+  background: #fff;
+  color: #263238;
+  box-shadow: none;
+}
+.texto-cantidad {
+  font-size: 1rem;
+  color: #263238;
+  margin: 0.3rem 0 0.7rem 0;
+  white-space: nowrap;
+  text-align: center;
+}
+.agregar-boton-verde {
+  background: #43a047 !important;
+  color: #fff !important;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 1.1rem 2.8rem;
+  border-radius: 0.9rem;
+  margin-left: 0;
+  box-shadow: 0 2px 8px rgba(67,160,71,0.08);
+  transition: background 0.2s;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 0.7rem;
+}
+.agregar-boton-verde:active {
+  background: #388e3c !important;
+}
+.link-seguir-comprando {
+  display: block;
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #43a047;
+  font-size: 1.1rem;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+}

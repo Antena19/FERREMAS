@@ -19,23 +19,46 @@ namespace Ferremas.Api.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public async Task<IEnumerable<Producto>> ObtenerTodosAsync()
+        public async Task<IEnumerable<Producto>> ObtenerTodosAsync(bool incluirInactivos = false)
         {
             using (var connection = new MySqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
 
                 var sql = @"
-                    SELECT p.*, c.nombre as CategoriaNombre, m.nombre as MarcaNombre
+                    SELECT 
+                        p.id,
+                        p.codigo,
+                        p.nombre,
+                        p.descripcion,
+                        p.precio,
+                        p.categoria_id AS CategoriaId,
+                        p.marca_id AS MarcaId,
+                        p.imagen_url AS ImagenUrl,
+                        p.especificaciones,
+                        p.fecha_creacion AS FechaCreacion,
+                        p.fecha_modificacion AS FechaModificacion,
+                        p.activo AS Activo,
+                        c.nombre as CategoriaNombre,
+                        m.nombre as MarcaNombre
                     FROM productos p
                     LEFT JOIN categorias c ON p.categoria_id = c.id
                     LEFT JOIN marcas m ON p.marca_id = m.id
-                    WHERE p.activo = 1
-                    ORDER BY p.nombre";
+";
+                if (!incluirInactivos)
+                {
+                    sql += " WHERE p.activo = 1";
+                }
+                sql += " ORDER BY p.nombre";
 
                 var productos = await connection.QueryAsync<Producto>(sql);
                 return productos;
             }
+        }
+
+        public async Task<IEnumerable<Producto>> ObtenerTodosAsync()
+        {
+            return await ObtenerTodosAsync(false);
         }
 
         public async Task<Producto> ObtenerPorIdAsync(int id)
@@ -45,7 +68,21 @@ namespace Ferremas.Api.Repositories
                 await connection.OpenAsync();
 
                 var sql = @"
-                    SELECT p.*, c.nombre as CategoriaNombre, m.nombre as MarcaNombre
+                    SELECT 
+                        p.id,
+                        p.codigo,
+                        p.nombre,
+                        p.descripcion,
+                        p.precio,
+                        p.categoria_id AS CategoriaId,
+                        p.marca_id AS MarcaId,
+                        p.imagen_url AS ImagenUrl,
+                        p.especificaciones,
+                        p.fecha_creacion AS FechaCreacion,
+                        p.fecha_modificacion AS FechaModificacion,
+                        p.activo AS Activo,
+                        c.nombre as CategoriaNombre,
+                        m.nombre as MarcaNombre
                     FROM productos p
                     LEFT JOIN categorias c ON p.categoria_id = c.id
                     LEFT JOIN marcas m ON p.marca_id = m.id
@@ -304,6 +341,34 @@ namespace Ferremas.Api.Repositories
                 });
 
                 return filasAfectadas > 0;
+            }
+        }
+
+        public async Task<bool> CategoriaExisteAsync(int categoriaId)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var sql = "SELECT COUNT(1) FROM categorias WHERE id = @CategoriaId";
+
+                var existe = await connection.ExecuteScalarAsync<int>(sql, new { CategoriaId = categoriaId });
+
+                return existe > 0;
+            }
+        }
+
+        public async Task<bool> MarcaExisteAsync(int marcaId)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var sql = "SELECT COUNT(1) FROM marcas WHERE id = @MarcaId";
+
+                var existe = await connection.ExecuteScalarAsync<int>(sql, new { MarcaId = marcaId });
+
+                return existe > 0;
             }
         }
     }

@@ -32,7 +32,7 @@ namespace Ferremas.Api.Controllers
             return Ok(inventario);
         }
 
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador,administrador")]
         [HttpPut("{id}/stock")]
         public async Task<IActionResult> UpdateStock(int id, [FromBody] int cantidad)
         {
@@ -47,7 +47,7 @@ namespace Ferremas.Api.Controllers
             }
         }
 
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador,administrador")]
         [HttpPut("{id}/precios")]
         public async Task<IActionResult> UpdatePrecios(int id, [FromBody] UpdatePreciosRequest request)
         {

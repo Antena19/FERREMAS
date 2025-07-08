@@ -1,0 +1,139 @@
+/* =============================== */
+/* 🎨 FONDO GENERAL DE LA VISTA    */
+/* =============================== */
+
+.login-bg {
+  --background: #f5f5f5 !important;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-wrapper {
+  width: 100%;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.login-card {
+  background-color: #fff;
+  border-radius: 2rem;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.login-title {
+  font-size: 2.1rem;
+  text-align: center;
+  color: #4CAF50;
+  font-weight: bold;
+  margin-bottom: 0.7rem;
+  letter-spacing: 1px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.input-label {
+  color: #263238 !important;
+  font-size: 1.08rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.input-white {
+  --background: #fff !important;
+  --color: #222 !important;
+  --placeholder-color: #bdbdbd !important;
+  --border-color: #4CAF50 !important;
+  font-size: 1.08rem;
+  padding: 0.9rem 1rem;
+  border-radius: 0.7rem;
+  border: 1.5px solid #4CAF50 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  margin-bottom: 0.2rem;
+}
+
+.input-white::placeholder {
+  color: #bdbdbd !important;
+  opacity: 1 !important;
+}
+
+:host ::ng-deep ion-input.input-white .native-input {
+  background: #fff !important;
+  color: #222 !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  border-radius: 0.7rem !important;
+  padding: 0 !important;
+}
+
+:host ::ng-deep ion-input.input-white .native-input::placeholder {
+  color: #bdbdbd !important;
+  opacity: 1 !important;
+}
+
+.login-btn-center {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-grande {
+  background: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 0.7rem;
+  font-size: 1.15rem;
+  font-weight: bold;
+  padding: 0.9rem 2.2rem;
+  margin-top: 0.7rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-grande:disabled {
+  background: #bdbdbd;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.mensaje-exito {
+  background-color: #e8f5e9;
+  color: #388e3c;
+  padding: 1rem 1.2rem;
+  border-radius: 0.7rem;
+  font-size: 1.08rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-weight: 600;
+  justify-content: center;
+}
+
+.mensaje-error {
+  background-color: #ffe0b2;
+  color: #bf360c;
+  padding: 1rem 1.2rem;
+  border-radius: 0.7rem;
+  font-size: 1.08rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-weight: 600;
+  justify-content: center;
+}

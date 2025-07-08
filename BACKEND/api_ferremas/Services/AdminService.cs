@@ -1,4 +1,5 @@
 using Ferremas.Api.Modelos;
+using Ferremas.Api.DTOs;
 using MySql.Data.MySqlClient;
 using System.Data;
 using System.Security.Cryptography;
@@ -890,6 +891,426 @@ namespace Ferremas.Api.Services
                 command.Parameters.AddWithValue("@id", id);
                 return await command.ExecuteNonQueryAsync() > 0;
             }
+        }
+
+        // Obtener perfil completo del usuario
+        public async Task<PerfilUsuarioDTO> GetPerfilUsuario(int id)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                
+                // 1. Obtener datos básicos del usuario
+                Usuario usuario = null;
+                using (var usuarioCommand = new MySqlCommand(@"
+                    SELECT * FROM usuarios WHERE id = @id", connection))
+                {
+                    usuarioCommand.Parameters.AddWithValue("@id", id);
+                    using var usuarioReader = await usuarioCommand.ExecuteReaderAsync();
+                    if (await usuarioReader.ReadAsync())
+                    {
+                        usuario = new Usuario
+                        {
+                            Id = usuarioReader.GetInt32("id"),
+                            Nombre = usuarioReader.GetString("nombre"),
+                            Apellido = usuarioReader.GetString("apellido"),
+                            Email = usuarioReader.GetString("email"),
+                            Rut = usuarioReader.GetString("rut"),
+                            Telefono = usuarioReader.GetString("telefono"),
+                            Rol = usuarioReader.GetString("rol"),
+                            FechaRegistro = usuarioReader.GetDateTime("fecha_registro"),
+                            UltimoAcceso = usuarioReader.IsDBNull("ultimo_acceso") ? null : usuarioReader.GetDateTime("ultimo_acceso")
+                        };
+                    }
+                }
+
+                if (usuario == null)
+                    return null;
+
+                var perfil = new PerfilUsuarioDTO
+                {
+                    Id = usuario.Id,
+                    Nombre = usuario.Nombre,
+                    Apellido = usuario.Apellido,
+                    Email = usuario.Email,
+                    Rut = usuario.Rut,
+                    Telefono = usuario.Telefono,
+                    Rol = usuario.Rol,
+                    FechaRegistro = usuario.FechaRegistro,
+                    UltimoAcceso = usuario.UltimoAcceso,
+                    HistorialCompras = new List<PedidoDTO>(),
+                    Direcciones = new List<DireccionDTO>()
+                };
+
+                // 2. Obtener datos adicionales del cliente (si existe)
+                using (var clienteCommand = new MySqlCommand(@"
+                    SELECT * FROM clientes WHERE correo_electronico = @email", connection))
+                {
+                    clienteCommand.Parameters.AddWithValue("@email", perfil.Email);
+                    using var clienteReader = await clienteCommand.ExecuteReaderAsync();
+                    if (await clienteReader.ReadAsync())
+                    {
+                        perfil.TipoCliente = clienteReader.GetString("tipo_cliente");
+                        perfil.TotalCompras = clienteReader.GetDecimal("total_compras");
+                        perfil.NumeroCompras = clienteReader.GetInt32("numero_compras");
+                        perfil.UltimaCompra = clienteReader.IsDBNull("ultima_compra") ? null : clienteReader.GetDateTime("ultima_compra");
+                        perfil.Newsletter = clienteReader.GetBoolean("newsletter");
+                    }
+                }
+
+                // 3. Obtener historial de compras
+                using (var pedidosCommand = new MySqlCommand(@"
+                    SELECT p.*, pi.producto_id, pi.cantidad, pi.precio_unitario, pi.subtotal,
+                           pr.nombre as producto_nombre, pr.imagen_url
+                    FROM pedidos p
+                    LEFT JOIN pedido_items pi ON p.id = pi.pedido_id
+                    LEFT JOIN productos pr ON pi.producto_id = pr.id
+                    WHERE p.usuario_id = @usuarioId
+                    ORDER BY p.fecha_pedido DESC", connection))
+                {
+                    pedidosCommand.Parameters.AddWithValue("@usuarioId", id);
+                    using var pedidosReader = await pedidosCommand.ExecuteReaderAsync();
+                    var pedidosDict = new Dictionary<int, PedidoDTO>();
+                    
+                    while (await pedidosReader.ReadAsync())
+                    {
+                        var pedidoId = pedidosReader.GetInt32("id");
+                        
+                        if (!pedidosDict.ContainsKey(pedidoId))
+                        {
+                            pedidosDict[pedidoId] = new PedidoDTO
+                            {
+                                Id = pedidoId,
+                                Fecha = pedidosReader.GetDateTime("fecha_pedido"),
+                                UsuarioId = pedidosReader.GetInt32("usuario_id"),
+                                Estado = pedidosReader.GetString("estado"),
+                                TipoEntrega = pedidosReader.GetString("tipo_entrega"),
+                                Subtotal = pedidosReader.GetDecimal("subtotal"),
+                                CostoEnvio = pedidosReader.GetDecimal("costo_envio"),
+                                Impuestos = pedidosReader.GetDecimal("impuestos"),
+                                Total = pedidosReader.GetDecimal("total"),
+                                Notas = pedidosReader.GetString("notas"),
+                                Items = new List<PedidoItemResponseDTO>()
+                            };
+                        }
+
+                        if (!pedidosReader.IsDBNull("producto_id"))
+                        {
+                            pedidosDict[pedidoId].Items.Add(new PedidoItemResponseDTO
+                            {
+                                ProductoId = pedidosReader.GetInt32("producto_id"),
+                                ProductoNombre = pedidosReader.GetString("producto_nombre"),
+                                Cantidad = pedidosReader.GetInt32("cantidad"),
+                                PrecioUnitario = pedidosReader.GetDecimal("precio_unitario"),
+                                Subtotal = pedidosReader.GetDecimal("subtotal")
+                            });
+                        }
+                    }
+                    
+                    perfil.HistorialCompras = pedidosDict.Values.ToList();
+                }
+
+                // 4. Obtener direcciones de envío
+                using (var direccionesCommand = new MySqlCommand(@"
+                    SELECT * FROM direcciones WHERE usuario_id = @usuarioId", connection))
+                {
+                    direccionesCommand.Parameters.AddWithValue("@usuarioId", id);
+                    using var direccionesReader = await direccionesCommand.ExecuteReaderAsync();
+                    while (await direccionesReader.ReadAsync())
+                    {
+                        perfil.Direcciones.Add(new DireccionDTO
+                        {
+                            Id = direccionesReader.GetInt32("id"),
+                            Calle = direccionesReader.GetString("calle"),
+                            Numero = direccionesReader.GetString("numero"),
+                            Departamento = direccionesReader.IsDBNull("departamento") ? null : direccionesReader.GetString("departamento"),
+                            Comuna = direccionesReader.GetString("comuna"),
+                            Region = direccionesReader.GetString("region"),
+                            CodigoPostal = direccionesReader.IsDBNull("codigo_postal") ? null : direccionesReader.GetString("codigo_postal"),
+                            EsPrincipal = direccionesReader.GetBoolean("es_principal")
+                        });
+                    }
+                }
+
+                return perfil;
+            }
+        }
+
+        // ============================
+        // 🏠 GESTIÓN DE DIRECCIONES
+        // ============================
+
+        /// <summary>
+        /// Obtiene todas las direcciones de un usuario
+        /// </summary>
+        public async Task<IEnumerable<DireccionDTO>> GetDireccionesUsuario(int usuarioId)
+        {
+            var direcciones = new List<DireccionDTO>();
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using (var command = new MySqlCommand(@"
+                    SELECT * FROM direcciones WHERE usuario_id = @usuarioId ORDER BY es_principal DESC, id ASC", connection))
+                {
+                    command.Parameters.AddWithValue("@usuarioId", usuarioId);
+                    using var reader = await command.ExecuteReaderAsync();
+                    while (await reader.ReadAsync())
+                    {
+                        direcciones.Add(new DireccionDTO
+                        {
+                            Id = reader.GetInt32("id"),
+                            UsuarioId = reader.GetInt32("usuario_id"),
+                            Calle = reader.GetString("calle"),
+                            Numero = reader.GetString("numero"),
+                            Departamento = reader.IsDBNull("departamento") ? null : reader.GetString("departamento"),
+                            Comuna = reader.GetString("comuna"),
+                            Region = reader.GetString("region"),
+                            CodigoPostal = reader.IsDBNull("codigo_postal") ? null : reader.GetString("codigo_postal"),
+                            EsPrincipal = reader.GetBoolean("es_principal")
+                        });
+                    }
+                }
+            }
+            return direcciones;
+        }
+
+        /// <summary>
+        /// Obtiene una dirección específica por ID
+        /// </summary>
+        public async Task<DireccionDTO> GetDireccionById(int id)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using (var command = new MySqlCommand(@"
+                    SELECT * FROM direcciones WHERE id = @id", connection))
+                {
+                    command.Parameters.AddWithValue("@id", id);
+                    using var reader = await command.ExecuteReaderAsync();
+                    if (await reader.ReadAsync())
+                    {
+                        return new DireccionDTO
+                        {
+                            Id = reader.GetInt32("id"),
+                            UsuarioId = reader.GetInt32("usuario_id"),
+                            Calle = reader.GetString("calle"),
+                            Numero = reader.GetString("numero"),
+                            Departamento = reader.IsDBNull("departamento") ? null : reader.GetString("departamento"),
+                            Comuna = reader.GetString("comuna"),
+                            Region = reader.GetString("region"),
+                            CodigoPostal = reader.IsDBNull("codigo_postal") ? null : reader.GetString("codigo_postal"),
+                            EsPrincipal = reader.GetBoolean("es_principal")
+                        };
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Crea una nueva dirección
+        /// </summary>
+        public async Task<DireccionDTO> CrearDireccion(DireccionDTO direccion)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using var transaction = await connection.BeginTransactionAsync();
+
+                try
+                {
+                    // Si es la dirección principal, desmarcar otras direcciones
+                    if (direccion.EsPrincipal)
+                    {
+                        using var updateCommand = new MySqlCommand(@"
+                            UPDATE direcciones 
+                            SET es_principal = 0 
+                            WHERE usuario_id = @usuarioId", connection, transaction);
+                        updateCommand.Parameters.AddWithValue("@usuarioId", direccion.UsuarioId);
+                        await updateCommand.ExecuteNonQueryAsync();
+                    }
+
+                    // Insertar nueva dirección
+                    using var insertCommand = new MySqlCommand(@"
+                        INSERT INTO direcciones (
+                            usuario_id, calle, numero, departamento, comuna, region, codigo_postal, es_principal
+                        ) VALUES (
+                            @usuarioId, @calle, @numero, @departamento, @comuna, @region, @codigoPostal, @esPrincipal
+                        )", connection, transaction);
+                    
+                    insertCommand.Parameters.AddWithValue("@usuarioId", direccion.UsuarioId);
+                    insertCommand.Parameters.AddWithValue("@calle", direccion.Calle);
+                    insertCommand.Parameters.AddWithValue("@numero", direccion.Numero);
+                    insertCommand.Parameters.AddWithValue("@departamento", direccion.Departamento ?? (object)DBNull.Value);
+                    insertCommand.Parameters.AddWithValue("@comuna", direccion.Comuna);
+                    insertCommand.Parameters.AddWithValue("@region", direccion.Region);
+                    insertCommand.Parameters.AddWithValue("@codigoPostal", direccion.CodigoPostal ?? (object)DBNull.Value);
+                    insertCommand.Parameters.AddWithValue("@esPrincipal", direccion.EsPrincipal);
+
+                    await insertCommand.ExecuteNonQueryAsync();
+                    
+                    // Obtener el ID de la última inserción
+                    using var getIdCommand = new MySqlCommand("SELECT LAST_INSERT_ID()", connection, transaction);
+                    var lastIdObj = await getIdCommand.ExecuteScalarAsync();
+                    var nuevaId = Convert.ToInt32(lastIdObj);
+
+                    await transaction.CommitAsync();
+
+                    direccion.Id = nuevaId;
+                    return direccion;
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Actualiza una dirección existente
+        /// </summary>
+        public async Task<DireccionDTO> ActualizarDireccion(int id, DireccionDTO direccion)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using var transaction = await connection.BeginTransactionAsync();
+
+                try
+                {
+                    // Si es la dirección principal, desmarcar otras direcciones
+                    if (direccion.EsPrincipal)
+                    {
+                        using var updateCommand = new MySqlCommand(@"
+                            UPDATE direcciones 
+                            SET es_principal = 0 
+                            WHERE usuario_id = @usuarioId AND id != @id", connection, transaction);
+                        updateCommand.Parameters.AddWithValue("@usuarioId", direccion.UsuarioId);
+                        updateCommand.Parameters.AddWithValue("@id", id);
+                        await updateCommand.ExecuteNonQueryAsync();
+                    }
+
+                    // Actualizar dirección
+                    using var updateDireccionCommand = new MySqlCommand(@"
+                        UPDATE direcciones 
+                        SET calle = @calle, numero = @numero, departamento = @departamento, 
+                            comuna = @comuna, region = @region, codigo_postal = @codigoPostal, 
+                            es_principal = @esPrincipal
+                        WHERE id = @id", connection, transaction);
+                    
+                    updateDireccionCommand.Parameters.AddWithValue("@calle", direccion.Calle);
+                    updateDireccionCommand.Parameters.AddWithValue("@numero", direccion.Numero);
+                    updateDireccionCommand.Parameters.AddWithValue("@departamento", direccion.Departamento ?? (object)DBNull.Value);
+                    updateDireccionCommand.Parameters.AddWithValue("@comuna", direccion.Comuna);
+                    updateDireccionCommand.Parameters.AddWithValue("@region", direccion.Region);
+                    updateDireccionCommand.Parameters.AddWithValue("@codigoPostal", direccion.CodigoPostal ?? (object)DBNull.Value);
+                    updateDireccionCommand.Parameters.AddWithValue("@esPrincipal", direccion.EsPrincipal);
+                    updateDireccionCommand.Parameters.AddWithValue("@id", id);
+
+                    await updateDireccionCommand.ExecuteNonQueryAsync();
+
+                    await transaction.CommitAsync();
+
+                    direccion.Id = id;
+                    return direccion;
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Elimina una dirección
+        /// </summary>
+        public async Task<bool> EliminarDireccion(int id)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using var command = new MySqlCommand("DELETE FROM direcciones WHERE id = @id", connection);
+                command.Parameters.AddWithValue("@id", id);
+                return await command.ExecuteNonQueryAsync() > 0;
+            }
+        }
+
+        /// <summary>
+        /// Actualiza los datos personales de un usuario
+        /// </summary>
+        public async Task<bool> ActualizarDatosPersonales(int usuarioId, DatosPersonalesDTO datos)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using var transaction = await connection.BeginTransactionAsync();
+
+                try
+                {
+                    // 1. Actualizar datos en la tabla usuarios
+                    using var updateUsuarioCommand = new MySqlCommand(@"
+                        UPDATE usuarios 
+                        SET nombre = @nombre, apellido = @apellido, telefono = @telefono
+                        WHERE id = @usuarioId", connection, transaction);
+                    
+                    updateUsuarioCommand.Parameters.AddWithValue("@nombre", datos.Nombre);
+                    updateUsuarioCommand.Parameters.AddWithValue("@apellido", datos.Apellido);
+                    updateUsuarioCommand.Parameters.AddWithValue("@telefono", datos.Telefono ?? (object)DBNull.Value);
+                    updateUsuarioCommand.Parameters.AddWithValue("@usuarioId", usuarioId);
+
+                    await updateUsuarioCommand.ExecuteNonQueryAsync();
+
+                    // 2. Actualizar datos en la tabla clientes (si existe)
+                    using var updateClienteCommand = new MySqlCommand(@"
+                        UPDATE clientes 
+                        SET nombre = @nombre, apellido = @apellido, telefono = @telefono, tipo_cliente = @tipoCliente
+                        WHERE correo_electronico = (SELECT email FROM usuarios WHERE id = @usuarioId)", connection, transaction);
+                    
+                    updateClienteCommand.Parameters.AddWithValue("@nombre", datos.Nombre);
+                    updateClienteCommand.Parameters.AddWithValue("@apellido", datos.Apellido);
+                    updateClienteCommand.Parameters.AddWithValue("@telefono", datos.Telefono ?? (object)DBNull.Value);
+                    updateClienteCommand.Parameters.AddWithValue("@tipoCliente", datos.TipoCliente);
+                    updateClienteCommand.Parameters.AddWithValue("@usuarioId", usuarioId);
+
+                    await updateClienteCommand.ExecuteNonQueryAsync();
+
+                    await transaction.CommitAsync();
+                    return true;
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    return false;
+                }
+            }
+        }
+
+        public async Task<IEnumerable<Sucursal>> GetAllSucursales()
+        {
+            var sucursales = new List<Sucursal>();
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using var command = new MySqlCommand("SELECT * FROM sucursales WHERE activo = 1", connection);
+                using var reader = await command.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    sucursales.Add(new Sucursal
+                    {
+                        Id = reader.GetInt32("id"),
+                        Nombre = reader.GetString("nombre"),
+                        Direccion = reader.GetString("direccion"),
+                        Comuna = reader.GetString("comuna"),
+                        Region = reader.GetString("region"),
+                        Telefono = reader.IsDBNull(reader.GetOrdinal("telefono")) ? null : reader.GetString("telefono"),
+                        EsPrincipal = reader.GetBoolean("es_principal"),
+                        Activo = reader.GetBoolean("activo")
+                    });
+                }
+            }
+            return sucursales;
         }
     }
 } 

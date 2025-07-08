@@ -285,3 +285,4 @@ C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\refint\Ferremas.Api.dll
 C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.pdb
 C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.genruntimeconfig.cache
 C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\ref\Ferremas.Api.dll
+C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\Ferremas.Api.staticwebassets.runtime.json

@@ -1,0 +1,57 @@
+<div class="home-container">
+
+  <!-- 🔷 CATEGORÍAS -->
+  <section class="categorias-section">
+    <div class="categorias-cloud">
+      <!-- Botón para ver todos los productos -->
+      <span (click)="verTodos()" class="categoria-palabra ver-todos" style="cursor:pointer;">
+        Ver todos
+      </span>
+      <!-- Categorías dinámicas -->
+      <span *ngFor="let categoria of categorias"
+            (click)="verCategoria(categoria)"
+            class="categoria-palabra"
+            style="cursor:pointer;">
+        {{ categoria.nombre }}
+      </span>
+    </div>
+  </section>
+
+  <!-- 🔶 PRODUCTOS DESTACADOS -->
+  <section class="productos-section">
+    <h2>Productos Destacados</h2>
+
+    <!-- ⏳ Spinner mientras se cargan los productos -->
+    <div *ngIf="cargando" class="spinner-center">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <!-- 🧱 Grilla de productos destacados (máx. 8) -->
+    <div *ngIf="!cargando && productos.length > 0" class="productos-grid">
+      <button class="carrusel-flecha izq" (click)="anteriorProducto()" aria-label="Anterior">
+        <svg viewBox="0 0 24 24"><polyline points="15 5 8 12 15 19"/></svg>
+      </button>
+
+      <div *ngFor="let producto of productos; let i = index" class="producto-card"
+           [ngStyle]="{'transform': getCarruselTransform(i), 'z-index': getCarruselZIndex(i), 'opacity': getCarruselOpacity(i)}">
+        <img [src]="getImagePath(producto)" [alt]="producto.nombre">
+        <h5>{{ producto.nombre }}</h5>
+        <p>${{ producto.precio | number:'1.0-0' }}</p>
+        <ng-container *ngIf="i === productoActual">
+          <button (click)="agregarAlCarrito(producto)">Agregar al carrito</button>
+          <button class="detalle-btn" (click)="verDetalle(producto)">Ver detalle</button>
+        </ng-container>
+      </div>
+
+      <button class="carrusel-flecha der" (click)="siguienteProducto()" aria-label="Siguiente">
+        <svg viewBox="0 0 24 24"><polyline points="9 5 16 12 9 19"/></svg>
+      </button>
+    </div>
+
+    <!-- 📎 Botón para ver más productos -->
+    <div class="ver-mas-container">
+      <a routerLink="/productos" (click)="verMas()">Ver más</a>
+    </div>
+  </section>
+
+</div>

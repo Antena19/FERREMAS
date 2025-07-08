@@ -1,0 +1,371 @@
+/* =============================== */
+/* 🎨 FONDO GENERAL DE LA VISTA    */
+/* =============================== */
+
+/* 🧱 Aplica un fondo oscuro a toda la vista */
+.login-bg {
+  --background: #f5f5f5 !important; // Fondo gris claro
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =============================== */
+/* 📦 CONTENEDOR DEL LOGIN CARD    */
+/* =============================== */
+
+/* 🧱 Contenedor que envuelve la tarjeta login */
+.login-wrapper {
+  width: 100%;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* =============================== */
+/* 🧾 TARJETA DE LOGIN             */
+/* =============================== */
+
+/* 🧾 Estilo principal de la tarjeta de login */
+.login-card {
+  background-color: #fff;
+  border-radius: 2rem;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+/* =============================== */
+/* 🏷️ TÍTULO DE BIENVENIDA        */
+/* =============================== */
+
+/* 🎯 Estilo del título principal */
+.login-title {
+  font-size: 2.1rem;
+  text-align: center;
+  color: #4CAF50;
+  font-weight: bold;
+  margin-bottom: 0.7rem;
+  letter-spacing: 1px;
+}
+
+/* ✅ Color institucional verde para destacar FERREMAS */
+.verde {
+  color: #4CAF50;
+}
+
+/* =============================== */
+/* 🏷️ GRUPO DE INPUT CON LABEL     */
+/* =============================== */
+
+/* 📦 Agrupa label y input */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 🎯 Estilo del texto label */
+.input-label {
+  color: #263238 !important;
+  font-size: 1.08rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+/* =============================== */
+/* 📥 INPUTS DE CORREO Y CLAVE     */
+/* =============================== */
+
+/* 🧾 Personalización de los campos de texto */
+.input-white {
+  --background: #fff !important;
+  --color: #222 !important;
+  --placeholder-color: #bdbdbd !important;
+  --border-color: #4CAF50 !important;
+  font-size: 1.08rem;
+  padding: 0.9rem 1rem;
+  border-radius: 0.7rem;
+  border: 1.5px solid #4CAF50 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  margin-bottom: 0.2rem;
+}
+
+.input-white::placeholder {
+  color: #bdbdbd !important;
+  opacity: 1 !important;
+}
+
+/** Eliminar fondo gris y bordes internos del botón y los inputs **/
+:host ::ng-deep .btn-grande * {
+  background: none !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+:host ::ng-deep ion-input.input-white .native-input {
+  background: none !important;
+  color: #222 !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  border-radius: 0.7rem !important;
+  padding: 0 !important;
+}
+
+:host ::ng-deep ion-input.input-white .native-input::placeholder {
+  color: #bdbdbd !important;
+  opacity: 1 !important;
+}
+
+/* =============================== */
+/* 🔗 ENLACE REGISTRO NUEVA CUENTA */
+/* =============================== */
+
+/* 🧭 Estilo para el texto inferior con link */
+.registro-link {
+  text-align: center;
+  color: #263238;
+  font-size: 1.05rem;
+  margin-top: 0.7rem;
+}
+
+/* 🔗 Estilo para el enlace clickeable */
+.registro-link a {
+  color: #4CAF50;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.08rem;
+}
+
+.registro-link a:hover {
+  text-decoration: underline;
+}
+
+/* =============================== */
+/* ⚠️ MENSAJE DE ERROR EN LOGIN     */
+/* =============================== */
+.mensaje-error {
+  background-color: #ffe0b2;
+  color: #bf360c;
+  padding: 1rem 1.2rem;
+  border-radius: 0.7rem;
+  font-size: 1.08rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-weight: 600;
+}
+
+.navbar-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  color: #4CAF50;
+  padding: 1.1rem 0 1.1rem 0;
+  border-bottom: 3px solid #4CAF50;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    cursor: pointer;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #4CAF50;
+
+    i {
+      font-size: 1.7rem;
+    }
+
+    span {
+      text-transform: uppercase;
+    }
+  }
+}
+
+.login-btn-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+
+.btn-grande {
+  font-size: 1.08rem !important;
+  font-weight: bold;
+  padding: 0.9rem 0 !important;
+  border-radius: 0.7rem !important;
+  letter-spacing: 1.2px;
+  width: 100%;
+  max-width: 220px;
+  min-width: 160px;
+  margin: 0 auto;
+  display: block;
+  background: #4CAF50 !important;
+  color: #fff !important;
+  border: none !important;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: background 0.2s, color 0.2s;
+  text-align: center;
+}
+
+.btn-grande:hover, .btn-grande:focus {
+  background: #388e3c !important;
+  color: #fff !important;
+}
+
+.btn-text {
+  background: none !important;
+  color: #fff !important;
+  font-weight: bold;
+  font-size: 1.08rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.btn-login-nativo {
+  background: #4CAF50 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 0.7rem !important;
+  width: 100%;
+  max-width: 220px;
+  min-width: 160px;
+  padding: 0.9rem 0 !important;
+  font-size: 1.08rem;
+  font-weight: bold;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin: 0 auto;
+  display: block;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: background 0.2s, color 0.2s;
+  text-align: center;
+  cursor: pointer;
+}
+
+.btn-login-nativo:hover, .btn-login-nativo:focus {
+  background: #388e3c !important;
+  color: #fff !important;
+}
+
+.btn-login-nativo:disabled {
+  background: #e0e0e0 !important;
+  color: #bdbdbd !important;
+  cursor: not-allowed !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.olvide-contrasena-link {
+  text-align: center;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  color: #888;
+  font-size: 1.01rem;
+}
+.olvide-contrasena-link a {
+  color: #4CAF50;
+  text-decoration: none;
+  font-weight: 500;
+  transition: text-decoration 0.2s, color 0.2s;
+}
+.olvide-contrasena-link a:hover {
+  text-decoration: underline;
+  color: #388e3c;
+}
+
+.registro-exito-msg {
+  position: fixed;
+  left: 50%;
+  bottom: 2.2rem;
+  transform: translateX(-50%);
+  background: #e8f5e9;
+  color: #219150;
+  border: 2px solid #4CAF50;
+  border-radius: 1.2rem;
+  font-size: 1.18rem;
+  font-weight: bold;
+  text-align: center;
+  min-width: 260px;
+  max-width: 90vw;
+  padding: 1.1rem 1.5rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.registro-error-msg {
+  position: fixed;
+  left: 50%;
+  bottom: 2.2rem;
+  transform: translateX(-50%);
+  background: #ffebee;
+  color: #c62828;
+  border: 2px solid #d32f2f;
+  border-radius: 1.2rem;
+  font-size: 1.18rem;
+  font-weight: bold;
+  text-align: center;
+  min-width: 260px;
+  max-width: 90vw;
+  padding: 1.1rem 1.5rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.input-group-password .input-password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-password-wrapper ion-input {
+  flex: 1;
+  padding-right: 2.2rem !important;
+}
+
+.btn-ojo {
+  position: absolute;
+  right: 0.7rem;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0 0.2rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.btn-ojo svg {
+  font-size: 1.35rem;
+  color: #4CAF50 !important;
+  pointer-events: none;
+  transition: color 0.2s;
+}
+
+.btn-ojo:focus svg,
+.btn-ojo:hover svg {
+  color: #388e3c !important;
+}

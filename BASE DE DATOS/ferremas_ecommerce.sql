@@ -68,7 +68,7 @@ CREATE TABLE `carritos` (
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`),
   CONSTRAINT `carritos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +77,7 @@ CREATE TABLE `carritos` (
 
 LOCK TABLES `carritos` WRITE;
 /*!40000 ALTER TABLE `carritos` DISABLE KEYS */;
-INSERT INTO `carritos` VALUES (13,10,'2025-05-27 14:19:13','2025-05-27 15:31:30',26970.00,5124.30,0.00,32094.30,0),(14,10,'2025-05-28 12:00:51','2025-05-28 19:44:13',4990.00,948.10,0.00,5938.10,1),(15,15,'2025-05-28 18:37:53','2025-05-29 15:42:30',69990.00,13298.10,0.00,83288.10,0);
+INSERT INTO `carritos` VALUES (15,15,'2025-05-28 18:37:53','2025-05-29 15:42:30',69990.00,13298.10,0.00,83288.10,0),(16,15,'2025-07-05 15:59:04',NULL,0.00,0.00,0.00,0.00,1),(17,33,'2025-07-05 19:17:20',NULL,0.00,0.00,0.00,0.00,1),(18,34,'2025-07-05 20:48:15',NULL,0.00,0.00,0.00,0.00,1);
 /*!40000 ALTER TABLE `carritos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,7 +134,7 @@ CREATE TABLE `clientes` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `rut` (`rut`),
   UNIQUE KEY `correo_electronico` (`correo_electronico`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +143,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (3,'Angelina','Mendoza','17144575-2','ange.mendoza@duocuc.cl','+56998555466','2025-05-22 12:05:05','particular','activo',0,NULL,0.00,0),(4,'Cliente','Cliente','123453452','cliente@example.com','99999999','2025-05-23 23:42:34','particular','activo',0,NULL,0.00,0),(5,'admin','admin','191991999','admin@ferremas.cl','99999999','2025-05-27 20:22:21','particular','activo',0,NULL,0.00,0),(7,'Prueba','Prueba','101001001','Prueba@prueba.cl','10101010','2025-05-28 11:37:17','particular','activo',0,NULL,0.00,0);
+INSERT INTO `clientes` VALUES (4,'Cliente','Cliente','123453452','cliente@example.com','99999999','2025-05-23 23:42:34','particular','activo',0,NULL,0.00,0),(5,'admin','admin','191991999','admin@ferremas.cl','99999999','2025-05-27 20:22:21','particular','activo',0,NULL,0.00,0),(7,'Prueba','Prueba','101001001','Prueba@prueba.cl','10101010','2025-05-28 11:37:17','particular','activo',0,NULL,0.00,0),(14,'Batitú','Mayorga','25592802-5','angelina.mendoza.y@gmail.com','+56998555466','2025-07-05 19:10:42','particular','activo',0,NULL,0.00,0),(15,'Angelina','Mendoza','17144575-2','ange.mendoza@duocuc.cl','+56998555466','2025-07-05 20:46:16','particular','activo',0,NULL,0.00,0);
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,7 +234,6 @@ CREATE TABLE `direcciones` (
 
 LOCK TABLES `direcciones` WRITE;
 /*!40000 ALTER TABLE `direcciones` DISABLE KEYS */;
-INSERT INTO `direcciones` VALUES (1,10,'Joseph Addison','2342','Portal Puerto Montt','Puerto Montt','Región de Los Lagos','5480000',1),(2,10,'Avenida Austral','1243','Jardín Austral','Puerto Montt','Región de Los Lagos','5480000',0);
 /*!40000 ALTER TABLE `direcciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -362,7 +361,7 @@ CREATE TABLE `items_carrito` (
 
 LOCK TABLES `items_carrito` WRITE;
 /*!40000 ALTER TABLE `items_carrito` DISABLE KEYS */;
-INSERT INTO `items_carrito` VALUES (12,13,8,1,4990.00,4990.00),(13,13,11,1,12990.00,12990.00),(14,13,13,1,8990.00,8990.00),(15,15,6,1,69990.00,69990.00),(17,14,8,1,4990.00,4990.00);
+INSERT INTO `items_carrito` VALUES (15,15,6,1,69990.00,69990.00);
 /*!40000 ALTER TABLE `items_carrito` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -526,7 +525,7 @@ CREATE TABLE `pagos` (
 
 LOCK TABLES `pagos` WRITE;
 /*!40000 ALTER TABLE `pagos` DISABLE KEYS */;
-INSERT INTO `pagos` VALUES (11,1,'mercadopago',32094.30,'pendiente','2025-05-28 15:17:02',NULL,'2411284550-c642ad9f-594a-453c-aad2-e6b14ab5bbea',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'https://localhost:4200/checkout/retorno?pedidoId=1&estado=pago'),(12,12,'transferencia',83288.10,'completado','2025-06-04 14:09:36',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,24,'');
+INSERT INTO `pagos` VALUES (12,12,'transferencia',83288.10,'completado','2025-06-04 14:09:36',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,24,'');
 /*!40000 ALTER TABLE `pagos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -558,7 +557,7 @@ CREATE TABLE `pedido_items` (
 
 LOCK TABLES `pedido_items` WRITE;
 /*!40000 ALTER TABLE `pedido_items` DISABLE KEYS */;
-INSERT INTO `pedido_items` VALUES (1,1,8,1,4990.00,4990.00),(2,1,11,1,12990.00,12990.00),(3,1,13,1,8990.00,8990.00),(10,12,6,1,69990.00,69990.00);
+INSERT INTO `pedido_items` VALUES (10,12,6,1,69990.00,69990.00);
 /*!40000 ALTER TABLE `pedido_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -604,7 +603,7 @@ CREATE TABLE `pedidos` (
 
 LOCK TABLES `pedidos` WRITE;
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
-INSERT INTO `pedidos` VALUES (1,10,'2025-05-27 15:31:30','pendiente','retiro_tienda',1,NULL,26970.00,0.00,5124.30,32094.30,'',NULL,NULL),(12,15,'2025-05-29 15:42:30','entregado','retiro_tienda',1,1,69990.00,0.00,13298.10,83288.10,'test',25,NULL);
+INSERT INTO `pedidos` VALUES (12,15,'2025-05-29 15:42:30','entregado','retiro_tienda',1,NULL,69990.00,0.00,13298.10,83288.10,'test',25,NULL);
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -988,7 +987,7 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `rut` (`rut`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -997,7 +996,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (10,'Angelina','Mendoza','ange.mendoza@duocuc.cl','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','17144575-2','+56998555466','cliente','2025-05-22 12:05:05','2025-05-28 19:44:14',1),(13,'admin','admin','admin@ferremas.cl','rJaJ4ickJwheNbnT4+i+2IyzQ0gotDuG/AWWytTG4nA=','191991999','99999999','Administrador','2025-05-27 20:22:21','2025-05-30 17:22:29',1),(15,'Prueba','Prueba','Prueba@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','101001001','10101010','cliente','2025-05-28 11:37:17','2025-06-04 11:20:54',1),(24,'Contador','Contador','contador@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-3','90909099','contador','2025-05-30 17:23:06','2025-06-04 14:09:09',1),(25,'Vendedor','Vendedor','vendedor@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-4','90909090','vendedor','2025-05-30 17:25:04','2025-06-05 15:05:11',1),(26,'Bodeguero','Bodeguero','bodeguero@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-5','90909097','bodeguero','2025-05-30 17:26:03','2025-06-05 14:56:13',1);
+INSERT INTO `usuarios` VALUES (13,'admin','admin','admin@ferremas.cl','rJaJ4ickJwheNbnT4+i+2IyzQ0gotDuG/AWWytTG4nA=','191991999','99999999','Administrador','2025-05-27 20:22:21','2025-05-30 17:22:29',1),(15,'Prueba','Prueba','Prueba@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','101001001','10101010','Administrador','2025-05-28 11:37:17','2025-07-05 16:05:47',1),(24,'Contador','Contador','contador@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-3','90909099','contador','2025-05-30 17:23:06','2025-06-04 14:09:09',1),(25,'Vendedor','Vendedor','vendedor@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-4','90909090','vendedor','2025-05-30 17:25:04','2025-06-05 15:05:11',1),(26,'Bodeguero','Bodeguero','bodeguero@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-5','90909097','bodeguero','2025-05-30 17:26:03','2025-06-05 14:56:13',1),(33,'Batitú','Mayorga','angelina.mendoza.y@gmail.com','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','25592802-5','+56998555466','cliente','2025-07-05 19:10:42','2025-07-05 19:17:20',1),(34,'Angelina','Mendoza','ange.mendoza@duocuc.cl','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','17144575-2','+56998555466','cliente','2025-07-05 20:46:16','2025-07-05 21:10:39',1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2785,4 +2784,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-05 15:31:47
+-- Dump completed on 2025-07-05 21:12:55

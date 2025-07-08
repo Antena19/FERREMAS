@@ -169,6 +169,7 @@ namespace Ferremas.Api.Services
                 SucursalId = pedido.SucursalId,
                 SucursalNombre = pedido.Sucursal?.Nombre,
                 DireccionId = pedido.DireccionId,
+                DireccionTexto = pedido.Direccion != null ? $"{pedido.Direccion.Calle} {pedido.Direccion.Numero}{(string.IsNullOrEmpty(pedido.Direccion.Departamento) ? "" : ", Depto. " + pedido.Direccion.Departamento)}, {pedido.Direccion.Comuna}, {pedido.Direccion.Region}" : null,
                 Subtotal = pedido.Subtotal,
                 CostoEnvio = pedido.CostoEnvio,
                 Impuestos = pedido.Impuestos,

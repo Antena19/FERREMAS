@@ -5,6 +5,7 @@ using Dapper;
 using Ferremas.Api.Modelos;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
+using System.Linq;
 
 namespace Ferremas.Api.Repositories
 {
@@ -496,6 +497,44 @@ namespace Ferremas.Api.Repositories
             }
         }
 
+        // Clase auxiliar para mapear el resultado del query
+        private class PedidoRaw
+        {
+            public int Id { get; set; }
+            public int UsuarioId { get; set; }
+            public DateTime FechaPedido { get; set; }
+            public string Estado { get; set; }
+            public string TipoEntrega { get; set; }
+            public int? SucursalId { get; set; }
+            public string SucursalNombre { get; set; }
+            public int? DireccionId { get; set; }
+            public string DireccionCalle { get; set; }
+            public string DireccionNumero { get; set; }
+            public string DireccionDepartamento { get; set; }
+            public string DireccionComuna { get; set; }
+            public string DireccionRegion { get; set; }
+            public decimal Subtotal { get; set; }
+            public decimal CostoEnvio { get; set; }
+            public decimal Impuestos { get; set; }
+            public decimal Total { get; set; }
+            public string Notas { get; set; }
+            public int? VendedorId { get; set; }
+            public string VendedorNombre { get; set; }
+            public int? BodegueroId { get; set; }
+            public string BodegueroNombre { get; set; }
+        }
+
+        private class PedidoItemRaw
+        {
+            public int Id { get; set; }
+            public int PedidoId { get; set; }
+            public int ProductoId { get; set; }
+            public string ProductoNombre { get; set; }
+            public int Cantidad { get; set; }
+            public decimal PrecioUnitario { get; set; }
+            public decimal Subtotal { get; set; }
+        }
+
         public async Task<IEnumerable<Pedido>> GetHistorialComprasUsuarioAsync(int usuarioId)
         {
             using (var connection = new MySqlConnection(_connectionString))
@@ -504,28 +543,95 @@ namespace Ferremas.Api.Repositories
 
                 var sql = @"
                     SELECT 
-                        p.*,
-                        u.nombre as UsuarioNombre,
-                        s.nombre as SucursalNombre,
-                        v.nombre as VendedorNombre,
-                        b.nombre as BodegueroNombre
+                        p.id, p.usuario_id as UsuarioId, p.fecha_pedido as FechaPedido, p.estado, p.tipo_entrega as TipoEntrega,
+                        p.sucursal_id as SucursalId, s.nombre as SucursalNombre,
+                        p.direccion_id as DireccionId, d.calle as DireccionCalle, d.numero as DireccionNumero, d.departamento as DireccionDepartamento, d.comuna as DireccionComuna, d.region as DireccionRegion,
+                        p.subtotal, p.costo_envio as CostoEnvio, p.impuestos, p.total, p.notas,
+                        p.vendedor_id as VendedorId, v.nombre as VendedorNombre,
+                        p.bodeguero_id as BodegueroId, b.nombre as BodegueroNombre
                     FROM pedidos p
-                    LEFT JOIN usuarios u ON p.usuario_id = u.id
                     LEFT JOIN sucursales s ON p.sucursal_id = s.id
+                    LEFT JOIN direcciones d ON p.direccion_id = d.id
                     LEFT JOIN usuarios v ON p.vendedor_id = v.id
                     LEFT JOIN usuarios b ON p.bodeguero_id = b.id
                     WHERE p.usuario_id = @UsuarioId
                     ORDER BY p.fecha_pedido DESC";
 
-                var pedidos = await connection.QueryAsync<Pedido>(sql, new { UsuarioId = usuarioId });
+                var pedidosRaw = (await connection.QueryAsync<PedidoRaw>(sql, new { UsuarioId = usuarioId })).ToList();
+                var pedidos = new List<Pedido>();
 
-                foreach (var pedido in pedidos)
+                foreach (var raw in pedidosRaw)
                 {
-                    var items = await GetPedidoItemsAsync(pedido.Id);
-                    pedido.Items = items as ICollection<PedidoItem>;
+                    var pedido = new Pedido
+                    {
+                        Id = raw.Id,
+                        UsuarioId = raw.UsuarioId,
+                        FechaPedido = raw.FechaPedido,
+                        Estado = raw.Estado,
+                        TipoEntrega = raw.TipoEntrega,
+                        SucursalId = raw.SucursalId,
+                        DireccionId = raw.DireccionId,
+                        Subtotal = raw.Subtotal,
+                        CostoEnvio = raw.CostoEnvio,
+                        Impuestos = raw.Impuestos,
+                        Total = raw.Total,
+                        Notas = raw.Notas,
+                        VendedorId = raw.VendedorId,
+                        BodegueroId = raw.BodegueroId,
+                        Sucursal = raw.SucursalId.HasValue ? new Sucursal { Id = raw.SucursalId.Value, Nombre = raw.SucursalNombre } : null,
+                        Direccion = raw.DireccionId.HasValue ? new Direccion {
+                            Id = raw.DireccionId.Value,
+                            Calle = raw.DireccionCalle,
+                            Numero = raw.DireccionNumero,
+                            Departamento = raw.DireccionDepartamento,
+                            Comuna = raw.DireccionComuna,
+                            Region = raw.DireccionRegion
+                        } : null,
+                        Vendedor = raw.VendedorId.HasValue ? new Usuario { Id = raw.VendedorId.Value, Nombre = raw.VendedorNombre } : null,
+                        Bodeguero = raw.BodegueroId.HasValue ? new Usuario { Id = raw.BodegueroId.Value, Nombre = raw.BodegueroNombre } : null
+                    };
+
+                    // Traer los items con nombre de producto
+                    var itemsSql = @"
+                        SELECT 
+                            pi.id, pi.pedido_id as PedidoId, pi.producto_id as ProductoId, pr.nombre as ProductoNombre,
+                            pi.cantidad, pi.precio_unitario as PrecioUnitario, pi.subtotal
+                        FROM pedido_items pi
+                        JOIN productos pr ON pi.producto_id = pr.id
+                        WHERE pi.pedido_id = @PedidoId";
+
+                    var itemsRaw = (await connection.QueryAsync<PedidoItemRaw>(itemsSql, new { PedidoId = pedido.Id })).ToList();
+                    var items = new List<PedidoItem>();
+                    foreach (var iraw in itemsRaw)
+                    {
+                        items.Add(new PedidoItem
+                        {
+                            Id = iraw.Id,
+                            PedidoId = iraw.PedidoId,
+                            ProductoId = iraw.ProductoId,
+                            Cantidad = iraw.Cantidad,
+                            PrecioUnitario = iraw.PrecioUnitario,
+                            Subtotal = iraw.Subtotal,
+                            Producto = new Producto { Id = iraw.ProductoId, Nombre = iraw.ProductoNombre }
+                        });
+                    }
+                    pedido.Items = items;
+
+                    pedidos.Add(pedido);
                 }
 
                 return pedidos;
+            }
+        }
+
+        public async Task<bool> ActualizarEstadoPedidoAsync(int pedidoId, string nuevoEstado)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var sql = "UPDATE pedidos SET estado = @NuevoEstado WHERE id = @PedidoId";
+                var filas = await connection.ExecuteAsync(sql, new { PedidoId = pedidoId, NuevoEstado = nuevoEstado });
+                return filas > 0;
             }
         }
     }

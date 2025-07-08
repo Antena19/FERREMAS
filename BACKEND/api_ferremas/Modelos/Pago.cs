@@ -30,32 +30,18 @@ namespace Ferremas.Api.Modelos
         [MaxLength(50)]
         public string Metodo { get; set; }  // tarjeta_debito, tarjeta_credito, transferencia, mercadopago
 
-        // Campos específicos de Mercado Pago
-        [MaxLength(100)]
-        public string MercadoPagoPaymentId { get; set; }
-
-        [MaxLength(100)]
-        public string MercadoPagoPreferenceId { get; set; }
-
-        [MaxLength(50)]
-        public string MercadoPagoStatus { get; set; }
-
-        [MaxLength(100)]
-        public string MercadoPagoStatusDetail { get; set; }
-
-        [MaxLength(50)]
-        public string MercadoPagoPaymentMethodId { get; set; }
-
-        [MaxLength(50)]
-        public string MercadoPagoPaymentTypeId { get; set; }
-
-        public int? MercadoPagoInstallments { get; set; }
-
-        [MaxLength(20)]
-        public string MercadoPagoCardNumber { get; set; }
-
-        [MaxLength(255)]
-        public string ReferenciaTransaccion { get; set; }
+        // Campos específicos de Webpay Plus
+        public string WebpayToken { get; set; }
+        public string WebpayBuyOrder { get; set; }
+        public string WebpaySessionId { get; set; }
+        public string WebpayAuthorizationCode { get; set; }
+        public string WebpayPaymentTypeCode { get; set; }
+        public int? WebpayResponseCode { get; set; }
+        public string WebpayCardLastDigits { get; set; }
+        public int? WebpayInstallmentsNumber { get; set; }
+        public DateTime? WebpayTransactionDate { get; set; }
+        public string WebpayStatus { get; set; }
+        public string WebpayVci { get; set; }
 
         public string Notas { get; set; }
 

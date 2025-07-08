@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';                  // ✅ Componente
 import { RouterModule } from '@angular/router';                // ✅ Para usar routerLink
 import { FormsModule } from '@angular/forms';                  // ✅ Para ngModel en el buscador
 import { AuthService } from 'src/app/services/auth.service';
+import { CarritoService } from 'src/app/services/carrito.service';
 
 @Component({
   selector: 'app-productos',
@@ -36,7 +37,8 @@ export class ProductosPage implements OnInit {
     private api: ApiService,              // 📡 Servicio de productos
     private router: Router,               // 🔁 Para ir al detalle
     private route: ActivatedRoute,         // 📥 Para leer parámetros como ?categoria=
-    private auth: AuthService
+    private auth: AuthService,
+    private carritoService: CarritoService // <-- Inyectar el servicio
   ) {}
 
   ngOnInit(): void {
@@ -118,7 +120,14 @@ export class ProductosPage implements OnInit {
   }
 
   agregarAlCarrito(producto: any): void {
-    console.log('Agregar al carrito:', producto);
+    this.carritoService.agregarProducto(producto, 1).subscribe({
+      next: () => {
+        alert('Producto agregado al carrito');
+      },
+      error: () => {
+        alert('Error al agregar al carrito');
+      }
+    });
   }
 
   cargarCsv(event: any) {

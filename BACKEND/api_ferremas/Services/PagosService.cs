@@ -12,13 +12,12 @@ namespace Ferremas.Api.Services
     {
         private readonly IPagoRepository _pagoRepository;
         private readonly IPedidoRepository _pedidoRepository;
-        private readonly MercadoPagoService _mercadoPagoService;
+        // Eliminado: private readonly MercadoPagoService _mercadoPagoService;
 
-        public PagosService(IPagoRepository pagoRepository, IPedidoRepository pedidoRepository, MercadoPagoService mercadoPagoService)
+        public PagosService(IPagoRepository pagoRepository, IPedidoRepository pedidoRepository)
         {
             _pagoRepository = pagoRepository;
             _pedidoRepository = pedidoRepository;
-            _mercadoPagoService = mercadoPagoService;
         }
 
         public async Task<IEnumerable<PagoResponseDTO>> ObtenerTodosAsync()
@@ -66,58 +65,43 @@ namespace Ferremas.Api.Services
 
             // Respuesta final
             var respuesta = MapPagoToDTO(nuevoPago);
-
-            // Si el método es Mercado Pago, generar preferencia
-            if (pagoCreateDTO.Metodo == "mercadopago")
-            {
-                // Crear preferencia en Mercado Pago
-                var mpResponse = await _mercadoPagoService.CrearPreferenciaPago(pedido, pagoId);
-
-                // Actualizar el pago con los datos de Mercado Pago
-                nuevoPago.MercadoPagoPreferenceId = mpResponse.PreferenceId;
-                await _pagoRepository.ActualizarPagoAsync(nuevoPago);
-
-                // Agregar URL de pago a la respuesta
-                respuesta.UrlPasarela = mpResponse.InitPoint; // o SandboxInitPoint para testing
-                respuesta.MercadoPagoPreferenceId = mpResponse.PreferenceId;
-            }
-
             return respuesta;
         }
 
         public async Task<PagoResponseDTO> ConfirmarPagoAsync(PagoConfirmacionDTO confirmacionDTO)
         {
-            // Buscar el pago por el preference ID de MercadoPago
-            var pago = await _pagoRepository.ObtenerPorTokenPasarelaAsync(confirmacionDTO.MercadoPagoPaymentId);
+            // 1. Confirmar con Webpay (esto lo hace el controlador y pasa el resultado aquí)
+            // 2. Buscar el pago por buyOrder o token
+            var pago = await _pagoRepository.ObtenerPorWebpayTokenAsync(confirmacionDTO.Token);
+            if (pago == null && !string.IsNullOrEmpty(confirmacionDTO.BuyOrder))
+            {
+                pago = await _pagoRepository.ObtenerPorWebpayBuyOrderAsync(confirmacionDTO.BuyOrder);
+            }
             if (pago == null)
-                throw new KeyNotFoundException("No se encontró un pago con el ID de MercadoPago especificado");
+                throw new KeyNotFoundException("Pago no encontrado para el token o buyOrder proporcionado");
 
-            // Actualizar el pago con todos los datos de MercadoPago
-            pago.MercadoPagoPaymentId = confirmacionDTO.MercadoPagoPaymentId;
-            pago.Estado = confirmacionDTO.Estado;
-            pago.MercadoPagoStatus = confirmacionDTO.MercadoPagoStatus;
-            pago.MercadoPagoStatusDetail = confirmacionDTO.MercadoPagoStatusDetail;
-            pago.MercadoPagoPaymentMethodId = confirmacionDTO.MercadoPagoPaymentMethodId;
-            pago.MercadoPagoPaymentTypeId = confirmacionDTO.MercadoPagoPaymentTypeId;
-            pago.MercadoPagoInstallments = confirmacionDTO.MercadoPagoInstallments;
-            pago.MercadoPagoCardNumber = confirmacionDTO.MercadoPagoCardNumber;
+            // 3. Actualizar los campos de Webpay y el estado
+            pago.WebpayToken = confirmacionDTO.Token;
+            pago.WebpayBuyOrder = confirmacionDTO.BuyOrder;
+            pago.WebpaySessionId = confirmacionDTO.SessionId;
+            pago.WebpayAuthorizationCode = confirmacionDTO.AuthorizationCode;
+            pago.WebpayPaymentTypeCode = confirmacionDTO.PaymentTypeCode;
+            pago.WebpayResponseCode = confirmacionDTO.ResponseCode;
+            pago.WebpayCardLastDigits = confirmacionDTO.CardLastDigits;
+            pago.WebpayInstallmentsNumber = confirmacionDTO.InstallmentsNumber;
+            pago.WebpayTransactionDate = confirmacionDTO.TransactionDate;
+            pago.WebpayStatus = confirmacionDTO.Status;
+            pago.WebpayVci = confirmacionDTO.Vci;
+            pago.Estado = (confirmacionDTO.Status == "AUTHORIZED" && confirmacionDTO.ResponseCode == 0) ? "completado" : "fallido";
+            pago.FechaPago = DateTime.Now;
 
-            // Actualizar el pago
             await _pagoRepository.ActualizarPagoAsync(pago);
 
-            // Si el pago fue exitoso, actualizar el estado del pedido
-            if (confirmacionDTO.Estado == "COMPLETADO")
+            // 4. Si el pago fue exitoso, actualizar el estado del pedido
+            if (pago.Estado == "completado")
             {
-                await _pedidoRepository.UpdatePedidoEstadoAsync(pago.PedidoId, "PAGADO");
+                await _pedidoRepository.ActualizarEstadoPedidoAsync(pago.PedidoId, "pagado");
             }
-            else if (confirmacionDTO.Estado == "RECHAZADO")
-            {
-                // Mantener el pedido como pendiente si el pago fue rechazado
-                await _pedidoRepository.UpdatePedidoEstadoAsync(pago.PedidoId, "PENDIENTE");
-            }
-
-            // Obtener el pago actualizado
-            pago = await _pagoRepository.ObtenerPorIdAsync(pago.Id);
 
             return MapPagoToDTO(pago);
         }
@@ -125,6 +109,12 @@ namespace Ferremas.Api.Services
         public async Task<bool> PagoExisteAsync(int id)
         {
             return await _pagoRepository.PagoExisteAsync(id);
+        }
+
+        public async Task ActualizarTokenYBuyOrderAsync(int pedidoId, string token, string buyOrder)
+        {
+            // Solo actualiza el pago pendiente asociado al pedido
+            await _pagoRepository.ActualizarTokenYBuyOrderAsync(pedidoId, token, buyOrder);
         }
 
         private PagoResponseDTO MapPagoToDTO(Pago pago)
@@ -137,14 +127,6 @@ namespace Ferremas.Api.Services
                 FechaPago = pago.FechaPago ?? DateTime.Now,
                 Estado = pago.Estado,
                 Metodo = pago.Metodo,
-                MercadoPagoPaymentId = pago.MercadoPagoPaymentId,
-                MercadoPagoPreferenceId = pago.MercadoPagoPreferenceId,
-                MercadoPagoStatus = pago.MercadoPagoStatus,
-                MercadoPagoStatusDetail = pago.MercadoPagoStatusDetail,
-                MercadoPagoPaymentMethodId = pago.MercadoPagoPaymentMethodId,
-                MercadoPagoPaymentTypeId = pago.MercadoPagoPaymentTypeId,
-                MercadoPagoInstallments = pago.MercadoPagoInstallments,
-                MercadoPagoCardNumber = pago.MercadoPagoCardNumber,
                 UrlPasarela = pago.UrlRetorno
             };
         }

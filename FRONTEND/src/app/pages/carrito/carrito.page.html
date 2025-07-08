@@ -9,59 +9,211 @@
   <!-- 📭 MENSAJE CUANDO EL CARRITO ESTÁ VACÍO -->
   <div *ngIf="!cargando && productos.length === 0" class="mensaje-vacio">
     <ion-icon name="cart-outline" size="large"></ion-icon>
-    
-    <!-- 👤 Mensaje para usuario no logueado -->
-    <div *ngIf="!usuarioLogeado" class="mensaje-no-login">
-      <p>Para ver tu carrito, debes iniciar sesión</p>
-      <ion-button routerLink="/login" color="success">
-        Iniciar sesión
-      </ion-button>
-    </div>
-    
-    <!-- 🛒 Mensaje para carrito vacío de usuario logueado -->
-    <div *ngIf="usuarioLogeado">
-      <p>Tu carrito está vacío</p>
-      <ion-button routerLink="/productos" color="success">
-        Ver productos
-      </ion-button>
-    </div>
+    <p>Tu carrito está vacío</p>
+    <ion-button routerLink="/productos" color="success">
+      Ver productos
+    </ion-button>
   </div>
 
-  <!-- 🛒 LISTADO DE PRODUCTOS DEL CARRITO -->
+  <!-- 🛒 LISTADO DE PRODUCTOS DEL CARRITO EN TABLA -->
   <div *ngIf="!cargando && productos.length > 0" class="lista-productos">
+    <table class="tabla-carrito">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos">
+          <td>
+            <img 
+              [src]="getImagenProducto(producto)"
+              alt="Imagen producto"
+              class="producto-imagen-mini"
+              (error)="onImgError($event)"
+            />
+          </td>
+          <td>{{ getNombreProducto(producto) }}</td>
+          <td>${{ getPrecioProducto(producto) | number:'1.0-0' }}</td>
+          <td>
+            <input type="number" min="1" [value]="producto.cantidad" (change)="onCantidadChange($event, producto)" class="input-cantidad" />
+          </td>
+          <td>${{ getSubtotalProducto(producto) | number:'1.0-0' }}</td>
+          <td>
+            <!-- Texto de eliminar producto en rojo -->
+            <span class="texto-eliminar" title="Eliminar" (click)="eliminarProducto(getIdProducto(producto))">Eliminar</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-    <!-- 🔁 RECORRIDO DE PRODUCTOS EN EL CARRITO -->
-    <div class="producto-item" *ngFor="let producto of productos">
-      
-      <!-- 🖼️ Imagen del producto -->
-      <img
-        *ngIf="producto.producto_imagen"
-        [src]="'assets/img/' + producto.producto_imagen"
-        alt="Imagen producto"
-        class="producto-imagen" />
-
-      <!-- 📋 Información del producto -->
-      <div class="info-producto">
-        <h4>{{ producto.producto_nombre }}</h4>
-        <p class="precio">${{ producto.precio_unitario }}</p>
-        <p class="cantidad">Cantidad: {{ producto.cantidad }}</p>
-      </div>
-
-      <!-- ❌ BOTÓN PARA ELIMINAR PRODUCTO -->
-      <ion-button
-        color="danger"
-        size="small"
-        (click)="eliminarProducto(producto.producto_id)">
-        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
-      </ion-button>
+    <!-- Totales -->
+    <div class="totales-box">
+      <div>Subtotal: ${{ subtotal | number:'1.0-0' }}</div>
+      <div>Impuestos (19%): ${{ impuestos | number:'1.0-0' }}</div>
+      <div><b>Total: ${{ total | number:'1.0-0' }}</b></div>
     </div>
 
-    <!-- ✅ BOTÓN CONFIRMAR PEDIDO -->
-    <div class="confirmar-container">
-      <ion-button expand="block" color="success" (click)="confirmarPedido()">
-        Confirmar pedido
-      </ion-button>
+    <!-- Botones de acción -->
+    <div class="acciones-carrito" *ngIf="!mostrarWizardPago">
+      <button class="btn-vaciar-rojo" (click)="vaciarCarrito()">
+        Vaciar carrito
+      </button>
+      <button *ngIf="!usuarioLogueado" class="btn-pagar" routerLink="/login">Iniciar sesión para pagar</button>
+      <button *ngIf="usuarioLogueado" class="btn-pagar" (click)="irAPagar()">Ir a pagar</button>
     </div>
-
   </div>
 </div>
+
+<!-- Overlay oscuro detrás del wizard -->
+<div *ngIf="mostrarWizardPago" class="wizard-overlay"></div>
+
+<!-- ===================== WIZARD DE PAGO ===================== -->
+<div class="wizard-pago" *ngIf="mostrarWizardPago">
+  <!-- Botón de cierre (X) -->
+  <button *ngIf="pasoActual !== 4" class="wizard-close-btn" (click)="cerrarWizard()" title="Cerrar">
+    &times;
+  </button>
+  <!-- Paso 1: Datos de entrega -->
+  <div class="wizard-paso" [class.activo]="pasoActual === 1">
+    <div class="wizard-header">
+      <span class="wizard-num">1</span> Datos de entrega
+    </div>
+    <div *ngIf="pasoActual === 1" class="wizard-body">
+      <div class="form-group">
+        <label>Tipo de entrega:</label>
+        <select [(ngModel)]="tipoEntrega" class="input-cantidad" (change)="onTipoEntregaChange()">
+          <option value="">Selecciona...</option>
+          <option value="retiro_tienda">Retiro en tienda</option>
+          <option value="despacho_domicilio">Despacho a domicilio</option>
+        </select>
+      </div>
+      <div class="form-group" *ngIf="tipoEntrega === 'retiro_tienda'">
+        <label>Sucursal:</label>
+        <select [(ngModel)]="sucursalId" class="input-cantidad" (change)="onSucursalChange()">
+          <option value="">Selecciona sucursal...</option>
+          <option *ngFor="let suc of sucursales" [value]="suc.id">{{ suc.nombre }}</option>
+        </select>
+        <div *ngIf="cargandoSucursales">Cargando sucursales...</div>
+      </div>
+      <div class="form-group" *ngIf="tipoEntrega === 'despacho_domicilio'">
+        <label>Dirección:</label>
+        <ng-container *ngIf="direcciones.length > 0; else sinDirecciones">
+          <div class="direccion-unica">
+            {{ direcciones[0].calle }} {{ direcciones[0].numero }}, {{ direcciones[0].comuna }}
+            <button class="btn-pagar btn-editar-dir" routerLink="/editar-perfil">Editar dirección</button>
+          </div>
+          <input type="hidden" [(ngModel)]="direccionId" [value]="direcciones[0].id" (change)="onDireccionChange()" />
+        </ng-container>
+        <ng-template #sinDirecciones>
+          <div class="error-pedido">No tienes direcciones guardadas.</div>
+          <button class="btn-pagar" routerLink="/editar-perfil">Ir a perfil para agregar dirección</button>
+        </ng-template>
+        <div *ngIf="cargandoDirecciones">Cargando direcciones...</div>
+      </div>
+      <div class="form-group">
+        <label>Notas (opcional):</label>
+        <input type="text" [(ngModel)]="notas" class="input-cantidad" placeholder="Notas para el pedido" (change)="onNotasChange()" />
+      </div>
+      <div *ngIf="cargandoActualizacionPedido" class="spinner-center">
+        <ion-spinner name="crescent"></ion-spinner> Actualizando pedido...
+      </div>
+      <div *ngIf="errorPedido" class="error-pedido">{{ errorPedido }}</div>
+      <div class="wizard-actions">
+        <button class="btn-pagar" (click)="crearPedido()" [disabled]="cargandoActualizacionPedido">Continuar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paso 2: Confirmación de pedido -->
+  <div class="wizard-paso" [class.activo]="pasoActual === 2">
+    <div class="wizard-header">
+      <span class="wizard-num">2</span> Confirmación de pedido
+    </div>
+    <div *ngIf="pasoActual === 2" class="wizard-body">
+      <div class="resumen-pedido">
+        <h4>Resumen del pedido</h4>
+        <div><b>Tipo de entrega:</b> {{ tipoEntrega === 'retiro_tienda' ? 'Retiro en tienda' : 'Despacho a domicilio' }}</div>
+        <div *ngIf="tipoEntrega === 'retiro_tienda'">
+          <b>Sucursal:</b>
+          {{ getNombreSucursal(sucursalId) }}
+        </div>
+        <div *ngIf="tipoEntrega === 'despacho_domicilio'">
+          <b>Dirección:</b>
+          {{ direcciones[0]?.calle }} {{ direcciones[0]?.numero }}, {{ direcciones[0]?.comuna }}
+        </div>
+        <div *ngIf="notas"><b>Notas:</b> {{ notas }}</div>
+        <h5>Productos:</h5>
+        <ul>
+          <li *ngFor="let producto of productos">
+            {{ getNombreProducto(producto) }} x{{ producto.cantidad }} - ${{ getSubtotalProducto(producto) | number:'1.0-0' }}
+          </li>
+        </ul>
+        <div class="totales-box">
+          <div>Subtotal: ${{ subtotal | number:'1.0-0' }}</div>
+          <div>Impuestos (19%): ${{ impuestos | number:'1.0-0' }}</div>
+          <div><b>Total: ${{ total | number:'1.0-0' }}</b></div>
+        </div>
+      </div>
+      <div class="wizard-actions">
+        <button class="btn-vaciar-rojo" (click)="retrocederPaso()">Atrás</button>
+        <button class="btn-pagar" (click)="avanzarPaso()">Confirmar y elegir pago</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paso 3: Selección de método de pago -->
+  <div class="wizard-paso" [class.activo]="pasoActual === 3">
+    <div class="wizard-header">
+      <span class="wizard-num">3</span> Selección de método de pago
+    </div>
+    <div *ngIf="pasoActual === 3" class="wizard-body">
+      <div class="form-group">
+        <label>Selecciona el método de pago:</label>
+        <div class="metodo-pago-opciones">
+          <label class="metodo-radio">
+            <input type="radio" name="metodoPago" [(ngModel)]="metodoPagoSeleccionado" value="webpay" checked />
+            Webpay
+          </label>
+          <label class="metodo-radio metodo-radio-disabled">
+            <input type="radio" name="metodoPago" value="transferencia" disabled />
+            Transferencia (próximamente)
+          </label>
+        </div>
+        <div class="wizard-actions">
+          <button class="btn-pagar" (click)="pagarConWebpay()" [disabled]="cargandoPago || metodoPagoSeleccionado !== 'webpay'">Pagar</button>
+          <button class="btn-vaciar-rojo" (click)="retrocederPaso()">Atrás</button>
+        </div>
+        <div *ngIf="cargandoPago" style="margin-top:0.7rem;"><ion-spinner name="crescent"></ion-spinner> Redirigiendo a Webpay...</div>
+        <div *ngIf="errorPago" class="error-pedido">{{ errorPago }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paso 4: Resultado del pago -->
+  <div class="wizard-paso" [class.activo]="pasoActual === 4">
+    <div class="wizard-header">
+      <span class="wizard-num">4</span> Resultado del pago
+    </div>
+    <div *ngIf="pasoActual === 4" class="wizard-body">
+      <div *ngIf="resultadoPago === 'exito'" class="resultado-pago-exito">
+        <h4>{{ mensajePago }}</h4>
+        <p>Gracias por tu compra. Puedes ver el detalle en la sección de pedidos.</p>
+      </div>
+      <div *ngIf="resultadoPago === 'error'" class="error-pedido">
+        <h4>Error en el pago</h4>
+        <p>{{ mensajePago }}</p>
+      </div>
+      <div class="wizard-actions">
+        <button class="btn-pagar" routerLink="/pedidos">Ver mis pedidos</button>
+        <button class="btn-vaciar-rojo" routerLink="/home">Volver al inicio</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- =================== FIN WIZARD DE PAGO =================== -->

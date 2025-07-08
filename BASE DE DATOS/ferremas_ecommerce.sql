@@ -68,7 +68,7 @@ CREATE TABLE `carritos` (
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`),
   CONSTRAINT `carritos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +77,7 @@ CREATE TABLE `carritos` (
 
 LOCK TABLES `carritos` WRITE;
 /*!40000 ALTER TABLE `carritos` DISABLE KEYS */;
-INSERT INTO `carritos` VALUES (15,15,'2025-05-28 18:37:53','2025-05-29 15:42:30',69990.00,13298.10,0.00,83288.10,0),(16,15,'2025-07-05 15:59:04',NULL,0.00,0.00,0.00,0.00,1),(17,33,'2025-07-05 19:17:20',NULL,0.00,0.00,0.00,0.00,1),(18,34,'2025-07-05 20:48:15',NULL,0.00,0.00,0.00,0.00,1);
+INSERT INTO `carritos` VALUES (21,34,'2025-07-08 16:37:17','2025-07-08 17:21:10',0.00,0.00,0.00,0.00,1),(22,33,'2025-07-08 16:54:27','2025-07-08 17:04:58',0.00,0.00,0.00,0.00,1);
 /*!40000 ALTER TABLE `carritos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,11 +143,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-<<<<<<< Updated upstream
-INSERT INTO `clientes` VALUES (4,'Cliente','Cliente','123453452','cliente@example.com','99999999','2025-05-23 23:42:34','particular','activo',0,NULL,0.00,0),(5,'admin','admin','191991999','admin@ferremas.cl','99999999','2025-05-27 20:22:21','particular','activo',0,NULL,0.00,0),(7,'Prueba','Prueba','101001001','Prueba@prueba.cl','10101010','2025-05-28 11:37:17','particular','activo',0,NULL,0.00,0),(14,'Batitú','Mayorga','25592802-5','angelina.mendoza.y@gmail.com','+56998555466','2025-07-05 19:10:42','particular','activo',0,NULL,0.00,0),(15,'Angelina','Mendoza','17144575-2','ange.mendoza@duocuc.cl','+56998555466','2025-07-05 20:46:16','particular','activo',0,NULL,0.00,0);
-=======
 INSERT INTO `clientes` VALUES (14,'Batitú','Mayorga','25592802-5','angelina.mendoza.y@gmail.com','+56998555466','2025-07-05 19:10:42','particular','activo',0,NULL,0.00,0),(15,'Angelina Andrea','Mendoza Yañez','17144575-2','ange.mendoza@duocuc.cl','+56998555466','2025-07-05 20:46:16','particular','activo',0,NULL,0.00,0);
->>>>>>> Stashed changes
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,7 +225,7 @@ CREATE TABLE `direcciones` (
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`),
   CONSTRAINT `direcciones_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,10 +234,7 @@ CREATE TABLE `direcciones` (
 
 LOCK TABLES `direcciones` WRITE;
 /*!40000 ALTER TABLE `direcciones` DISABLE KEYS */;
-<<<<<<< Updated upstream
-=======
-INSERT INTO `direcciones` VALUES (5,34,'Joseph Addison','2342','','Pruerto Montt','Los Lagos','',1);
->>>>>>> Stashed changes
+INSERT INTO `direcciones` VALUES (5,34,'Joseph Addison Portal','2342','','Pruerto Montt','Los Lagos','',1),(6,33,'Test','1234','1234','Puerto Montt','Los Lagos','1',1);
 /*!40000 ALTER TABLE `direcciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -360,7 +353,7 @@ CREATE TABLE `items_carrito` (
   KEY `producto_id` (`producto_id`),
   CONSTRAINT `items_carrito_ibfk_1` FOREIGN KEY (`carrito_id`) REFERENCES `carritos` (`id`) ON DELETE CASCADE,
   CONSTRAINT `items_carrito_ibfk_2` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -369,7 +362,6 @@ CREATE TABLE `items_carrito` (
 
 LOCK TABLES `items_carrito` WRITE;
 /*!40000 ALTER TABLE `items_carrito` DISABLE KEYS */;
-INSERT INTO `items_carrito` VALUES (15,15,6,1,69990.00,69990.00);
 /*!40000 ALTER TABLE `items_carrito` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -500,31 +492,31 @@ DROP TABLE IF EXISTS `pagos`;
 CREATE TABLE `pagos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `pedido_id` int NOT NULL,
-  `metodo` enum('tarjeta_debito','tarjeta_credito','transferencia','mercadopago') NOT NULL,
+  `metodo` enum('transferencia','webpay') NOT NULL,
   `monto` decimal(10,2) NOT NULL,
   `estado` enum('pendiente','completado','fallido','reembolsado') DEFAULT 'pendiente',
   `fecha_pago` datetime DEFAULT NULL,
-  `mercadopago_payment_id` varchar(100) DEFAULT NULL,
-  `mercadopago_preference_id` varchar(100) DEFAULT NULL,
-  `mercadopago_status` varchar(50) DEFAULT NULL,
-  `mercadopago_status_detail` varchar(100) DEFAULT NULL,
-  `mercadopago_payment_method_id` varchar(50) DEFAULT NULL,
-  `mercadopago_payment_type_id` varchar(50) DEFAULT NULL,
-  `mercadopago_installments` int DEFAULT NULL,
-  `mercadopago_card_number` varchar(20) DEFAULT NULL,
   `referencia_transaccion` varchar(255) DEFAULT NULL,
   `notas` text,
   `contador_id` int DEFAULT NULL,
   `url_retorno` varchar(255) DEFAULT NULL,
+  `webpay_token` varchar(100) DEFAULT NULL,
+  `webpay_buyorder` varchar(100) DEFAULT NULL,
+  `webpay_sessionid` varchar(100) DEFAULT NULL,
+  `webpay_authorization_code` varchar(20) DEFAULT NULL,
+  `webpay_payment_type_code` varchar(10) DEFAULT NULL,
+  `webpay_response_code` int DEFAULT NULL,
+  `webpay_card_last_digits` varchar(10) DEFAULT NULL,
+  `webpay_installments_number` int DEFAULT NULL,
+  `webpay_transaction_date` datetime DEFAULT NULL,
+  `webpay_status` varchar(20) DEFAULT NULL,
+  `webpay_vci` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `pedido_id` (`pedido_id`),
   KEY `contador_id` (`contador_id`),
-  KEY `idx_mercadopago_payment_id` (`mercadopago_payment_id`),
-  KEY `idx_mercadopago_preference_id` (`mercadopago_preference_id`),
-  KEY `idx_mercadopago_status` (`mercadopago_status`),
   CONSTRAINT `pagos_ibfk_1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`) ON DELETE CASCADE,
   CONSTRAINT `pagos_ibfk_2` FOREIGN KEY (`contador_id`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -533,7 +525,7 @@ CREATE TABLE `pagos` (
 
 LOCK TABLES `pagos` WRITE;
 /*!40000 ALTER TABLE `pagos` DISABLE KEYS */;
-INSERT INTO `pagos` VALUES (12,12,'transferencia',83288.10,'completado','2025-06-04 14:09:36',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,24,'');
+INSERT INTO `pagos` VALUES (12,12,'transferencia',83288.10,'completado','2025-06-04 14:09:36',NULL,NULL,24,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(19,16,'webpay',232026.20,'completado','2025-07-08 16:37:46',NULL,NULL,NULL,NULL,'01abe36bd756c8bb3156b8ba81ec890a8f5231150a0e65c50ffa5617a5c71ac6','16','session-94098efd-fea6-4136-ae42-b67e4ce4f0ac','1617','VN',0,'2032',0,'2025-07-08 20:38:43','AUTHORIZED','TSY'),(20,17,'webpay',107052.40,'completado','2025-07-08 17:04:25',NULL,NULL,NULL,NULL,'01ab7a857fed039bbd938a0b23caf060ee994a3cd2f17519fbc2921c2713192c','17','session-95ca59b3-56af-4f07-8936-a1ad30190f6a','1617','VN',0,'2032',0,'2025-07-08 21:05:22','AUTHORIZED','TSY'),(21,16,'webpay',10938.10,'completado','2025-07-08 17:20:12',NULL,NULL,NULL,NULL,'01abf5f4089adfb3b417adae15b718f0c32f09318ecfb59f143669b63a05cf39','16','session-c63c9972-16c2-4d83-a1f9-de9e2e2d3c04','1617','VN',0,'2032',0,'2025-07-08 21:21:24','AUTHORIZED','TSY'),(22,16,'webpay',10938.10,'pendiente','2025-07-08 17:20:27',NULL,NULL,NULL,'http://localhost:8100/carrito','01abf5f4089adfb3b417adae15b718f0c32f09318ecfb59f143669b63a05cf39','16',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `pagos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -556,7 +548,7 @@ CREATE TABLE `pedido_items` (
   KEY `producto_id` (`producto_id`),
   CONSTRAINT `pedido_items_ibfk_1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`) ON DELETE CASCADE,
   CONSTRAINT `pedido_items_ibfk_2` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=218 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -565,7 +557,7 @@ CREATE TABLE `pedido_items` (
 
 LOCK TABLES `pedido_items` WRITE;
 /*!40000 ALTER TABLE `pedido_items` DISABLE KEYS */;
-INSERT INTO `pedido_items` VALUES (10,12,6,1,69990.00,69990.00);
+INSERT INTO `pedido_items` VALUES (10,12,6,1,69990.00,69990.00),(209,17,13,1,8990.00,8990.00),(210,17,15,1,4990.00,4990.00),(211,17,14,1,5990.00,5990.00),(212,17,6,1,69990.00,69990.00),(217,16,8,1,4990.00,4990.00);
 /*!40000 ALTER TABLE `pedido_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -602,7 +594,7 @@ CREATE TABLE `pedidos` (
   CONSTRAINT `pedidos_ibfk_3` FOREIGN KEY (`direccion_id`) REFERENCES `direcciones` (`id`) ON DELETE SET NULL,
   CONSTRAINT `pedidos_ibfk_4` FOREIGN KEY (`vendedor_id`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL,
   CONSTRAINT `pedidos_ibfk_5` FOREIGN KEY (`bodeguero_id`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -611,7 +603,7 @@ CREATE TABLE `pedidos` (
 
 LOCK TABLES `pedidos` WRITE;
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
-INSERT INTO `pedidos` VALUES (12,15,'2025-05-29 15:42:30','entregado','retiro_tienda',1,NULL,69990.00,0.00,13298.10,83288.10,'test',25,NULL);
+INSERT INTO `pedidos` VALUES (12,15,'2025-05-29 15:42:30','entregado','retiro_tienda',1,NULL,69990.00,0.00,13298.10,83288.10,'test',25,NULL),(16,34,'2025-07-08 16:37:39','pendiente','despacho_domicilio',NULL,NULL,4990.00,5000.00,948.10,10938.10,'',NULL,NULL),(17,33,'2025-07-08 16:55:10','pendiente','retiro_tienda',7,NULL,89960.00,0.00,17092.40,107052.40,'',NULL,NULL);
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1004,11 +996,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-<<<<<<< Updated upstream
-INSERT INTO `usuarios` VALUES (13,'admin','admin','admin@ferremas.cl','rJaJ4ickJwheNbnT4+i+2IyzQ0gotDuG/AWWytTG4nA=','191991999','99999999','Administrador','2025-05-27 20:22:21','2025-05-30 17:22:29',1),(15,'Prueba','Prueba','Prueba@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','101001001','10101010','Administrador','2025-05-28 11:37:17','2025-07-05 16:05:47',1),(24,'Contador','Contador','contador@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-3','90909099','contador','2025-05-30 17:23:06','2025-06-04 14:09:09',1),(25,'Vendedor','Vendedor','vendedor@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-4','90909090','vendedor','2025-05-30 17:25:04','2025-06-05 15:05:11',1),(26,'Bodeguero','Bodeguero','bodeguero@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-5','90909097','bodeguero','2025-05-30 17:26:03','2025-06-05 14:56:13',1),(33,'Batitú','Mayorga','angelina.mendoza.y@gmail.com','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','25592802-5','+56998555466','cliente','2025-07-05 19:10:42','2025-07-05 19:17:20',1),(34,'Angelina','Mendoza','ange.mendoza@duocuc.cl','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','17144575-2','+56998555466','cliente','2025-07-05 20:46:16','2025-07-05 21:10:39',1);
-=======
-INSERT INTO `usuarios` VALUES (13,'admin','admin','admin@ferremas.cl','rJaJ4ickJwheNbnT4+i+2IyzQ0gotDuG/AWWytTG4nA=','191991999','99999999','Administrador','2025-05-27 20:22:21','2025-05-30 17:22:29',1),(15,'Prueba','Prueba','Prueba@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','101001001','10101010','Administrador','2025-05-28 11:37:17','2025-07-07 21:01:38',1),(24,'Contador','Contador','contador@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-3','90909099','contador','2025-05-30 17:23:06','2025-06-04 14:09:09',1),(25,'Vendedor','Vendedor','vendedor@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-4','90909090','vendedor','2025-05-30 17:25:04','2025-06-05 15:05:11',1),(26,'Bodeguero','Bodeguero','bodeguero@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-5','90909097','bodeguero','2025-05-30 17:26:03','2025-06-05 14:56:13',1),(33,'Batitú','Mayorga','angelina.mendoza.y@gmail.com','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','25592802-5','+56998555466','cliente','2025-07-05 19:10:42','2025-07-05 19:17:20',1),(34,'Angelina Andrea','Mendoza Yañez','ange.mendoza@duocuc.cl','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','17144575-2','+56998555466','cliente','2025-07-05 20:46:16','2025-07-07 13:07:07',1);
->>>>>>> Stashed changes
+INSERT INTO `usuarios` VALUES (13,'admin','admin','admin@ferremas.cl','rJaJ4ickJwheNbnT4+i+2IyzQ0gotDuG/AWWytTG4nA=','191991999','99999999','Administrador','2025-05-27 20:22:21','2025-05-30 17:22:29',1),(15,'Prueba','Prueba','Prueba@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','101001001','10101010','Administrador','2025-05-28 11:37:17','2025-07-07 21:01:38',1),(24,'Contador','Contador','contador@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-3','90909099','contador','2025-05-30 17:23:06','2025-06-04 14:09:09',1),(25,'Vendedor','Vendedor','vendedor@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-4','90909090','vendedor','2025-05-30 17:25:04','2025-06-05 15:05:11',1),(26,'Bodeguero','Bodeguero','bodeguero@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-5','90909097','bodeguero','2025-05-30 17:26:03','2025-06-05 14:56:13',1),(33,'Batitú','Mayorga','angelina.mendoza.y@gmail.com','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','25592802-5','+56998555466','cliente','2025-07-05 19:10:42','2025-07-08 16:54:27',1),(34,'Angelina Andrea','Mendoza Yañez','ange.mendoza@duocuc.cl','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','17144575-2','+56998555466','cliente','2025-07-05 20:46:16','2025-07-08 17:19:59',1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1811,6 +1799,137 @@ BEGIN
     );
     
     SELECT LAST_INSERT_ID() AS marca_id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_crear_o_actualizar_pedido_desde_carrito` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_crear_o_actualizar_pedido_desde_carrito`(
+    IN p_usuario_id INT,
+    IN p_tipo_entrega ENUM('retiro_tienda','despacho_domicilio'),
+    IN p_sucursal_id INT,
+    IN p_direccion_id INT,
+    IN p_notas TEXT
+)
+BEGIN
+    DECLARE v_carrito_id INT;
+    DECLARE v_subtotal DECIMAL(10,2);
+    DECLARE v_impuestos DECIMAL(10,2);
+    DECLARE v_total DECIMAL(10,2);
+    DECLARE v_pedido_id INT;
+    DECLARE v_costo_envio DECIMAL(10,2) DEFAULT 0;
+
+    -- Obtener carrito activo
+    SELECT id, subtotal, impuestos, total 
+    INTO v_carrito_id, v_subtotal, v_impuestos, v_total
+    FROM carritos 
+    WHERE usuario_id = p_usuario_id AND activo = 1
+    LIMIT 1;
+
+    IF v_carrito_id IS NULL THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'No hay carrito activo para este usuario';
+    END IF;
+
+    -- Calcular costo de envío si es despacho a domicilio
+    IF p_tipo_entrega = 'despacho_domicilio' THEN
+        SET v_costo_envio = 5000;
+        SET v_total = v_total + v_costo_envio;
+    END IF;
+
+    -- Buscar pedido pendiente existente
+    SELECT id INTO v_pedido_id
+    FROM pedidos
+    WHERE usuario_id = p_usuario_id AND estado = 'pendiente'
+    LIMIT 1;
+
+    IF v_pedido_id IS NULL THEN
+        -- Crear el pedido si no existe
+        INSERT INTO pedidos (
+            usuario_id,
+            tipo_entrega,
+            sucursal_id,
+            direccion_id,
+            subtotal,
+            impuestos,
+            costo_envio,
+            total,
+            notas,
+            estado
+        ) VALUES (
+            p_usuario_id,
+            p_tipo_entrega,
+            p_sucursal_id,
+            p_direccion_id,
+            v_subtotal,
+            v_impuestos,
+            v_costo_envio,
+            v_total,
+            p_notas,
+            'pendiente'
+        );
+        SET v_pedido_id = LAST_INSERT_ID();
+    ELSE
+        -- Si existe, actualizar datos del pedido
+        UPDATE pedidos
+        SET
+            tipo_entrega = p_tipo_entrega,
+            sucursal_id = p_sucursal_id,
+            direccion_id = p_direccion_id,
+            subtotal = v_subtotal,
+            impuestos = v_impuestos,
+            costo_envio = v_costo_envio,
+            total = v_total,
+            notas = p_notas
+        WHERE id = v_pedido_id;
+
+        -- Eliminar items anteriores del pedido
+        DELETE FROM pedido_items WHERE pedido_id = v_pedido_id;
+    END IF;
+
+    -- Insertar los items actuales del carrito al pedido
+    INSERT INTO pedido_items (
+        pedido_id,
+        producto_id,
+        cantidad,
+        precio_unitario,
+        subtotal
+    )
+    SELECT 
+        v_pedido_id,
+        producto_id,
+        cantidad,
+        precio_unitario,
+        subtotal
+    FROM items_carrito
+    WHERE carrito_id = v_carrito_id;
+
+    -- NO desactivar el carrito aquí
+
+    -- Devolver información del pedido actualizado/creado
+    SELECT 
+        p.*,
+        u.nombre as nombre_usuario,
+        u.apellido as apellido_usuario,
+        s.nombre as nombre_sucursal,
+        d.calle as direccion_entrega,
+        d.comuna as comuna_entrega
+    FROM pedidos p
+    JOIN usuarios u ON p.usuario_id = u.id
+    LEFT JOIN sucursales s ON p.sucursal_id = s.id
+    LEFT JOIN direcciones d ON p.direccion_id = d.id
+    WHERE p.id = v_pedido_id;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2796,8 +2915,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-<<<<<<< Updated upstream
--- Dump completed on 2025-07-05 21:12:55
-=======
--- Dump completed on 2025-07-08 10:55:25
->>>>>>> Stashed changes
+-- Dump completed on 2025-07-08 17:24:06

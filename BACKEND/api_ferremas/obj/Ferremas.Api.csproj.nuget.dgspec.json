@@ -71,6 +71,10 @@
               "target": "Package",
               "version": "[6.6.2, )"
             },
+            "TransbankSDK": {
+              "target": "Package",
+              "version": "[7.2.0, )"
+            },
             "mercadopago-sdk": {
               "target": "Package",
               "version": "[2.5.0, )"

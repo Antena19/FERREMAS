@@ -259,6 +259,16 @@
   },
   {
     "ContainingType": "Ferremas.Api.Controllers.AdminController",
+    "Method": "GetSucursalesActivas",
+    "RelativePath": "api/Admin/sucursales/activas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ferremas.Api.Controllers.AdminController",
     "Method": "GetAllUsuarios",
     "RelativePath": "api/Admin/usuarios",
     "HttpMethod": "GET",
@@ -1617,6 +1627,38 @@
     ]
   },
   {
+    "ContainingType": "Ferremas.Api.Controllers.PagosController",
+    "Method": "ConfirmarTransaccionWebpay",
+    "RelativePath": "api/Pagos/webpay/confirmar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ferremas.Api.Controllers.PagosController\u002BWebpayConfirmarRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ferremas.Api.Controllers.PagosController",
+    "Method": "CrearTransaccionWebpay",
+    "RelativePath": "api/Pagos/webpay/crear",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ferremas.Api.Controllers.PagosController\u002BWebpayCrearRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Ferremas.Api.Controllers.PedidosController",
     "Method": "GetPedidos",
     "RelativePath": "api/Pedidos",
@@ -1859,6 +1901,37 @@
   },
   {
     "ContainingType": "Ferremas.Api.Controllers.PedidosController",
+    "Method": "CrearOActualizarPedidoDesdeCarrito",
+    "RelativePath": "api/Pedidos/desde-carrito",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Ferremas.Api.DTOs.PedidoDesdeCarritoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      }
+    ]
+  },
+  {
+    "ContainingType": "Ferremas.Api.Controllers.PedidosController",
     "Method": "GetMiHistorialCompras",
     "RelativePath": "api/Pedidos/mi-historial",
     "HttpMethod": "GET",
@@ -1883,6 +1956,22 @@
           "text/json"
         ],
         "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "Ferremas.Api.Controllers.PedidosController",
+    "Method": "ObtenerPedidoPendiente",
+    "RelativePath": "api/Pedidos/pendiente",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
       }
     ]
   },

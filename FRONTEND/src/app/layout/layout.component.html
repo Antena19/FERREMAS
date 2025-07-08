@@ -42,9 +42,9 @@
         <a *ngIf="usuarioNombre" (click)="logout()" class="nav-link">SALIR</a>
 
         <!-- 🛒 Icono Carrito al final (solo si NO es admin) -->
-        <a *ngIf="!esAdmin" routerLink="/carrito" class="nav-cart-link">
+        <a *ngIf="!esAdmin" routerLink="/carrito" class="nav-cart-link" style="position: relative;">
           <ion-icon name="cart-outline"></ion-icon>
-          <ion-badge *ngIf="carritoCantidad > 0" color="danger">{{ carritoCantidad }}</ion-badge>
+          <span *ngIf="carritoCantidad > 0" class="carrito-badge-verde">{{ carritoCantidad }}</span>
         </a>
 
       </div>

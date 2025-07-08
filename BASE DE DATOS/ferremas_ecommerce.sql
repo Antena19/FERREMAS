@@ -143,7 +143,11 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
+<<<<<<< Updated upstream
 INSERT INTO `clientes` VALUES (4,'Cliente','Cliente','123453452','cliente@example.com','99999999','2025-05-23 23:42:34','particular','activo',0,NULL,0.00,0),(5,'admin','admin','191991999','admin@ferremas.cl','99999999','2025-05-27 20:22:21','particular','activo',0,NULL,0.00,0),(7,'Prueba','Prueba','101001001','Prueba@prueba.cl','10101010','2025-05-28 11:37:17','particular','activo',0,NULL,0.00,0),(14,'Batitú','Mayorga','25592802-5','angelina.mendoza.y@gmail.com','+56998555466','2025-07-05 19:10:42','particular','activo',0,NULL,0.00,0),(15,'Angelina','Mendoza','17144575-2','ange.mendoza@duocuc.cl','+56998555466','2025-07-05 20:46:16','particular','activo',0,NULL,0.00,0);
+=======
+INSERT INTO `clientes` VALUES (14,'Batitú','Mayorga','25592802-5','angelina.mendoza.y@gmail.com','+56998555466','2025-07-05 19:10:42','particular','activo',0,NULL,0.00,0),(15,'Angelina Andrea','Mendoza Yañez','17144575-2','ange.mendoza@duocuc.cl','+56998555466','2025-07-05 20:46:16','particular','activo',0,NULL,0.00,0);
+>>>>>>> Stashed changes
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -225,7 +229,7 @@ CREATE TABLE `direcciones` (
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`),
   CONSTRAINT `direcciones_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,6 +238,10 @@ CREATE TABLE `direcciones` (
 
 LOCK TABLES `direcciones` WRITE;
 /*!40000 ALTER TABLE `direcciones` DISABLE KEYS */;
+<<<<<<< Updated upstream
+=======
+INSERT INTO `direcciones` VALUES (5,34,'Joseph Addison','2342','','Pruerto Montt','Los Lagos','',1);
+>>>>>>> Stashed changes
 /*!40000 ALTER TABLE `direcciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -701,7 +709,7 @@ CREATE TABLE `productos` (
   KEY `marca_id` (`marca_id`),
   CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`) ON DELETE SET NULL,
   CONSTRAINT `productos_ibfk_2` FOREIGN KEY (`marca_id`) REFERENCES `marcas` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -710,7 +718,7 @@ CREATE TABLE `productos` (
 
 LOCK TABLES `productos` WRITE;
 /*!40000 ALTER TABLE `productos` DISABLE KEYS */;
-INSERT INTO `productos` VALUES (1,'MARTB001','Martillo Profesional','Martillo de acero forjado con mango ergonómico',15990.00,5,3,'martillo.jpg',NULL,'2025-04-23 13:00:27',NULL,1),(2,'DESTB002','Set Destornilladores 6 piezas','Set de destornilladores Phillips y planos',12990.00,5,3,'destornilladores.jpg',NULL,'2025-04-23 13:00:27',NULL,1),(3,'LLAVB003','Juego de Llaves Combinadas','Set de 10 llaves combinadas de 8 a 19mm',24990.00,5,1,'llaves.jpg',NULL,'2025-04-23 13:00:27',NULL,1),(4,'TALM001','Taladro Percutor Bosch','Taladro percutor profesional 800W con maleta',89990.00,6,1,'taladro_bosch.jpg',NULL,'2025-04-23 13:00:27',NULL,1),(5,'SIERM002','Sierra Circular Makita','Sierra circular 7-1/4\" 1800W',119990.00,6,2,'sierra_makita.jpg',NULL,'2025-04-23 13:00:27',NULL,1),(6,'LIJAM003','Lijadora Orbital DeWalt','Lijadora orbital con colector de polvo',69990.00,6,7,'lijadora_dewalt.jpg',NULL,'2025-04-23 13:00:27',NULL,1),(7,'CEMS001','Cemento Portland 25kg','Saco de cemento de alta resistencia',6990.00,7,NULL,'cemento.jpg',NULL,'2025-04-23 13:00:27',NULL,1),(8,'AREN002','Arena Fina 40kg','Saco de arena fina para mezclas',4990.00,7,NULL,'arena.jpg',NULL,'2025-04-23 13:00:27',NULL,1),(9,'LADR003','Ladrillos Prensados','Pallet de ladrillos prensados (500 unidades)',189990.00,7,NULL,'ladrillos.jpg',NULL,'2025-04-23 13:00:27',NULL,1),(10,'PINTS001','Pintura Látex Blanco 1 Galón','Pintura látex para interiores',15990.00,8,NULL,'pintura.jpg',NULL,'2025-04-23 13:00:27',NULL,1),(11,'BARNS002','Barniz Marino 1L','Barniz protector resistente al agua',12990.00,8,NULL,'barniz.jpg',NULL,'2025-04-23 13:00:27',NULL,1),(12,'CERS003','Cerámica Blanca 30x30cm','Caja cerámica blanca (2m²)',9990.00,8,NULL,'ceramica.jpg',NULL,'2025-04-23 13:00:27',NULL,1),(13,'CASE001','Casco de Seguridad','Casco certificado con ajuste tipo ratchet',8990.00,3,5,'casco.jpg',NULL,'2025-04-23 13:00:27',NULL,1),(14,'GUAN002','Guantes de Trabajo','Par de guantes de seguridad resistentes',5990.00,3,5,'guantes.jpg',NULL,'2025-04-23 13:00:27',NULL,1),(15,'LENT003','Lentes de Seguridad','Lentes protectores anti-impacto',4990.00,3,5,'lentes.jpg',NULL,'2025-04-23 13:00:27',NULL,1);
+INSERT INTO `productos` VALUES (1,'MARTB001','Martillo Profesional','Martillo de acero forjado con mango ergonómico',15990.00,5,3,'Martillo_Stanley.webp',NULL,'2025-04-23 13:00:27','2025-07-06 16:19:54',1),(2,'DESTB002','Set Destornilladores 6 piezas','Set de destornilladores Phillips y planos',12990.00,5,3,'Juego_de_Destornilladores.avif',NULL,'2025-04-23 13:00:27','2025-07-06 16:19:54',1),(3,'LLAVB003','Juego de Llaves Combinadas','Set de 10 llaves combinadas de 8 a 19mm',24990.00,5,1,'llaves.jpg',NULL,'2025-04-23 13:00:27',NULL,1),(4,'TALM001','Taladro Percutor Bosch','Taladro percutor profesional 800W con maleta',89990.00,6,1,'Taladro_Percutor_Bosch.webp',NULL,'2025-04-23 13:00:27','2025-07-06 16:19:54',1),(5,'SIERM002','Sierra Circular Makita','Sierra circular 7-1/4\" 1800W',119990.00,6,2,'Sierra_Circular_Makita.jpg',NULL,'2025-04-23 13:00:27','2025-07-06 16:19:54',1),(6,'LIJAM003','Lijadora Orbital DeWalt','Lijadora orbital con colector de polvo',69990.00,6,7,'Lijadora_Orbital_DeWalt.jpg',NULL,'2025-04-23 13:00:27','2025-07-06 16:19:54',1),(7,'CEMS001','Cemento Portland 25kg test','Saco de cemento de alta resistencia test',8990.00,8,NULL,'Cemento_Portland_25kg.jpg','test editar','2025-04-23 13:00:27','2025-07-06 19:25:58',1),(8,'AREN002','Arena Fina 40kg','Saco de arena fina para mezclas',4990.00,7,NULL,'af416ae3-cffe-4818-91dd-f018d1ecbfee_Arena_Fina_40kg.webp','Sin especificaciones','2025-04-23 13:00:27','2025-07-07 12:56:48',1),(9,'LADR003','Ladrillos Prensados','Pallet de ladrillos prensados (500 unidades)',189990.00,7,NULL,'Ladrillos_Prensados.jpg',NULL,'2025-04-23 13:00:27','2025-07-06 16:19:54',1),(10,'PINTS001','Pintura Látex Blanco 1 Galón','Pintura látex para interiores',15990.00,8,NULL,'Pintura_Látex_Blanco_1_Galón.webp',NULL,'2025-04-23 13:00:27','2025-07-06 16:19:54',1),(11,'BARNS002','Barniz Marino 1L','Barniz protector resistente al agua',12990.00,8,NULL,'Barniz_Marino_1L.png',NULL,'2025-04-23 13:00:27','2025-07-06 16:19:54',1),(12,'CERS003','Cerámica Blanca 30x30cm','Caja cerámica blanca (2m²)',9990.00,8,NULL,'02d342e2-c579-402f-8760-d5ebd3a6f9c6_Cerámica_Blanca_30x30cm.webp','Sin especificaciones','2025-04-23 13:00:27','2025-07-07 11:46:32',1),(13,'CASE001','Casco de Seguridad','Casco certificado con ajuste tipo ratchet',8990.00,3,5,'Casco_de_Seguridad.webp',NULL,'2025-04-23 13:00:27','2025-07-06 16:19:54',1),(14,'GUAN002','Guantes de Trabajo','Par de guantes de seguridad resistentes',5990.00,3,5,'Guantes_de_Trabajo.webp',NULL,'2025-04-23 13:00:27','2025-07-06 16:19:54',1),(15,'LENT003','Lentes de Seguridad','Lentes protectores anti-impacto',4990.00,3,5,'Lentes_de_Seguridad.webp',NULL,'2025-04-23 13:00:27','2025-07-06 16:19:54',1),(16,'TEST001','Producto test','test',9990.00,1,NULL,'cf778f17-a3d5-492b-9fbd-7ba1e7a6839e_prueba.png','Sin especificaciones','2025-07-07 12:50:35','2025-07-07 13:26:38',0);
 /*!40000 ALTER TABLE `productos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -996,7 +1004,11 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+<<<<<<< Updated upstream
 INSERT INTO `usuarios` VALUES (13,'admin','admin','admin@ferremas.cl','rJaJ4ickJwheNbnT4+i+2IyzQ0gotDuG/AWWytTG4nA=','191991999','99999999','Administrador','2025-05-27 20:22:21','2025-05-30 17:22:29',1),(15,'Prueba','Prueba','Prueba@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','101001001','10101010','Administrador','2025-05-28 11:37:17','2025-07-05 16:05:47',1),(24,'Contador','Contador','contador@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-3','90909099','contador','2025-05-30 17:23:06','2025-06-04 14:09:09',1),(25,'Vendedor','Vendedor','vendedor@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-4','90909090','vendedor','2025-05-30 17:25:04','2025-06-05 15:05:11',1),(26,'Bodeguero','Bodeguero','bodeguero@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-5','90909097','bodeguero','2025-05-30 17:26:03','2025-06-05 14:56:13',1),(33,'Batitú','Mayorga','angelina.mendoza.y@gmail.com','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','25592802-5','+56998555466','cliente','2025-07-05 19:10:42','2025-07-05 19:17:20',1),(34,'Angelina','Mendoza','ange.mendoza@duocuc.cl','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','17144575-2','+56998555466','cliente','2025-07-05 20:46:16','2025-07-05 21:10:39',1);
+=======
+INSERT INTO `usuarios` VALUES (13,'admin','admin','admin@ferremas.cl','rJaJ4ickJwheNbnT4+i+2IyzQ0gotDuG/AWWytTG4nA=','191991999','99999999','Administrador','2025-05-27 20:22:21','2025-05-30 17:22:29',1),(15,'Prueba','Prueba','Prueba@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','101001001','10101010','Administrador','2025-05-28 11:37:17','2025-07-07 21:01:38',1),(24,'Contador','Contador','contador@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-3','90909099','contador','2025-05-30 17:23:06','2025-06-04 14:09:09',1),(25,'Vendedor','Vendedor','vendedor@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-4','90909090','vendedor','2025-05-30 17:25:04','2025-06-05 15:05:11',1),(26,'Bodeguero','Bodeguero','bodeguero@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-5','90909097','bodeguero','2025-05-30 17:26:03','2025-06-05 14:56:13',1),(33,'Batitú','Mayorga','angelina.mendoza.y@gmail.com','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','25592802-5','+56998555466','cliente','2025-07-05 19:10:42','2025-07-05 19:17:20',1),(34,'Angelina Andrea','Mendoza Yañez','ange.mendoza@duocuc.cl','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','17144575-2','+56998555466','cliente','2025-07-05 20:46:16','2025-07-07 13:07:07',1);
+>>>>>>> Stashed changes
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2784,4 +2796,8 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< Updated upstream
 -- Dump completed on 2025-07-05 21:12:55
+=======
+-- Dump completed on 2025-07-08 10:55:25
+>>>>>>> Stashed changes

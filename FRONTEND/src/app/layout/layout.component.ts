@@ -11,6 +11,7 @@ import {
 
 import { ApiService } from 'src/app/services/api.service';     // 📡 Servicio que se comunica con el backend
 import { AuthService } from 'src/app/services/auth.service';   // 🔐 Servicio de autenticación para manejar sesiones
+import { CarritoService } from 'src/app/services/carrito.service';
 
 @Component({
   selector: 'app-layout',
@@ -31,11 +32,13 @@ export class LayoutComponent implements OnInit, OnDestroy {
   usuarioNombre: string = '';      // 👤 Nombre del usuario logueado (si aplica)
   esAdmin: boolean = false;        // 🛡️ Indica si el usuario es administrador
   private authSubscription?: Subscription; // 🔄 Suscripción para cambios de autenticación
+  private carritoSubscription?: Subscription;
 
   constructor(
     private api: ApiService,       // 📡 Servicio que accede al backend
     private auth: AuthService,     // 🔐 Manejo de sesión del usuario
-    private router: Router         // 🧭 Para redirecciones
+    private router: Router,        // 🧭 Para redirecciones
+    private carritoService: CarritoService // <-- Inyectar el servicio
   ) {}
 
   /**
@@ -50,6 +53,12 @@ export class LayoutComponent implements OnInit, OnDestroy {
     // 🔄 Estado inicial
     const usuarioInicial = this.auth.obtenerUsuario();
     this.actualizarEstadoUsuario(usuarioInicial);
+
+    // 🛒 Suscribirse al carrito para actualizar el contador en tiempo real
+    this.carritoSubscription = this.carritoService.getCarrito$().subscribe(productos => {
+      // Sumar cantidades si los productos tienen cantidad, si no, contar elementos
+      this.carritoCantidad = productos.reduce((acc, p) => acc + (p.cantidad || 1), 0);
+    });
   }
 
   /**
@@ -60,20 +69,10 @@ export class LayoutComponent implements OnInit, OnDestroy {
       // ✅ Usuario logueado
       this.usuarioNombre = usuario.nombre || 'Usuario';
       this.esAdmin = usuario.rol && usuario.rol.toLowerCase().includes('admin');
-      
-      // 📊 Consultar carrito del usuario
-      this.api.getCarritoPorUsuario(usuario.id).subscribe({
-        next: (productos) => this.carritoCantidad = productos.length,
-        error: (err) => {
-          console.error('❌ Error al obtener carrito:', err);
-          this.carritoCantidad = 0;
-        }
-      });
     } else {
       // 👤 Usuario NO logueado
       this.usuarioNombre = '';
       this.esAdmin = false;
-      this.carritoCantidad = 0;
     }
   }
 
@@ -83,6 +82,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
+    }
+    if (this.carritoSubscription) {
+      this.carritoSubscription.unsubscribe();
     }
   }
 

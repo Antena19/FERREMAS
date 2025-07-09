@@ -216,7 +216,9 @@ namespace Ferremas.Api.Services
                         Monto = reader.GetDecimal("monto"),
                         Estado = reader.GetString("estado"),
                         FechaPago = reader.GetDateTime("fecha_pago"),
-                        ReferenciaTransaccion = reader.GetString("referencia_transaccion"),
+                        Notas = reader.IsDBNull(reader.GetOrdinal("notas")) ? null : reader.GetString("notas"),
+                        UrlRetorno = reader.IsDBNull(reader.GetOrdinal("url_retorno")) ? null : reader.GetString("url_retorno"),
+                        ContadorId = reader.IsDBNull(reader.GetOrdinal("contador_id")) ? null : reader.GetInt32("contador_id"),
                         Pedido = new Pedido
                         {
                             Id = reader.GetInt32("pedido_id"),
@@ -252,18 +254,9 @@ namespace Ferremas.Api.Services
                         Monto = reader.GetDecimal("monto"),
                         Estado = reader.GetString("estado"),
                         FechaPago = reader.IsDBNull(reader.GetOrdinal("fecha_pago")) ? null : reader.GetDateTime("fecha_pago"),
-                        ReferenciaTransaccion = reader.IsDBNull(reader.GetOrdinal("referencia_transaccion")) ? null : reader.GetString("referencia_transaccion"),
                         Notas = reader.IsDBNull(reader.GetOrdinal("notas")) ? null : reader.GetString("notas"),
                         UrlRetorno = reader.IsDBNull(reader.GetOrdinal("url_retorno")) ? null : reader.GetString("url_retorno"),
                         ContadorId = reader.IsDBNull(reader.GetOrdinal("contador_id")) ? null : reader.GetInt32("contador_id"),
-                        MercadoPagoPaymentId = reader.IsDBNull(reader.GetOrdinal("mercadopago_payment_id")) ? null : reader.GetString("mercadopago_payment_id"),
-                        MercadoPagoPreferenceId = reader.IsDBNull(reader.GetOrdinal("mercadopago_preference_id")) ? null : reader.GetString("mercadopago_preference_id"),
-                        MercadoPagoStatus = reader.IsDBNull(reader.GetOrdinal("mercadopago_status")) ? null : reader.GetString("mercadopago_status"),
-                        MercadoPagoStatusDetail = reader.IsDBNull(reader.GetOrdinal("mercadopago_status_detail")) ? null : reader.GetString("mercadopago_status_detail"),
-                        MercadoPagoPaymentMethodId = reader.IsDBNull(reader.GetOrdinal("mercadopago_payment_method_id")) ? null : reader.GetString("mercadopago_payment_method_id"),
-                        MercadoPagoPaymentTypeId = reader.IsDBNull(reader.GetOrdinal("mercadopago_payment_type_id")) ? null : reader.GetString("mercadopago_payment_type_id"),
-                        MercadoPagoInstallments = reader.IsDBNull(reader.GetOrdinal("mercadopago_installments")) ? null : reader.GetInt32("mercadopago_installments"),
-                        MercadoPagoCardNumber = reader.IsDBNull(reader.GetOrdinal("mercadopago_card_number")) ? null : reader.GetString("mercadopago_card_number"),
                         Pedido = new Pedido
                         {
                             Id = reader.GetInt32("pedido_id"),
@@ -300,7 +293,9 @@ namespace Ferremas.Api.Services
                         Monto = reader.GetDecimal("monto"),
                         Estado = reader.GetString("estado"),
                         FechaPago = reader.GetDateTime("fecha_pago"),
-                        ReferenciaTransaccion = reader.GetString("referencia_transaccion"),
+                        Notas = reader.IsDBNull(reader.GetOrdinal("notas")) ? null : reader.GetString("notas"),
+                        UrlRetorno = reader.IsDBNull(reader.GetOrdinal("url_retorno")) ? null : reader.GetString("url_retorno"),
+                        ContadorId = reader.IsDBNull(reader.GetOrdinal("contador_id")) ? null : reader.GetInt32("contador_id"),
                         Pedido = new Pedido
                         {
                             Id = reader.GetInt32("pedido_id"),

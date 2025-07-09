@@ -200,8 +200,17 @@ C:\FERREMAS\Ferremas.Api\api_ferremas\bin\Debug\net8.0\runtimes\win-arm64\native
 C:\FERREMAS\Ferremas.Api\api_ferremas\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 C:\FERREMAS\Ferremas.Api\api_ferremas\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 C:\FERREMAS\Ferremas.Api\api_ferremas\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.csproj.AssemblyReference.cache
+C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.AssemblyInfoInputs.cache
+C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.AssemblyInfo.cs
+C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.csproj.CoreCompileInputs.cache
+C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.MvcApplicationPartsAssemblyInfo.cache
+C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.sourcelink.json
 C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\appsettings.Development.json
 C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\appsettings.json
+C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\Ferremas.Api.staticwebassets.runtime.json
 C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\Ferremas.Api.staticwebassets.endpoints.json
 C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\Ferremas.Api.exe
 C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\Ferremas.Api.deps.json
@@ -245,6 +254,7 @@ C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\System.Security.Permissions.dl
 C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\System.Text.Encodings.Web.dll
 C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\System.Text.Json.dll
 C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\System.Windows.Extensions.dll
+C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\Transbank.dll
 C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\ZstdSharp.dll
 C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
 C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
@@ -260,14 +270,6 @@ C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\runtimes\win-x64\native\krbcc6
 C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Windows.Extensions.dll
-C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.csproj.AssemblyReference.cache
-C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.GeneratedMSBuildEditorConfig.editorconfig
-C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.AssemblyInfoInputs.cache
-C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.AssemblyInfo.cs
-C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.csproj.CoreCompileInputs.cache
-C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.MvcApplicationPartsAssemblyInfo.cs
-C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.MvcApplicationPartsAssemblyInfo.cache
-C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.sourcelink.json
 C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\scopedcss\bundle\Ferremas.Api.styles.css
 C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\staticwebassets.build.json
 C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\staticwebassets.development.json
@@ -285,4 +287,3 @@ C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\refint\Ferremas.Api.dll
 C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.pdb
 C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\Ferremas.Api.genruntimeconfig.cache
 C:\FERREMAS\BACKEND\api_ferremas\obj\Debug\net8.0\ref\Ferremas.Api.dll
-C:\FERREMAS\BACKEND\api_ferremas\bin\Debug\net8.0\Ferremas.Api.staticwebassets.runtime.json

@@ -38,19 +38,31 @@ namespace Ferremas.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene un pedido por su ID
+        /// Endpoint temporal para probar la consulta de usuarios
         /// </summary>
-        [HttpGet("{id}")]
+        [HttpGet("test-usuarios")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PedidoDTO>> GetPedido(int id)
+        public async Task<ActionResult> TestUsuarios()
         {
-            var pedido = await _pedidosService.GetPedidoByIdAsync(id);
+            try
+            {
+                var sql = @"
+                    SELECT 
+                        u.id,
+                        u.nombre,
+                        u.apellido,
+                        CONCAT(u.nombre, ' ', u.apellido) as NombreCompleto
+                    FROM usuarios u
+                    WHERE u.id IN (33, 34, 15)
+                    ORDER BY u.id";
 
-            if (pedido == null)
-                return NotFound($"No se encontró el pedido con ID {id}");
-
-            return Ok(pedido);
+                var usuarios = await _db.QueryAsync(sql);
+                return Ok(usuarios);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         /// <summary>
@@ -212,7 +224,7 @@ namespace Ferremas.Api.Controllers
             try
             {
                 // Obtener el ID del usuario desde el token JWT
-                var usuarioIdClaim = User.FindFirst("userId");
+                var usuarioIdClaim = User.FindFirst("nameid") ?? User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
                 if (usuarioIdClaim == null || !int.TryParse(usuarioIdClaim.Value, out int usuarioId))
                 {
                     return BadRequest("No se pudo identificar al usuario");
@@ -226,6 +238,64 @@ namespace Ferremas.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, 
                     "Error al obtener el historial de compras: " + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Crea o actualiza el pedido pendiente del usuario autenticado a partir del carrito actual.
+        /// </summary>
+        [HttpPost("desde-carrito")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CrearOActualizarPedidoDesdeCarrito([FromBody] PedidoDesdeCarritoDTO dto)
+        {
+            try
+            {
+                // Obtener el ID del usuario desde el token JWT
+                var usuarioIdClaim = User.FindFirst("nameid") ?? User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+                if (usuarioIdClaim == null || !int.TryParse(usuarioIdClaim.Value, out int usuarioId))
+                {
+                    return BadRequest("No se pudo identificar al usuario");
+                }
+
+                var result = await _db.QueryAsync<dynamic>(
+                    "sp_crear_o_actualizar_pedido_desde_carrito",
+                    new
+                    {
+                        p_usuario_id = usuarioId,
+                        p_tipo_entrega = dto.TipoEntrega,
+                        p_sucursal_id = dto.SucursalId,
+                        p_direccion_id = dto.DireccionId,
+                        p_notas = dto.Notas
+                    },
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Obtiene el pedido pendiente del usuario autenticado (si existe)
+        /// </summary>
+        [HttpGet("pendiente")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> ObtenerPedidoPendiente()
+        {
+            var usuarioIdClaim = User.FindFirst("userId");
+            if (usuarioIdClaim == null || !int.TryParse(usuarioIdClaim.Value, out int usuarioId))
+            {
+                return BadRequest("No se pudo identificar al usuario");
+            }
+
+            var result = await _db.QueryFirstOrDefaultAsync<dynamic>(
+                "SELECT * FROM pedidos WHERE usuario_id = @usuarioId AND estado = 'pendiente' LIMIT 1",
+                new { usuarioId }
+            );
+            return Ok(result);
         }
     }
 }

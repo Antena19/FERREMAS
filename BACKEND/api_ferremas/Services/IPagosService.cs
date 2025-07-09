@@ -12,5 +12,6 @@ namespace Ferremas.Api.Services
         Task<PagoResponseDTO> CrearPagoAsync(PagoCreateDTO pagoCreateDTO);
         Task<PagoResponseDTO> ConfirmarPagoAsync(PagoConfirmacionDTO confirmacionDTO);
         Task<bool> PagoExisteAsync(int id);
+        Task ActualizarTokenYBuyOrderAsync(int pedidoId, string token, string buyOrder);
     }
 }

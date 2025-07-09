@@ -68,7 +68,7 @@ CREATE TABLE `carritos` (
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`),
   CONSTRAINT `carritos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +77,7 @@ CREATE TABLE `carritos` (
 
 LOCK TABLES `carritos` WRITE;
 /*!40000 ALTER TABLE `carritos` DISABLE KEYS */;
-INSERT INTO `carritos` VALUES (15,15,'2025-05-28 18:37:53','2025-05-29 15:42:30',69990.00,13298.10,0.00,83288.10,0),(16,15,'2025-07-05 15:59:04',NULL,0.00,0.00,0.00,0.00,1),(17,33,'2025-07-05 19:17:20',NULL,0.00,0.00,0.00,0.00,1),(18,34,'2025-07-05 20:48:15',NULL,0.00,0.00,0.00,0.00,1);
+INSERT INTO `carritos` VALUES (21,34,'2025-07-08 16:37:17','2025-07-09 01:26:43',0.00,0.00,0.00,0.00,1),(22,33,'2025-07-08 16:54:27','2025-07-09 00:38:04',0.00,0.00,0.00,0.00,1),(23,15,'2025-07-09 00:41:30',NULL,0.00,0.00,0.00,0.00,1);
 /*!40000 ALTER TABLE `carritos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,11 +143,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-<<<<<<< Updated upstream
-INSERT INTO `clientes` VALUES (4,'Cliente','Cliente','123453452','cliente@example.com','99999999','2025-05-23 23:42:34','particular','activo',0,NULL,0.00,0),(5,'admin','admin','191991999','admin@ferremas.cl','99999999','2025-05-27 20:22:21','particular','activo',0,NULL,0.00,0),(7,'Prueba','Prueba','101001001','Prueba@prueba.cl','10101010','2025-05-28 11:37:17','particular','activo',0,NULL,0.00,0),(14,'Batitú','Mayorga','25592802-5','angelina.mendoza.y@gmail.com','+56998555466','2025-07-05 19:10:42','particular','activo',0,NULL,0.00,0),(15,'Angelina','Mendoza','17144575-2','ange.mendoza@duocuc.cl','+56998555466','2025-07-05 20:46:16','particular','activo',0,NULL,0.00,0);
-=======
 INSERT INTO `clientes` VALUES (14,'Batitú','Mayorga','25592802-5','angelina.mendoza.y@gmail.com','+56998555466','2025-07-05 19:10:42','particular','activo',0,NULL,0.00,0),(15,'Angelina Andrea','Mendoza Yañez','17144575-2','ange.mendoza@duocuc.cl','+56998555466','2025-07-05 20:46:16','particular','activo',0,NULL,0.00,0);
->>>>>>> Stashed changes
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,7 +225,7 @@ CREATE TABLE `direcciones` (
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`),
   CONSTRAINT `direcciones_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,10 +234,7 @@ CREATE TABLE `direcciones` (
 
 LOCK TABLES `direcciones` WRITE;
 /*!40000 ALTER TABLE `direcciones` DISABLE KEYS */;
-<<<<<<< Updated upstream
-=======
-INSERT INTO `direcciones` VALUES (5,34,'Joseph Addison','2342','','Pruerto Montt','Los Lagos','',1);
->>>>>>> Stashed changes
+INSERT INTO `direcciones` VALUES (5,34,'Joseph Addison Portal','2342','','Pruerto Montt','Los Lagos','',1),(6,33,'Test','1234','1234','Puerto Montt','Los Lagos','1',1);
 /*!40000 ALTER TABLE `direcciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -337,7 +330,7 @@ CREATE TABLE `inventario` (
 
 LOCK TABLES `inventario` WRITE;
 /*!40000 ALTER TABLE `inventario` DISABLE KEYS */;
-INSERT INTO `inventario` VALUES (1,1,1,104,10,'2025-05-27 15:36:14',NULL),(2,2,1,30,5,'2025-04-23 13:00:27',NULL),(3,3,1,55,5,'2025-04-23 13:00:27',NULL),(4,4,1,15,3,'2025-04-23 13:00:27',NULL),(5,5,1,10,2,'2025-04-23 13:00:27',NULL),(6,6,1,23,5,'2025-04-23 13:00:27','2025-06-05 14:57:08'),(7,7,1,100,20,'2025-04-23 13:00:27',NULL),(8,8,1,199,50,'2025-04-23 13:00:27',NULL),(9,9,1,5,1,'2025-04-23 13:00:27',NULL),(10,10,1,88,10,'2025-04-23 13:00:27',NULL),(11,11,1,29,5,'2025-04-23 13:00:27',NULL),(12,12,1,80,20,'2025-04-23 13:00:27',NULL),(13,13,1,49,10,'2025-04-23 13:00:27',NULL),(14,14,1,40,10,'2025-04-23 13:00:27',NULL),(15,15,1,60,15,'2025-04-23 13:00:27',NULL),(16,13,7,51,5,'2025-04-23 13:00:27',NULL),(17,13,6,45,5,'2025-04-23 13:00:27',NULL),(18,13,5,15,5,'2025-04-23 13:00:27',NULL),(19,13,4,29,5,'2025-04-23 13:00:27',NULL),(20,13,3,42,5,'2025-04-23 13:00:27',NULL),(21,13,2,14,5,'2025-04-23 13:00:27',NULL),(22,14,7,36,5,'2025-04-23 13:00:27',NULL),(23,14,6,25,5,'2025-04-23 13:00:27',NULL),(24,14,5,10,5,'2025-04-23 13:00:27',NULL),(25,14,4,13,5,'2025-04-23 13:00:27',NULL),(26,14,3,27,5,'2025-04-23 13:00:27',NULL),(27,14,2,35,5,'2025-04-23 13:00:27',NULL),(28,15,7,34,5,'2025-04-23 13:00:27',NULL),(29,15,6,57,5,'2025-04-23 13:00:27',NULL),(30,15,5,21,5,'2025-04-23 13:00:27',NULL),(31,15,4,28,5,'2025-04-23 13:00:27',NULL),(32,15,3,16,5,'2025-04-23 13:00:27',NULL),(33,15,2,38,5,'2025-04-23 13:00:27',NULL),(34,1,7,84,5,'2025-05-27 15:36:14',NULL),(35,1,6,83,5,'2025-05-27 15:36:14',NULL),(36,1,5,97,5,'2025-05-27 15:36:14',NULL),(37,1,4,76,5,'2025-05-27 15:36:14',NULL),(38,1,3,72,5,'2025-05-27 15:36:14',NULL),(39,1,2,70,5,'2025-05-27 15:36:14',NULL),(40,2,7,15,5,'2025-04-23 13:00:27',NULL),(41,2,6,18,5,'2025-04-23 13:00:27',NULL),(42,2,5,36,5,'2025-04-23 13:00:27',NULL),(43,2,4,15,5,'2025-04-23 13:00:27',NULL),(44,2,3,10,5,'2025-04-23 13:00:27',NULL),(45,2,2,46,5,'2025-04-23 13:00:27',NULL),(46,3,7,41,5,'2025-04-23 13:00:27',NULL),(47,3,6,57,5,'2025-04-23 13:00:27',NULL),(48,3,5,53,5,'2025-04-23 13:00:27',NULL),(49,3,4,34,5,'2025-04-23 13:00:27',NULL),(50,3,3,51,5,'2025-04-23 13:00:27',NULL),(51,3,2,45,5,'2025-04-23 13:00:27',NULL),(52,4,7,13,5,'2025-04-23 13:00:27',NULL),(53,4,6,20,5,'2025-04-23 13:00:27',NULL),(54,4,5,53,5,'2025-04-23 13:00:27',NULL),(55,4,4,43,5,'2025-04-23 13:00:27',NULL),(56,4,3,48,5,'2025-04-23 13:00:27',NULL),(57,4,2,53,5,'2025-04-23 13:00:27',NULL),(58,5,7,58,5,'2025-04-23 13:00:27',NULL),(59,5,6,24,5,'2025-04-23 13:00:27',NULL),(60,5,5,34,5,'2025-04-23 13:00:27',NULL),(61,5,4,39,5,'2025-04-23 13:00:27',NULL),(62,5,3,33,5,'2025-04-23 13:00:27',NULL),(63,5,2,40,5,'2025-04-23 13:00:27',NULL),(64,6,7,42,5,'2025-04-23 13:00:27',NULL),(65,6,6,30,5,'2025-04-23 13:00:27',NULL),(66,6,5,13,5,'2025-04-23 13:00:27',NULL),(67,6,4,16,5,'2025-04-23 13:00:27',NULL),(68,6,3,30,5,'2025-04-23 13:00:27',NULL),(69,6,2,42,5,'2025-04-23 13:00:27',NULL),(70,7,7,13,5,'2025-04-23 13:00:27',NULL),(71,7,6,28,5,'2025-04-23 13:00:27',NULL),(72,7,5,42,5,'2025-04-23 13:00:27',NULL),(73,7,4,16,5,'2025-04-23 13:00:27',NULL),(74,7,3,44,5,'2025-04-23 13:00:27',NULL),(75,7,2,12,5,'2025-04-23 13:00:27',NULL),(76,8,7,17,5,'2025-04-23 13:00:27',NULL),(77,8,6,45,5,'2025-04-23 13:00:27',NULL),(78,8,5,15,5,'2025-04-23 13:00:27',NULL),(79,8,4,33,5,'2025-04-23 13:00:27',NULL),(80,8,3,9,5,'2025-04-23 13:00:27',NULL),(81,8,2,39,5,'2025-04-23 13:00:27',NULL),(82,9,7,11,5,'2025-04-23 13:00:27',NULL),(83,9,6,25,5,'2025-04-23 13:00:27',NULL),(84,9,5,31,5,'2025-04-23 13:00:27',NULL),(85,9,4,19,5,'2025-04-23 13:00:27',NULL),(86,9,3,46,5,'2025-04-23 13:00:27',NULL),(87,9,2,12,5,'2025-04-23 13:00:27',NULL),(88,10,7,14,5,'2025-04-23 13:00:27',NULL),(89,10,6,25,5,'2025-04-23 13:00:27',NULL),(90,10,5,23,5,'2025-04-23 13:00:27',NULL),(91,10,4,31,5,'2025-04-23 13:00:27',NULL),(92,10,3,27,5,'2025-04-23 13:00:27',NULL),(93,10,2,31,5,'2025-04-23 13:00:27',NULL),(94,11,7,12,5,'2025-04-23 13:00:27',NULL),(95,11,6,14,5,'2025-04-23 13:00:27',NULL),(96,11,5,27,5,'2025-04-23 13:00:27',NULL),(97,11,4,32,5,'2025-04-23 13:00:27',NULL),(98,11,3,21,5,'2025-04-23 13:00:27',NULL),(99,11,2,50,5,'2025-04-23 13:00:27',NULL),(100,12,7,29,5,'2025-04-23 13:00:27',NULL),(101,12,6,32,5,'2025-04-23 13:00:27',NULL),(102,12,5,16,5,'2025-04-23 13:00:27',NULL),(103,12,4,22,5,'2025-04-23 13:00:27',NULL),(104,12,3,55,5,'2025-04-23 13:00:27',NULL),(105,12,2,49,5,'2025-04-23 13:00:27',NULL);
+INSERT INTO `inventario` VALUES (1,1,1,104,10,'2025-05-27 15:36:14',NULL),(2,2,1,29,5,'2025-04-23 13:00:27','2025-07-09 01:17:24'),(3,3,1,55,5,'2025-04-23 13:00:27',NULL),(4,4,1,15,3,'2025-04-23 13:00:27',NULL),(5,5,1,10,2,'2025-04-23 13:00:27',NULL),(6,6,1,23,5,'2025-04-23 13:00:27','2025-06-05 14:57:08'),(7,7,1,100,20,'2025-04-23 13:00:27',NULL),(8,8,1,199,50,'2025-04-23 13:00:27',NULL),(9,9,1,5,1,'2025-04-23 13:00:27',NULL),(10,10,1,88,10,'2025-04-23 13:00:27',NULL),(11,11,1,29,5,'2025-04-23 13:00:27',NULL),(12,12,1,80,20,'2025-04-23 13:00:27',NULL),(13,13,1,49,10,'2025-04-23 13:00:27',NULL),(14,14,1,40,10,'2025-04-23 13:00:27',NULL),(15,15,1,59,15,'2025-04-23 13:00:27','2025-07-09 01:19:31'),(16,13,7,51,5,'2025-04-23 13:00:27',NULL),(17,13,6,45,5,'2025-04-23 13:00:27',NULL),(18,13,5,15,5,'2025-04-23 13:00:27',NULL),(19,13,4,29,5,'2025-04-23 13:00:27',NULL),(20,13,3,42,5,'2025-04-23 13:00:27',NULL),(21,13,2,14,5,'2025-04-23 13:00:27',NULL),(22,14,7,36,5,'2025-04-23 13:00:27',NULL),(23,14,6,25,5,'2025-04-23 13:00:27',NULL),(24,14,5,10,5,'2025-04-23 13:00:27',NULL),(25,14,4,13,5,'2025-04-23 13:00:27',NULL),(26,14,3,27,5,'2025-04-23 13:00:27',NULL),(27,14,2,35,5,'2025-04-23 13:00:27',NULL),(28,15,7,34,5,'2025-04-23 13:00:27',NULL),(29,15,6,57,5,'2025-04-23 13:00:27',NULL),(30,15,5,21,5,'2025-04-23 13:00:27',NULL),(31,15,4,28,5,'2025-04-23 13:00:27',NULL),(32,15,3,16,5,'2025-04-23 13:00:27',NULL),(33,15,2,38,5,'2025-04-23 13:00:27',NULL),(34,1,7,84,5,'2025-05-27 15:36:14',NULL),(35,1,6,83,5,'2025-05-27 15:36:14',NULL),(36,1,5,97,5,'2025-05-27 15:36:14',NULL),(37,1,4,76,5,'2025-05-27 15:36:14',NULL),(38,1,3,72,5,'2025-05-27 15:36:14',NULL),(39,1,2,70,5,'2025-05-27 15:36:14',NULL),(40,2,7,15,5,'2025-04-23 13:00:27',NULL),(41,2,6,18,5,'2025-04-23 13:00:27',NULL),(42,2,5,36,5,'2025-04-23 13:00:27',NULL),(43,2,4,15,5,'2025-04-23 13:00:27',NULL),(44,2,3,10,5,'2025-04-23 13:00:27',NULL),(45,2,2,46,5,'2025-04-23 13:00:27',NULL),(46,3,7,41,5,'2025-04-23 13:00:27',NULL),(47,3,6,57,5,'2025-04-23 13:00:27',NULL),(48,3,5,53,5,'2025-04-23 13:00:27',NULL),(49,3,4,34,5,'2025-04-23 13:00:27',NULL),(50,3,3,51,5,'2025-04-23 13:00:27',NULL),(51,3,2,45,5,'2025-04-23 13:00:27',NULL),(52,4,7,13,5,'2025-04-23 13:00:27',NULL),(53,4,6,20,5,'2025-04-23 13:00:27',NULL),(54,4,5,53,5,'2025-04-23 13:00:27',NULL),(55,4,4,43,5,'2025-04-23 13:00:27',NULL),(56,4,3,48,5,'2025-04-23 13:00:27',NULL),(57,4,2,53,5,'2025-04-23 13:00:27',NULL),(58,5,7,58,5,'2025-04-23 13:00:27',NULL),(59,5,6,24,5,'2025-04-23 13:00:27',NULL),(60,5,5,34,5,'2025-04-23 13:00:27',NULL),(61,5,4,39,5,'2025-04-23 13:00:27',NULL),(62,5,3,33,5,'2025-04-23 13:00:27',NULL),(63,5,2,40,5,'2025-04-23 13:00:27',NULL),(64,6,7,42,5,'2025-04-23 13:00:27',NULL),(65,6,6,30,5,'2025-04-23 13:00:27',NULL),(66,6,5,13,5,'2025-04-23 13:00:27',NULL),(67,6,4,16,5,'2025-04-23 13:00:27',NULL),(68,6,3,30,5,'2025-04-23 13:00:27',NULL),(69,6,2,42,5,'2025-04-23 13:00:27',NULL),(70,7,7,13,5,'2025-04-23 13:00:27',NULL),(71,7,6,28,5,'2025-04-23 13:00:27',NULL),(72,7,5,42,5,'2025-04-23 13:00:27',NULL),(73,7,4,16,5,'2025-04-23 13:00:27',NULL),(74,7,3,44,5,'2025-04-23 13:00:27',NULL),(75,7,2,12,5,'2025-04-23 13:00:27',NULL),(76,8,7,17,5,'2025-04-23 13:00:27',NULL),(77,8,6,45,5,'2025-04-23 13:00:27',NULL),(78,8,5,15,5,'2025-04-23 13:00:27',NULL),(79,8,4,33,5,'2025-04-23 13:00:27',NULL),(80,8,3,9,5,'2025-04-23 13:00:27',NULL),(81,8,2,39,5,'2025-04-23 13:00:27',NULL),(82,9,7,11,5,'2025-04-23 13:00:27',NULL),(83,9,6,25,5,'2025-04-23 13:00:27',NULL),(84,9,5,31,5,'2025-04-23 13:00:27',NULL),(85,9,4,19,5,'2025-04-23 13:00:27',NULL),(86,9,3,46,5,'2025-04-23 13:00:27',NULL),(87,9,2,12,5,'2025-04-23 13:00:27',NULL),(88,10,7,14,5,'2025-04-23 13:00:27',NULL),(89,10,6,25,5,'2025-04-23 13:00:27',NULL),(90,10,5,23,5,'2025-04-23 13:00:27',NULL),(91,10,4,31,5,'2025-04-23 13:00:27',NULL),(92,10,3,27,5,'2025-04-23 13:00:27',NULL),(93,10,2,31,5,'2025-04-23 13:00:27',NULL),(94,11,7,12,5,'2025-04-23 13:00:27',NULL),(95,11,6,14,5,'2025-04-23 13:00:27',NULL),(96,11,5,27,5,'2025-04-23 13:00:27',NULL),(97,11,4,32,5,'2025-04-23 13:00:27',NULL),(98,11,3,21,5,'2025-04-23 13:00:27',NULL),(99,11,2,50,5,'2025-04-23 13:00:27',NULL),(100,12,7,29,5,'2025-04-23 13:00:27',NULL),(101,12,6,32,5,'2025-04-23 13:00:27',NULL),(102,12,5,15,5,'2025-04-23 13:00:27','2025-07-09 01:26:43'),(103,12,4,22,5,'2025-04-23 13:00:27',NULL),(104,12,3,55,5,'2025-04-23 13:00:27',NULL),(105,12,2,49,5,'2025-04-23 13:00:27',NULL);
 /*!40000 ALTER TABLE `inventario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -360,7 +353,7 @@ CREATE TABLE `items_carrito` (
   KEY `producto_id` (`producto_id`),
   CONSTRAINT `items_carrito_ibfk_1` FOREIGN KEY (`carrito_id`) REFERENCES `carritos` (`id`) ON DELETE CASCADE,
   CONSTRAINT `items_carrito_ibfk_2` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -369,7 +362,6 @@ CREATE TABLE `items_carrito` (
 
 LOCK TABLES `items_carrito` WRITE;
 /*!40000 ALTER TABLE `items_carrito` DISABLE KEYS */;
-INSERT INTO `items_carrito` VALUES (15,15,6,1,69990.00,69990.00);
 /*!40000 ALTER TABLE `items_carrito` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -422,7 +414,7 @@ CREATE TABLE `logs_actividad` (
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`),
   CONSTRAINT `logs_actividad_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -431,6 +423,7 @@ CREATE TABLE `logs_actividad` (
 
 LOCK TABLES `logs_actividad` WRITE;
 /*!40000 ALTER TABLE `logs_actividad` DISABLE KEYS */;
+INSERT INTO `logs_actividad` VALUES (1,34,'compra','Stock reducido: Producto ID 2, Cantidad: 1, Sucursal: 1','2025-07-09 01:17:24',NULL),(2,34,'compra','Stock reducido: Producto ID 15, Cantidad: 1, Sucursal: 1','2025-07-09 01:19:31',NULL),(3,34,'compra','Stock reducido: Producto ID 12, Cantidad: 1, Sucursal: 5','2025-07-09 01:26:43',NULL);
 /*!40000 ALTER TABLE `logs_actividad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -500,31 +493,31 @@ DROP TABLE IF EXISTS `pagos`;
 CREATE TABLE `pagos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `pedido_id` int NOT NULL,
-  `metodo` enum('tarjeta_debito','tarjeta_credito','transferencia','mercadopago') NOT NULL,
+  `metodo` enum('transferencia','webpay') NOT NULL,
   `monto` decimal(10,2) NOT NULL,
   `estado` enum('pendiente','completado','fallido','reembolsado') DEFAULT 'pendiente',
   `fecha_pago` datetime DEFAULT NULL,
-  `mercadopago_payment_id` varchar(100) DEFAULT NULL,
-  `mercadopago_preference_id` varchar(100) DEFAULT NULL,
-  `mercadopago_status` varchar(50) DEFAULT NULL,
-  `mercadopago_status_detail` varchar(100) DEFAULT NULL,
-  `mercadopago_payment_method_id` varchar(50) DEFAULT NULL,
-  `mercadopago_payment_type_id` varchar(50) DEFAULT NULL,
-  `mercadopago_installments` int DEFAULT NULL,
-  `mercadopago_card_number` varchar(20) DEFAULT NULL,
   `referencia_transaccion` varchar(255) DEFAULT NULL,
   `notas` text,
   `contador_id` int DEFAULT NULL,
   `url_retorno` varchar(255) DEFAULT NULL,
+  `webpay_token` varchar(100) DEFAULT NULL,
+  `webpay_buyorder` varchar(100) DEFAULT NULL,
+  `webpay_sessionid` varchar(100) DEFAULT NULL,
+  `webpay_authorization_code` varchar(20) DEFAULT NULL,
+  `webpay_payment_type_code` varchar(10) DEFAULT NULL,
+  `webpay_response_code` int DEFAULT NULL,
+  `webpay_card_last_digits` varchar(10) DEFAULT NULL,
+  `webpay_installments_number` int DEFAULT NULL,
+  `webpay_transaction_date` datetime DEFAULT NULL,
+  `webpay_status` varchar(20) DEFAULT NULL,
+  `webpay_vci` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `pedido_id` (`pedido_id`),
   KEY `contador_id` (`contador_id`),
-  KEY `idx_mercadopago_payment_id` (`mercadopago_payment_id`),
-  KEY `idx_mercadopago_preference_id` (`mercadopago_preference_id`),
-  KEY `idx_mercadopago_status` (`mercadopago_status`),
   CONSTRAINT `pagos_ibfk_1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`) ON DELETE CASCADE,
   CONSTRAINT `pagos_ibfk_2` FOREIGN KEY (`contador_id`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -533,9 +526,31 @@ CREATE TABLE `pagos` (
 
 LOCK TABLES `pagos` WRITE;
 /*!40000 ALTER TABLE `pagos` DISABLE KEYS */;
-INSERT INTO `pagos` VALUES (12,12,'transferencia',83288.10,'completado','2025-06-04 14:09:36',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,24,'');
+INSERT INTO `pagos` VALUES (12,12,'transferencia',83288.10,'completado','2025-06-04 14:09:36',NULL,NULL,24,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(19,16,'webpay',232026.20,'completado','2025-07-08 16:37:46',NULL,NULL,NULL,NULL,'01abe36bd756c8bb3156b8ba81ec890a8f5231150a0e65c50ffa5617a5c71ac6','16','session-94098efd-fea6-4136-ae42-b67e4ce4f0ac','1617','VN',0,'2032',0,'2025-07-08 20:38:43','AUTHORIZED','TSY'),(20,17,'webpay',107052.40,'completado','2025-07-08 17:04:25',NULL,NULL,NULL,NULL,'01ab7a857fed039bbd938a0b23caf060ee994a3cd2f17519fbc2921c2713192c','17','session-95ca59b3-56af-4f07-8936-a1ad30190f6a','1617','VN',0,'2032',0,'2025-07-08 21:05:22','AUTHORIZED','TSY'),(21,16,'webpay',10938.10,'completado','2025-07-08 17:20:12',NULL,NULL,NULL,NULL,'01abf5f4089adfb3b417adae15b718f0c32f09318ecfb59f143669b63a05cf39','16','session-c63c9972-16c2-4d83-a1f9-de9e2e2d3c04','1617','VN',0,'2032',0,'2025-07-08 21:21:24','AUTHORIZED','TSY'),(22,16,'webpay',10938.10,'completado','2025-07-08 17:20:27',NULL,NULL,NULL,NULL,'01abdf605f4c5dddb49e3da0eff865273837fdb73a26ca71029059b22758c492','16','session-d077004b-256a-4675-91ee-7736c0ae62e6','1617','VN',0,'2032',0,'2025-07-09 01:53:00','AUTHORIZED','TSY'),(23,16,'webpay',255826.20,'completado','2025-07-08 21:52:03',NULL,NULL,NULL,NULL,'01ab83a54dd9cf59b0d011594b216b5543267a523b3f546fb5d53606492c1a78','16','session-508f014c-6ac5-427f-872e-4dae72f1f404','1617','VN',0,'2032',0,'2025-07-09 01:55:52','AUTHORIZED','TSY'),(24,16,'webpay',10698.10,'completado','2025-07-08 21:54:54',NULL,NULL,NULL,'http://localhost:8100/carrito','01ab83a54dd9cf59b0d011594b216b5543267a523b3f546fb5d53606492c1a78','16',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(29,21,'webpay',5938.10,'completado','2025-07-08 23:40:07',NULL,NULL,NULL,NULL,'01ab6928417c1efdd05793fd08991e3338658fed7ab317a0aeab51af13a6d09c','21','session-f6b978b5-abbb-4c3c-84c4-b9e2d42710a6','1617','VN',0,'2032',0,'2025-07-09 03:41:05','AUTHORIZED','TSY'),(30,22,'webpay',24028.10,'completado','2025-07-08 23:50:58',NULL,NULL,NULL,NULL,'01ab410486948d3f8b132b0052fc85bd19954b221fb9a4f22221ad12c375cead','22','session-c8eb956a-67f0-47da-923c-0f002ce4c39a','1617','VN',0,'2032',0,'2025-07-09 03:51:56','AUTHORIZED','TSY'),(31,23,'webpay',5938.10,'completado','2025-07-09 00:18:22',NULL,NULL,NULL,NULL,'01ab18e4bcca8972ee63e141e191e3869b9864e49ef6d7904f93d246fcf5bc25','23','session-72193c40-306a-41b5-af69-b5b906cfa2b9','1617','VN',0,'2032',0,'2025-07-09 04:19:19','AUTHORIZED','TSY'),(32,24,'webpay',10698.10,'completado','2025-07-09 00:37:30',NULL,NULL,NULL,NULL,'01ab35c631c7c72ccdf7b8bb7290bf57b430887a578f89a2c100243c7ec2d35f','24','session-d9ba9695-5d5a-4cb0-9a72-0b6c1c2eeafa','1617','VN',0,'2032',0,'2025-07-09 04:38:28','AUTHORIZED','TSY'),(33,25,'webpay',20458.10,'completado','2025-07-09 01:12:55',NULL,NULL,NULL,'http://localhost:8100/carrito','01abf789ced51c9b475f81db139620ceac0b798bec7529010cb6960e7bef8573','25',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(34,26,'webpay',10938.10,'completado','2025-07-09 01:18:48',NULL,NULL,NULL,NULL,'01abb9a5038bfe0f7e52a57ad69e51a5dd281e8517e53704fef655b5013c2633','26','session-e72d232c-9d9e-4ad6-ba58-4bb620dcec03','1617','VN',0,'2032',0,'2025-07-09 05:19:45','AUTHORIZED','TSY'),(35,27,'webpay',11888.10,'completado','2025-07-09 01:26:06',NULL,NULL,NULL,NULL,'01ab2f57a2edba0a1421bc1d66c9fb3c5dea791c9a9088c9006f895dcd23a787','27','session-e64a75ab-e651-411f-8c2e-db06bc20761d','1617','VN',0,'2032',0,'2025-07-09 05:27:04','AUTHORIZED','TSY');
 /*!40000 ALTER TABLE `pagos` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tr_pagos_confirmado` AFTER UPDATE ON `pagos` FOR EACH ROW BEGIN
+    -- Solo si el estado cambió a 'completado'
+    IF NEW.estado = 'completado' AND OLD.estado <> 'completado' THEN
+        UPDATE pedidos
+        SET estado = 'confirmado'
+        WHERE id = NEW.pedido_id;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `pedido_items`
@@ -556,7 +571,7 @@ CREATE TABLE `pedido_items` (
   KEY `producto_id` (`producto_id`),
   CONSTRAINT `pedido_items_ibfk_1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`) ON DELETE CASCADE,
   CONSTRAINT `pedido_items_ibfk_2` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=263 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -565,7 +580,7 @@ CREATE TABLE `pedido_items` (
 
 LOCK TABLES `pedido_items` WRITE;
 /*!40000 ALTER TABLE `pedido_items` DISABLE KEYS */;
-INSERT INTO `pedido_items` VALUES (10,12,6,1,69990.00,69990.00);
+INSERT INTO `pedido_items` VALUES (10,12,6,1,69990.00,69990.00),(209,17,13,1,8990.00,8990.00),(210,17,15,1,4990.00,4990.00),(211,17,14,1,5990.00,5990.00),(212,17,6,1,69990.00,69990.00),(229,16,13,1,8990.00,8990.00),(231,18,7,1,8990.00,8990.00),(247,21,8,1,4990.00,4990.00),(249,22,1,1,15990.00,15990.00),(252,23,8,1,4990.00,4990.00),(255,24,13,1,8990.00,8990.00),(257,25,2,1,12990.00,12990.00),(259,26,15,1,4990.00,4990.00),(262,27,12,1,9990.00,9990.00);
 /*!40000 ALTER TABLE `pedido_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -602,7 +617,7 @@ CREATE TABLE `pedidos` (
   CONSTRAINT `pedidos_ibfk_3` FOREIGN KEY (`direccion_id`) REFERENCES `direcciones` (`id`) ON DELETE SET NULL,
   CONSTRAINT `pedidos_ibfk_4` FOREIGN KEY (`vendedor_id`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL,
   CONSTRAINT `pedidos_ibfk_5` FOREIGN KEY (`bodeguero_id`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -611,9 +626,86 @@ CREATE TABLE `pedidos` (
 
 LOCK TABLES `pedidos` WRITE;
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
-INSERT INTO `pedidos` VALUES (12,15,'2025-05-29 15:42:30','entregado','retiro_tienda',1,NULL,69990.00,0.00,13298.10,83288.10,'test',25,NULL);
+INSERT INTO `pedidos` VALUES (12,15,'2025-05-29 15:42:30','entregado','retiro_tienda',1,NULL,69990.00,0.00,13298.10,83288.10,'test',25,NULL),(16,34,'2025-07-08 16:37:39','confirmado','retiro_tienda',3,NULL,8990.00,0.00,1708.10,10698.10,'',NULL,NULL),(17,33,'2025-07-08 16:55:10','confirmado','retiro_tienda',7,NULL,89960.00,0.00,17092.40,107052.40,'',NULL,NULL),(18,34,'2025-07-08 23:16:01','confirmado','despacho_domicilio',NULL,NULL,8990.00,5000.00,1708.10,15698.10,'',NULL,NULL),(21,34,'2025-07-08 23:40:00','confirmado','retiro_tienda',7,NULL,4990.00,0.00,948.10,5938.10,'',NULL,NULL),(22,34,'2025-07-08 23:49:41','confirmado','despacho_domicilio',NULL,NULL,15990.00,5000.00,3038.10,24028.10,'',NULL,NULL),(23,34,'2025-07-09 00:18:14','confirmado','retiro_tienda',7,NULL,4990.00,0.00,948.10,5938.10,'',NULL,NULL),(24,33,'2025-07-09 00:37:24','confirmado','retiro_tienda',7,NULL,8990.00,0.00,1708.10,10698.10,'',NULL,NULL),(25,34,'2025-07-09 01:12:50','confirmado','despacho_domicilio',NULL,NULL,12990.00,5000.00,2468.10,20458.10,'',NULL,NULL),(26,34,'2025-07-09 01:18:43','confirmado','despacho_domicilio',NULL,NULL,4990.00,5000.00,948.10,10938.10,'',NULL,NULL),(27,34,'2025-07-09 01:24:04','confirmado','retiro_tienda',5,NULL,9990.00,0.00,1898.10,11888.10,'',NULL,NULL);
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tr_pedidos_confirmado_stock` AFTER UPDATE ON `pedidos` FOR EACH ROW BEGIN
+    DECLARE v_sucursal_id INT;
+    DECLARE v_producto_id INT;
+    DECLARE v_cantidad INT;
+    DECLARE v_stock_actual INT;
+    DECLARE done INT DEFAULT FALSE;
+    
+    DECLARE cur_items CURSOR FOR 
+        SELECT producto_id, cantidad 
+        FROM pedido_items 
+        WHERE pedido_id = NEW.id;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    
+    IF NEW.estado = 'confirmado' AND OLD.estado <> 'confirmado' THEN
+        -- Si es entrega a domicilio, siempre usar sucursal 1
+        IF NEW.tipo_entrega = 'despacho_domicilio' THEN
+            SET v_sucursal_id = 1;
+        ELSE
+            SET v_sucursal_id = NEW.sucursal_id;
+        END IF;
+        
+        IF v_sucursal_id IS NOT NULL THEN
+            OPEN cur_items;
+            read_loop: LOOP
+                FETCH cur_items INTO v_producto_id, v_cantidad;
+                IF done THEN
+                    LEAVE read_loop;
+                END IF;
+                SELECT stock INTO v_stock_actual
+                FROM inventario 
+                WHERE producto_id = v_producto_id AND sucursal_id = v_sucursal_id;
+                IF v_stock_actual IS NULL THEN
+                    INSERT INTO inventario (producto_id, sucursal_id, stock, stock_minimo)
+                    VALUES (v_producto_id, v_sucursal_id, 0, 5);
+                    SET v_stock_actual = 0;
+                END IF;
+                IF v_stock_actual >= v_cantidad THEN
+                    UPDATE inventario 
+                    SET stock = stock - v_cantidad,
+                        ultima_salida = NOW()
+                    WHERE producto_id = v_producto_id AND sucursal_id = v_sucursal_id;
+                    INSERT INTO logs_actividad (usuario_id, tipo_actividad, descripcion)
+                    VALUES (NEW.usuario_id, 'compra', 
+                           CONCAT('Stock reducido: Producto ID ', v_producto_id, 
+                                 ', Cantidad: ', v_cantidad, 
+                                 ', Sucursal: ', v_sucursal_id));
+                ELSE
+                    -- Si no hay stock suficiente, cancela el pedido
+                    UPDATE pedidos 
+                    SET estado = 'cancelado' 
+                    WHERE id = NEW.id;
+                    INSERT INTO logs_actividad (usuario_id, tipo_actividad, descripcion)
+                    VALUES (NEW.usuario_id, 'compra', 
+                           CONCAT('Pedido cancelado por stock insuficiente: Producto ID ', v_producto_id, 
+                                 ', Stock disponible: ', v_stock_actual, 
+                                 ', Cantidad solicitada: ', v_cantidad));
+                    LEAVE read_loop;
+                END IF;
+            END LOOP;
+            CLOSE cur_items;
+        END IF;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `pedidos_bodega`
@@ -1004,11 +1096,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-<<<<<<< Updated upstream
-INSERT INTO `usuarios` VALUES (13,'admin','admin','admin@ferremas.cl','rJaJ4ickJwheNbnT4+i+2IyzQ0gotDuG/AWWytTG4nA=','191991999','99999999','Administrador','2025-05-27 20:22:21','2025-05-30 17:22:29',1),(15,'Prueba','Prueba','Prueba@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','101001001','10101010','Administrador','2025-05-28 11:37:17','2025-07-05 16:05:47',1),(24,'Contador','Contador','contador@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-3','90909099','contador','2025-05-30 17:23:06','2025-06-04 14:09:09',1),(25,'Vendedor','Vendedor','vendedor@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-4','90909090','vendedor','2025-05-30 17:25:04','2025-06-05 15:05:11',1),(26,'Bodeguero','Bodeguero','bodeguero@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-5','90909097','bodeguero','2025-05-30 17:26:03','2025-06-05 14:56:13',1),(33,'Batitú','Mayorga','angelina.mendoza.y@gmail.com','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','25592802-5','+56998555466','cliente','2025-07-05 19:10:42','2025-07-05 19:17:20',1),(34,'Angelina','Mendoza','ange.mendoza@duocuc.cl','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','17144575-2','+56998555466','cliente','2025-07-05 20:46:16','2025-07-05 21:10:39',1);
-=======
-INSERT INTO `usuarios` VALUES (13,'admin','admin','admin@ferremas.cl','rJaJ4ickJwheNbnT4+i+2IyzQ0gotDuG/AWWytTG4nA=','191991999','99999999','Administrador','2025-05-27 20:22:21','2025-05-30 17:22:29',1),(15,'Prueba','Prueba','Prueba@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','101001001','10101010','Administrador','2025-05-28 11:37:17','2025-07-07 21:01:38',1),(24,'Contador','Contador','contador@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-3','90909099','contador','2025-05-30 17:23:06','2025-06-04 14:09:09',1),(25,'Vendedor','Vendedor','vendedor@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-4','90909090','vendedor','2025-05-30 17:25:04','2025-06-05 15:05:11',1),(26,'Bodeguero','Bodeguero','bodeguero@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-5','90909097','bodeguero','2025-05-30 17:26:03','2025-06-05 14:56:13',1),(33,'Batitú','Mayorga','angelina.mendoza.y@gmail.com','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','25592802-5','+56998555466','cliente','2025-07-05 19:10:42','2025-07-05 19:17:20',1),(34,'Angelina Andrea','Mendoza Yañez','ange.mendoza@duocuc.cl','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','17144575-2','+56998555466','cliente','2025-07-05 20:46:16','2025-07-07 13:07:07',1);
->>>>>>> Stashed changes
+INSERT INTO `usuarios` VALUES (13,'admin','admin','admin@ferremas.cl','rJaJ4ickJwheNbnT4+i+2IyzQ0gotDuG/AWWytTG4nA=','191991999','99999999','Administrador','2025-05-27 20:22:21','2025-05-30 17:22:29',1),(15,'Prueba','Prueba','Prueba@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','101001001','10101010','Administrador','2025-05-28 11:37:17','2025-07-09 01:27:53',1),(24,'Contador','Contador','contador@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-3','90909099','contador','2025-05-30 17:23:06','2025-06-04 14:09:09',1),(25,'Vendedor','Vendedor','vendedor@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-4','90909090','vendedor','2025-05-30 17:25:04','2025-06-05 15:05:11',1),(26,'Bodeguero','Bodeguero','bodeguero@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-5','90909097','bodeguero','2025-05-30 17:26:03','2025-06-05 14:56:13',1),(33,'Batitú','Mayorga','angelina.mendoza.y@gmail.com','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','25592802-5','+56998555466','cliente','2025-07-05 19:10:42','2025-07-09 00:36:57',1),(34,'Angelina Andrea','Mendoza Yañez','ange.mendoza@duocuc.cl','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','17144575-2','+56998555466','cliente','2025-07-05 20:46:16','2025-07-09 01:18:28',1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1811,6 +1899,138 @@ BEGIN
     );
     
     SELECT LAST_INSERT_ID() AS marca_id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_crear_o_actualizar_pedido_desde_carrito` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_crear_o_actualizar_pedido_desde_carrito`(
+    IN p_usuario_id INT,
+    IN p_tipo_entrega ENUM('retiro_tienda','despacho_domicilio'),
+    IN p_sucursal_id INT,
+    IN p_direccion_id INT,
+    IN p_notas TEXT
+)
+BEGIN
+    DECLARE v_carrito_id INT;
+    DECLARE v_subtotal DECIMAL(10,2);
+    DECLARE v_impuestos DECIMAL(10,2);
+    DECLARE v_total DECIMAL(10,2);
+    DECLARE v_pedido_id INT;
+    DECLARE v_costo_envio DECIMAL(10,2) DEFAULT 0;
+
+    -- Obtener carrito activo
+    SELECT id, subtotal, impuestos, total 
+    INTO v_carrito_id, v_subtotal, v_impuestos, v_total
+    FROM carritos 
+    WHERE usuario_id = p_usuario_id AND activo = 1
+    LIMIT 1;
+
+    IF v_carrito_id IS NULL THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'No hay carrito activo para este usuario';
+    END IF;
+
+    -- Calcular costo de envío si es despacho a domicilio
+    IF p_tipo_entrega = 'despacho_domicilio' THEN
+        SET v_costo_envio = 5000;
+        SET v_total = v_total + v_costo_envio;
+    END IF;
+
+    -- Buscar pedido pendiente SIN pago completado asociado
+    SELECT p.id INTO v_pedido_id
+    FROM pedidos p
+    LEFT JOIN pagos pg ON pg.pedido_id = p.id AND pg.estado = 'completado'
+    WHERE p.usuario_id = p_usuario_id AND p.estado = 'pendiente' AND pg.id IS NULL
+    LIMIT 1;
+
+    IF v_pedido_id IS NULL THEN
+        -- Crear el pedido si no existe
+        INSERT INTO pedidos (
+            usuario_id,
+            tipo_entrega,
+            sucursal_id,
+            direccion_id,
+            subtotal,
+            impuestos,
+            costo_envio,
+            total,
+            notas,
+            estado
+        ) VALUES (
+            p_usuario_id,
+            p_tipo_entrega,
+            p_sucursal_id,
+            p_direccion_id,
+            v_subtotal,
+            v_impuestos,
+            v_costo_envio,
+            v_total,
+            p_notas,
+            'pendiente'
+        );
+        SET v_pedido_id = LAST_INSERT_ID();
+    ELSE
+        -- Si existe, actualizar datos del pedido
+        UPDATE pedidos
+        SET
+            tipo_entrega = p_tipo_entrega,
+            sucursal_id = p_sucursal_id,
+            direccion_id = p_direccion_id,
+            subtotal = v_subtotal,
+            impuestos = v_impuestos,
+            costo_envio = v_costo_envio,
+            total = v_total,
+            notas = p_notas
+        WHERE id = v_pedido_id;
+
+        -- Eliminar items anteriores del pedido
+        DELETE FROM pedido_items WHERE pedido_id = v_pedido_id;
+    END IF;
+
+    -- Insertar los items actuales del carrito al pedido
+    INSERT INTO pedido_items (
+        pedido_id,
+        producto_id,
+        cantidad,
+        precio_unitario,
+        subtotal
+    )
+    SELECT 
+        v_pedido_id,
+        producto_id,
+        cantidad,
+        precio_unitario,
+        subtotal
+    FROM items_carrito
+    WHERE carrito_id = v_carrito_id;
+
+    -- NO desactivar el carrito aquí
+
+    -- Devolver información del pedido actualizado/creado
+    SELECT 
+        p.*,
+        u.nombre as nombre_usuario,
+        u.apellido as apellido_usuario,
+        s.nombre as nombre_sucursal,
+        d.calle as direccion_entrega,
+        d.comuna as comuna_entrega
+    FROM pedidos p
+    JOIN usuarios u ON p.usuario_id = u.id
+    LEFT JOIN sucursales s ON p.sucursal_id = s.id
+    LEFT JOIN direcciones d ON p.direccion_id = d.id
+    WHERE p.id = v_pedido_id;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2796,8 +3016,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-<<<<<<< Updated upstream
--- Dump completed on 2025-07-05 21:12:55
-=======
--- Dump completed on 2025-07-08 10:55:25
->>>>>>> Stashed changes
+-- Dump completed on 2025-07-09 11:12:50

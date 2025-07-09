@@ -416,6 +416,15 @@ namespace Ferremas.Api.Controllers
                 return BadRequest(ApiResponse<IEnumerable<Sucursal>>.Error($"Error al obtener sucursales: {ex.Message}"));
             }
         }
+
+        // Endpoint público para obtener sucursales activas
+        [AllowAnonymous]
+        [HttpGet("sucursales/activas")]
+        public async Task<IActionResult> GetSucursalesActivas()
+        {
+            var sucursales = await _adminService.GetAllSucursales(); // O ajusta para filtrar solo activas si tienes ese método
+            return Ok(sucursales);
+        }
     }
 
     public class CreateUsuarioRequest

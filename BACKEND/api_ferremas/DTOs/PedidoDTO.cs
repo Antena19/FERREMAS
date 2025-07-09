@@ -14,6 +14,7 @@ namespace Ferremas.Api.DTOs
         public int? SucursalId { get; set; }
         public string SucursalNombre { get; set; }
         public int? DireccionId { get; set; }
+        public string DireccionTexto { get; set; }
         public decimal Subtotal { get; set; }
         public decimal CostoEnvio { get; set; }
         public decimal Impuestos { get; set; }

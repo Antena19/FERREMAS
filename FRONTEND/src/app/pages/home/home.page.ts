@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router'; // ✅ Asegúrate de importar es
 // 📦 Importaciones necesarias para la vista
 import { CommonModule } from '@angular/common';
 import { IonSpinner } from '@ionic/angular/standalone';
+import { CarritoService } from 'src/app/services/carrito.service';
 
 @Component({
   selector: 'app-home',
@@ -25,8 +26,9 @@ export class HomePage implements OnInit, OnDestroy {
 
   constructor(
     private api: ApiService,     // 📡 Servicio para llamar a la API de productos
-    private imageMapping: ImageMappingService, // 🖼 Servicio para mapear imágenes
-    private router: Router       // 🔁 Navegación a otras vistas
+    private imageMapping: ImageMappingService, // 🖼️ Servicio para mapear imágenes
+    private router: Router,       // 🔁 Navegación a otras vistas
+    private carritoService: CarritoService // <-- Inyectar el servicio
   ) {}
 
   ngOnInit(): void {
@@ -78,7 +80,14 @@ export class HomePage implements OnInit, OnDestroy {
 
   // 🛒 Acción al hacer clic en "Agregar al carrito"
   agregarAlCarrito(producto: any): void {
-    console.log('Agregar al carrito:', producto.nombre);
+    this.carritoService.agregarProducto(producto, 1).subscribe({
+      next: () => {
+        alert('Producto agregado al carrito');
+      },
+      error: () => {
+        alert('Error al agregar al carrito');
+      }
+    });
   }
 
   // 🔁 Acción cuando se hace clic en "Ver más"

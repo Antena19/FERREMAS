@@ -11,8 +11,11 @@ namespace Ferremas.Api.Repositories
         Task<IEnumerable<Pago>> ObtenerPorPedidoAsync(int pedidoId);
         Task<int> CrearPagoAsync(Pago pago);
         Task<bool> ActualizarPagoAsync(Pago pago);
-        Task<bool> ActualizarEstadoPagoAsync(int id, string estado, string transaccionId, string datosRespuesta);
+        Task<bool> ActualizarEstadoPagoAsync(int id, string estado, string notas);
         Task<Pago> ObtenerPorTokenPasarelaAsync(string tokenPasarela);
+        Task<Pago> ObtenerPorWebpayTokenAsync(string webpayToken);
+        Task<Pago> ObtenerPorWebpayBuyOrderAsync(string webpayBuyOrder);
         Task<bool> PagoExisteAsync(int id);
+        Task<bool> ActualizarTokenYBuyOrderAsync(int pedidoId, string token, string buyOrder);
     }
 }

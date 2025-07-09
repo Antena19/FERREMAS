@@ -68,6 +68,19 @@ namespace Ferremas.Api.Modelos
         public string EstadoAsignacion { get; set; }
         public decimal? ComisionCalculada { get; set; }
 
+        // Propiedades para nombres (no mapeadas a la base de datos)
+        [NotMapped]
+        public string UsuarioNombre { get; set; }
+
+        [NotMapped]
+        public string SucursalNombre { get; set; }
+
+        [NotMapped]
+        public string VendedorNombre { get; set; }
+
+        [NotMapped]
+        public string BodegueroNombre { get; set; }
+
         // Propiedades de navegación
         public virtual Cliente Cliente { get; set; }
         public virtual Direccion DireccionEntrega { get; set; }

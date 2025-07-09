@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { CarritoService } from 'src/app/services/carrito.service';
 
 @Component({
   selector: 'app-detalle-producto',
@@ -30,7 +31,8 @@ export class DetalleProductoPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
-    private auth: AuthService
+    private auth: AuthService,
+    private carritoService: CarritoService // <--- Inyectar el servicio
   ) {}
 
   ngOnInit(): void {
@@ -106,8 +108,15 @@ export class DetalleProductoPage implements OnInit {
 
   agregarAlCarrito(): void {
     if (this.cantidad < 1) return;
-    // Aquí deberías llamar a tu servicio de carrito, pasando el producto y la cantidad
-    console.log('🛒 Agregado al carrito:', this.producto?.nombre, 'Cantidad:', this.cantidad);
+    if (!this.producto) return;
+    this.carritoService.agregarProducto(this.producto, this.cantidad).subscribe({
+      next: () => {
+        alert('Producto agregado al carrito');
+      },
+      error: () => {
+        alert('Error al agregar al carrito');
+      }
+    });
   }
 
   sumarCantidad() {

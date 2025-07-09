@@ -82,15 +82,17 @@ namespace Ferremas.Api.Repositories
                         fecha_pago,
                         estado,
                         metodo,
-                        mercadopago_payment_id,
-                        mercadopago_preference_id,
-                        mercadopago_status,
-                        mercadopago_status_detail,
-                        mercadopago_payment_method_id,
-                        mercadopago_payment_type_id,
-                        mercadopago_installments,
-                        mercadopago_card_number,
-                        referencia_transaccion,
+                        webpay_token,
+                        webpay_buyorder,
+                        webpay_sessionid,
+                        webpay_authorization_code,
+                        webpay_payment_type_code,
+                        webpay_response_code,
+                        webpay_card_last_digits,
+                        webpay_installments_number,
+                        webpay_transaction_date,
+                        webpay_status,
+                        webpay_vci,
                         notas,
                         contador_id,
                         url_retorno
@@ -100,15 +102,17 @@ namespace Ferremas.Api.Repositories
                         @FechaPago,
                         @Estado,
                         @Metodo,
-                        @MercadoPagoPaymentId,
-                        @MercadoPagoPreferenceId,
-                        @MercadoPagoStatus,
-                        @MercadoPagoStatusDetail,
-                        @MercadoPagoPaymentMethodId,
-                        @MercadoPagoPaymentTypeId,
-                        @MercadoPagoInstallments,
-                        @MercadoPagoCardNumber,
-                        @ReferenciaTransaccion,
+                        @WebpayToken,
+                        @WebpayBuyOrder,
+                        @WebpaySessionId,
+                        @WebpayAuthorizationCode,
+                        @WebpayPaymentTypeCode,
+                        @WebpayResponseCode,
+                        @WebpayCardLastDigits,
+                        @WebpayInstallmentsNumber,
+                        @WebpayTransactionDate,
+                        @WebpayStatus,
+                        @WebpayVci,
                         @Notas,
                         @ContadorId,
                         @UrlRetorno
@@ -122,15 +126,17 @@ namespace Ferremas.Api.Repositories
                     pago.FechaPago,
                     pago.Estado,
                     pago.Metodo,
-                    pago.MercadoPagoPaymentId,
-                    pago.MercadoPagoPreferenceId,
-                    pago.MercadoPagoStatus,
-                    pago.MercadoPagoStatusDetail,
-                    pago.MercadoPagoPaymentMethodId,
-                    pago.MercadoPagoPaymentTypeId,
-                    pago.MercadoPagoInstallments,
-                    pago.MercadoPagoCardNumber,
-                    pago.ReferenciaTransaccion,
+                    pago.WebpayToken,
+                    pago.WebpayBuyOrder,
+                    pago.WebpaySessionId,
+                    pago.WebpayAuthorizationCode,
+                    pago.WebpayPaymentTypeCode,
+                    pago.WebpayResponseCode,
+                    pago.WebpayCardLastDigits,
+                    pago.WebpayInstallmentsNumber,
+                    pago.WebpayTransactionDate,
+                    pago.WebpayStatus,
+                    pago.WebpayVci,
                     pago.Notas,
                     pago.ContadorId,
                     pago.UrlRetorno
@@ -151,15 +157,17 @@ namespace Ferremas.Api.Repositories
                     SET 
                         estado = @Estado,
                         metodo = @Metodo,
-                        mercadopago_payment_id = @MercadoPagoPaymentId,
-                        mercadopago_preference_id = @MercadoPagoPreferenceId,
-                        mercadopago_status = @MercadoPagoStatus,
-                        mercadopago_status_detail = @MercadoPagoStatusDetail,
-                        mercadopago_payment_method_id = @MercadoPagoPaymentMethodId,
-                        mercadopago_payment_type_id = @MercadoPagoPaymentTypeId,
-                        mercadopago_installments = @MercadoPagoInstallments,
-                        mercadopago_card_number = @MercadoPagoCardNumber,
-                        referencia_transaccion = @ReferenciaTransaccion,
+                        webpay_token = @WebpayToken,
+                        webpay_buyorder = @WebpayBuyOrder,
+                        webpay_sessionid = @WebpaySessionId,
+                        webpay_authorization_code = @WebpayAuthorizationCode,
+                        webpay_payment_type_code = @WebpayPaymentTypeCode,
+                        webpay_response_code = @WebpayResponseCode,
+                        webpay_card_last_digits = @WebpayCardLastDigits,
+                        webpay_installments_number = @WebpayInstallmentsNumber,
+                        webpay_transaction_date = @WebpayTransactionDate,
+                        webpay_status = @WebpayStatus,
+                        webpay_vci = @WebpayVci,
                         notas = @Notas,
                         contador_id = @ContadorId,
                         url_retorno = @UrlRetorno
@@ -170,15 +178,17 @@ namespace Ferremas.Api.Repositories
                     pago.Id,
                     pago.Estado,
                     pago.Metodo,
-                    pago.MercadoPagoPaymentId,
-                    pago.MercadoPagoPreferenceId,
-                    pago.MercadoPagoStatus,
-                    pago.MercadoPagoStatusDetail,
-                    pago.MercadoPagoPaymentMethodId,
-                    pago.MercadoPagoPaymentTypeId,
-                    pago.MercadoPagoInstallments,
-                    pago.MercadoPagoCardNumber,
-                    pago.ReferenciaTransaccion,
+                    pago.WebpayToken,
+                    pago.WebpayBuyOrder,
+                    pago.WebpaySessionId,
+                    pago.WebpayAuthorizationCode,
+                    pago.WebpayPaymentTypeCode,
+                    pago.WebpayResponseCode,
+                    pago.WebpayCardLastDigits,
+                    pago.WebpayInstallmentsNumber,
+                    pago.WebpayTransactionDate,
+                    pago.WebpayStatus,
+                    pago.WebpayVci,
                     pago.Notas,
                     pago.ContadorId,
                     pago.UrlRetorno
@@ -188,7 +198,7 @@ namespace Ferremas.Api.Repositories
             }
         }
 
-        public async Task<bool> ActualizarEstadoPagoAsync(int id, string estado, string referenciaTransaccion, string notas)
+        public async Task<bool> ActualizarEstadoPagoAsync(int id, string estado, string notas)
         {
             using (var connection = new MySqlConnection(_connectionString))
             {
@@ -198,7 +208,6 @@ namespace Ferremas.Api.Repositories
                     UPDATE pagos 
                     SET 
                         estado = @Estado,
-                        referencia_transaccion = @ReferenciaTransaccion,
                         notas = @Notas
                     WHERE id = @Id";
 
@@ -206,7 +215,6 @@ namespace Ferremas.Api.Repositories
                 {
                     Id = id,
                     Estado = estado,
-                    ReferenciaTransaccion = referenciaTransaccion,
                     Notas = notas
                 });
 
@@ -228,6 +236,39 @@ namespace Ferremas.Api.Repositories
 
                 var pago = await connection.QueryFirstOrDefaultAsync<Pago>(sql, new { MercadoPagoPreferenceId = mercadoPagoPreferenceId });
                 return pago;
+            }
+        }
+
+        public async Task<Pago> ObtenerPorWebpayTokenAsync(string webpayToken)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var sql = @"SELECT * FROM pagos WHERE webpay_token = @WebpayToken LIMIT 1";
+                var pago = await connection.QueryFirstOrDefaultAsync<Pago>(sql, new { WebpayToken = webpayToken });
+                return pago;
+            }
+        }
+
+        public async Task<Pago> ObtenerPorWebpayBuyOrderAsync(string webpayBuyOrder)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var sql = @"SELECT * FROM pagos WHERE webpay_buyorder = @WebpayBuyOrder LIMIT 1";
+                var pago = await connection.QueryFirstOrDefaultAsync<Pago>(sql, new { WebpayBuyOrder = webpayBuyOrder });
+                return pago;
+            }
+        }
+
+        public async Task<bool> ActualizarTokenYBuyOrderAsync(int pedidoId, string token, string buyOrder)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var sql = @"UPDATE pagos SET webpay_token = @Token, webpay_buyorder = @BuyOrder WHERE pedido_id = @PedidoId AND estado = 'pendiente'";
+                var filasAfectadas = await connection.ExecuteAsync(sql, new { Token = token, BuyOrder = buyOrder, PedidoId = pedidoId });
+                return filasAfectadas > 0;
             }
         }
 

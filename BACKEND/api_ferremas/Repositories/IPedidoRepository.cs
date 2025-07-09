@@ -17,5 +17,6 @@ namespace Ferremas.Api.Repositories
         Task<IEnumerable<Pedido>> GetPedidosPendientesAsync();
         Task<IEnumerable<Pedido>> GetHistorialComprasClienteAsync(int clienteId);
         Task<IEnumerable<Pedido>> GetHistorialComprasUsuarioAsync(int usuarioId);
+        Task<bool> ActualizarEstadoPedidoAsync(int pedidoId, string nuevoEstado);
     }
 }

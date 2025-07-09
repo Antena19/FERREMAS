@@ -96,6 +96,11 @@ export class ApiService {
     return this.http.get<any[]>(`${this.baseUrl}/pedidos/mi-historial`);
   }
 
+  /** ✅ Obtener todos los pedidos (para administradores) */
+  getTodosLosPedidos(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/pedidos`);
+  }
+
   /** ✅ Obtener historial de compras de un cliente específico */
   getHistorialComprasCliente(clienteId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/pedidos/cliente/${clienteId}/historial`);

@@ -39,8 +39,16 @@ namespace Ferremas.Api.Repositories
                         p.total,
                         p.notas,
                         p.vendedor_id as VendedorId,
-                        p.bodeguero_id as BodegueroId
+                        p.bodeguero_id as BodegueroId,
+                        CONCAT(COALESCE(u.nombre, ''), ' ', COALESCE(u.apellido, '')) as UsuarioNombre,
+                        s.nombre as SucursalNombre,
+                        CONCAT(COALESCE(v.nombre, ''), ' ', COALESCE(v.apellido, '')) as VendedorNombre,
+                        CONCAT(COALESCE(b.nombre, ''), ' ', COALESCE(b.apellido, '')) as BodegueroNombre
                     FROM pedidos p
+                    LEFT JOIN usuarios u ON p.usuario_id = u.id
+                    LEFT JOIN sucursales s ON p.sucursal_id = s.id
+                    LEFT JOIN usuarios v ON p.vendedor_id = v.id
+                    LEFT JOIN usuarios b ON p.bodeguero_id = b.id
                     ORDER BY p.fecha_pedido DESC";
 
                 var pedidos = await connection.QueryAsync<Pedido>(sql);
@@ -401,26 +409,12 @@ namespace Ferremas.Api.Repositories
                         pi.cantidad,
                         pi.precio_unitario as PrecioUnitario,
                         pi.subtotal,
-                        p.id as ProductoId,
-                        p.nombre as ProductoNombre,
-                        p.precio as ProductoPrecio,
-                        p.descripcion as ProductoDescripcion,
-                        p.categoria_id as ProductoCategoriaId,
-                        p.activo as ProductoActivo
+                        p.nombre as ProductoNombre
                     FROM pedido_items pi
                     INNER JOIN productos p ON pi.producto_id = p.id
                     WHERE pi.pedido_id = @PedidoId";
 
-                var items = await connection.QueryAsync<PedidoItem, Producto, PedidoItem>(
-                    sql,
-                    (pedidoItem, producto) =>
-                    {
-                        pedidoItem.Producto = producto;
-                        return pedidoItem;
-                    },
-                    new { PedidoId = pedidoId },
-                    splitOn: "ProductoId"
-                );
+                var items = await connection.QueryAsync<PedidoItem>(sql, new { PedidoId = pedidoId });
 
                 return items;
             }

@@ -38,19 +38,31 @@ namespace Ferremas.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene un pedido por su ID
+        /// Endpoint temporal para probar la consulta de usuarios
         /// </summary>
-        [HttpGet("{id}")]
+        [HttpGet("test-usuarios")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PedidoDTO>> GetPedido(int id)
+        public async Task<ActionResult> TestUsuarios()
         {
-            var pedido = await _pedidosService.GetPedidoByIdAsync(id);
+            try
+            {
+                var sql = @"
+                    SELECT 
+                        u.id,
+                        u.nombre,
+                        u.apellido,
+                        CONCAT(u.nombre, ' ', u.apellido) as NombreCompleto
+                    FROM usuarios u
+                    WHERE u.id IN (33, 34, 15)
+                    ORDER BY u.id";
 
-            if (pedido == null)
-                return NotFound($"No se encontró el pedido con ID {id}");
-
-            return Ok(pedido);
+                var usuarios = await _db.QueryAsync(sql);
+                return Ok(usuarios);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         /// <summary>

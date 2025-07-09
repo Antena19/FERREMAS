@@ -80,6 +80,13 @@ namespace Ferremas.Api.Services
             if (pago == null)
                 throw new KeyNotFoundException("Pago no encontrado para el token o buyOrder proporcionado");
 
+            // Si el pago ya está completado, retorna éxito (idempotencia)
+            if (pago.Estado == "completado")
+            {
+                Console.WriteLine($"[LOG] Pago ya estaba completado para PedidoId: {pago.PedidoId}");
+                return MapPagoToDTO(pago);
+            }
+
             // 3. Actualizar los campos de Webpay y el estado
             pago.WebpayToken = confirmacionDTO.Token;
             pago.WebpayBuyOrder = confirmacionDTO.BuyOrder;
@@ -97,11 +104,7 @@ namespace Ferremas.Api.Services
 
             await _pagoRepository.ActualizarPagoAsync(pago);
 
-            // 4. Si el pago fue exitoso, actualizar el estado del pedido
-            if (pago.Estado == "completado")
-            {
-                await _pedidoRepository.ActualizarEstadoPedidoAsync(pago.PedidoId, "pagado");
-            }
+            // El trigger se encargará automáticamente de actualizar el pedido
 
             return MapPagoToDTO(pago);
         }

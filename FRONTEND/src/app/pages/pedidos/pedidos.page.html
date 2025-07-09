@@ -1,7 +1,12 @@
 <div class="pedidos-container">
   <h1 class="pedidos-title">
     <ion-icon name="bag-outline"></ion-icon>
-    Mi Historial de Compras
+    <ng-container *ngIf="esCliente; else adminTitle">
+      Mi Historial de Compras
+    </ng-container>
+    <ng-template #adminTitle>
+      Todos los Pedidos
+    </ng-template>
   </h1>
 
   <!-- Spinner de carga -->
@@ -14,8 +19,14 @@
   <div *ngIf="!cargando && pedidos.length === 0" class="mensaje-vacio-centrado">
     <div class="mensaje-card">
       <ion-icon name="bag-outline" class="mensaje-icon-grande"></ion-icon>
-      <h2>¡Bienvenido a tu historial de compras!</h2>
-      <p>Aquí verás todas tus compras realizadas. Cuando compres, aparecerán aquí tus pedidos y sus detalles.</p>
+      <ng-container *ngIf="esCliente; else adminEmptyMessage">
+        <h2>¡Bienvenido a tu historial de compras!</h2>
+        <p>Aquí verás todas tus compras realizadas. Cuando compres, aparecerán aquí tus pedidos y sus detalles.</p>
+      </ng-container>
+      <ng-template #adminEmptyMessage>
+        <h2>No hay pedidos registrados</h2>
+        <p>Actualmente no hay pedidos en el sistema. Los pedidos aparecerán aquí cuando los clientes realicen compras.</p>
+      </ng-template>
       <button class="btn-explorar-grande" routerLink="/home">
         <ion-icon name="home-outline"></ion-icon>
         Explorar Productos
@@ -25,12 +36,127 @@
 
   <!-- Historial de pedidos -->
   <div *ngIf="!cargando && pedidos.length > 0" class="historial-container">
-    <div *ngFor="let pedido of pedidos" class="pedido-card">
-      <!-- Aquí puedes renderizar los detalles del pedido -->
-      <h3>Pedido #{{ pedido.id }}</h3>
-      <p>Estado: {{ pedido.estado }}</p>
-      <p>Total: ${{ pedido.total | number:'1.0-0' }}</p>
-    </div>
+    <!-- Vista para cliente -->
+    <ng-container *ngIf="esCliente; else adminView">
+      <table class="tabla-pedidos-resumen">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let pedido of pedidos">
+            <tr>
+              <td>{{ pedido.id }}</td>
+              <td>
+                <ng-container *ngIf="pedido.estado !== 'pendiente'; else preparacion">
+                  <span [ngClass]="obtenerColorEstado(pedido.estado)">{{ pedido.estado }}</span>
+                </ng-container>
+                <ng-template #preparacion>
+                  <span class="estado-preparacion">
+                    {{ pedido.tipoEntrega === 'retiro_tienda' ? 'En preparación para retiro' : (pedido.tipoEntrega === 'despacho_domicilio' ? 'En preparación para entrega' : '') }}
+                  </span>
+                </ng-template>
+              </td>
+              <td>
+                <button class="btn-pagar" (click)="toggleExpandido(pedido.id)">
+                  {{ pedidosExpandido[pedido.id] ? 'Ocultar' : 'Ver Detalle' }}
+                </button>
+                <button *ngIf="pedido.estado === 'pendiente'" class="btn-pagar" [routerLink]="['/carrito']" [queryParams]="{ pedidoId: pedido.id }">
+                  Pagar
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="pedidosExpandido[pedido.id]">
+              <td colspan="3">
+                <!-- Detalle del pedido expandido -->
+                <table class="tabla-pedido">
+                  <tr><th>Fecha</th><td>{{ pedido.fecha ? formatearFecha(pedido.fecha) : '-' }}</td></tr>
+                  <tr><th>Tipo Entrega</th><td>{{ pedido.tipoEntrega === 'retiro_tienda' ? 'Retiro en tienda' : (pedido.tipoEntrega === 'despacho_domicilio' ? 'Despacho a domicilio' : pedido.tipoEntrega) }}</td></tr>
+                  <tr><th>Sucursal/Dirección</th><td>{{ obtenerSucursalODireccion(pedido) }}</td></tr>
+                  <tr><th>Subtotal</th><td>${{ pedido.subtotal | number:'1.0-2' }}</td></tr>
+                  <tr><th>Costo Envío</th><td>${{ pedido.costoEnvio | number:'1.0-2' }}</td></tr>
+                  <tr><th>Impuestos</th><td>${{ pedido.impuestos | number:'1.0-2' }}</td></tr>
+                  <tr><th>Total</th><td><b>${{ pedido.total | number:'1.0-2' }}</b></td></tr>
+                  <tr><th>Notas</th><td>{{ pedido.notas || '-' }}</td></tr>
+                </table>
+                <h4>Productos del pedido</h4>
+                <table class="tabla-items">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Producto</th>
+                      <th>Cantidad</th>
+                      <th>Precio Unitario</th>
+                      <th>Subtotal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of pedido.items">
+                      <td>{{ item.id }}</td>
+                      <td>{{ item.productoNombre }}</td>
+                      <td>{{ item.cantidad }}</td>
+                      <td>${{ item.precioUnitario | number:'1.0-2' }}</td>
+                      <td>${{ item.subtotal | number:'1.0-2' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </ng-container>
+    <!-- Vista para administrador -->
+    <ng-template #adminView>
+      <div *ngFor="let pedido of pedidos" class="pedido-card">
+        <h3>Pedido #{{ pedido.id }}</h3>
+        <p>Cliente: <a [routerLink]="['/admin/usuarios', pedido.usuarioId]">{{ pedido.usuarioNombre || '-' }}</a></p>
+        <table class="tabla-pedido">
+          <tr><th>Fecha</th><td>{{ pedido.fecha ? formatearFecha(pedido.fecha) : '-' }}</td></tr>
+          <tr><th>Estado</th><td>
+            <ng-container *ngIf="pedido.estado !== 'pendiente'; else preparacionA">
+              <span [ngClass]="obtenerColorEstado(pedido.estado)">{{ pedido.estado }}</span>
+            </ng-container>
+            <ng-template #preparacionA>
+              <span class="estado-preparacion">
+                {{ pedido.tipoEntrega === 'retiro_tienda' ? 'En preparación para retiro' : (pedido.tipoEntrega === 'despacho_domicilio' ? 'En preparación para entrega' : '') }}
+              </span>
+            </ng-template>
+          </td></tr>
+          <tr><th>Tipo Entrega</th><td>{{ pedido.tipoEntrega === 'retiro_tienda' ? 'Retiro en tienda' : (pedido.tipoEntrega === 'despacho_domicilio' ? 'Despacho a domicilio' : pedido.tipoEntrega) }}</td></tr>
+          <tr><th>Sucursal/Dirección</th><td>{{ obtenerSucursalODireccion(pedido) }}</td></tr>
+          <tr><th>Subtotal</th><td>${{ pedido.subtotal | number:'1.0-2' }}</td></tr>
+          <tr><th>Costo Envío</th><td>${{ pedido.costoEnvio | number:'1.0-2' }}</td></tr>
+          <tr><th>Impuestos</th><td>${{ pedido.impuestos | number:'1.0-2' }}</td></tr>
+          <tr><th>Total</th><td><b>${{ pedido.total | number:'1.0-2' }}</b></td></tr>
+          <tr><th>Notas</th><td>{{ pedido.notas || '-' }}</td></tr>
+        </table>
+        <h4>Productos del pedido</h4>
+        <table class="tabla-items">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio Unitario</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of pedido.items">
+              <td>{{ item.id }}</td>
+              <td>{{ item.productoNombre }}</td>
+              <td>{{ item.cantidad }}</td>
+              <td>${{ item.precioUnitario | number:'1.0-2' }}</td>
+              <td>${{ item.subtotal | number:'1.0-2' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-template>
   </div>
 
   <!-- Botón flotante de carrito eliminado -->

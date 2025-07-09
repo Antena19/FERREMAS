@@ -66,6 +66,10 @@
       </button>
       <button *ngIf="!usuarioLogueado" class="btn-pagar" routerLink="/login">Iniciar sesión para pagar</button>
       <button *ngIf="usuarioLogueado" class="btn-pagar" (click)="irAPagar()">Ir a pagar</button>
+      <div *ngIf="mensajePedidoNoPendiente" class="mensaje-advertencia-pago">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        {{ mensajePedidoNoPendiente }}
+      </div>
     </div>
   </div>
 </div>
@@ -186,7 +190,7 @@
           </label>
         </div>
         <div class="wizard-actions">
-          <button class="btn-pagar" (click)="pagarConWebpay()" [disabled]="cargandoPago || metodoPagoSeleccionado !== 'webpay'">Pagar</button>
+          <button class="btn-pagar" (click)="pagarConWebpay()" [disabled]="cargandoPago || pagando || metodoPagoSeleccionado !== 'webpay'">Pagar</button>
           <button class="btn-vaciar-rojo" (click)="retrocederPaso()">Atrás</button>
         </div>
         <div *ngIf="cargandoPago" style="margin-top:0.7rem;"><ion-spinner name="crescent"></ion-spinner> Redirigiendo a Webpay...</div>

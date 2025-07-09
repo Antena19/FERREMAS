@@ -54,10 +54,12 @@ export class CarritoPage implements OnInit {
   // Paso 3: Webpay
   cargandoPago: boolean = false;
   errorPago: string = '';
+  pagando: boolean = false; // Nueva bandera para prevenir múltiples clics
 
   resultadoPago: 'exito' | 'error' | null = null;
   mensajePago: string = '';
   metodoPagoSeleccionado: string = 'webpay';
+  mensajePedidoNoPendiente: string = '';
 
   constructor(
     private carritoService: CarritoService,
@@ -154,6 +156,7 @@ export class CarritoPage implements OnInit {
   }
 
   mostrarWizard() {
+    this.mensajePedidoNoPendiente = '';
     this.mostrarWizardPago = true;
     this.cargarSucursales();
     this.cargarDirecciones();
@@ -167,6 +170,12 @@ export class CarritoPage implements OnInit {
           this.sucursalId = pedido.sucursal_id;
           this.direccionId = pedido.direccion_id;
           this.notas = pedido.notas;
+          // Validar estado del pedido
+          if (pedido.estado && pedido.estado !== 'pendiente') {
+            this.mostrarWizardPago = false;
+            this.mensajePedidoNoPendiente = 'Este pedido ya fue confirmado o pagado. Si deseas comprar de nuevo, agrega productos al carrito y genera un nuevo pedido.';
+            return;
+          }
         } else {
           this.pedidoCreado = null;
           this.tipoEntrega = '';
@@ -240,13 +249,24 @@ export class CarritoPage implements OnInit {
   }
 
   pagarConWebpay() {
+    if (this.pagando) {
+      console.log('[LOG] Ya se está procesando un pago, ignorando clic adicional');
+      return;
+    }
+    
     this.cargandoPago = true;
+    this.pagando = true;
     this.errorPago = '';
     if (!this.pedidoCreado || !this.pedidoCreado.id) {
       this.errorPago = 'No se encontró el pedido.';
       this.cargandoPago = false;
+      this.pagando = false;
       return;
     }
+    
+    console.log('[LOG] Iniciando pago con pedidoId:', this.pedidoCreado.id);
+    console.log('[LOG] Pedido completo:', this.pedidoCreado);
+    
     // 1. Crear el pago asociado al pedido
     this.api.crearPago({
       pedidoId: this.pedidoCreado.id,
@@ -254,13 +274,16 @@ export class CarritoPage implements OnInit {
       urlRetorno: window.location.origin + window.location.pathname // para volver aquí
     }).subscribe({
       next: (pago: any) => {
+        console.log('[LOG] Pago creado exitosamente:', pago);
         // 2. Crear la transacción Webpay con el monto y el id del pedido
         this.api.crearTransaccionWebpay({
           amount: this.pedidoCreado.total,
           pedidoId: this.pedidoCreado.id
         }).subscribe({
           next: (res: any) => {
+            console.log('[LOG] Transacción Webpay creada:', res);
             this.cargandoPago = false;
+            this.pagando = false;
             if (res && res.url && res.token) {
               // Redirigir a Webpay
               window.location.href = `${res.url}?token_ws=${res.token}`;
@@ -268,14 +291,18 @@ export class CarritoPage implements OnInit {
               this.errorPago = 'No se pudo iniciar el pago Webpay.';
             }
           },
-          error: () => {
+          error: (err) => {
+            console.error('[LOG] Error al crear transacción Webpay:', err);
             this.cargandoPago = false;
+            this.pagando = false;
             this.errorPago = 'Error al crear la transacción Webpay.';
           }
         });
       },
-      error: () => {
+      error: (err) => {
+        console.error('[LOG] Error al crear pago:', err);
         this.cargandoPago = false;
+        this.pagando = false;
         this.errorPago = 'Error al crear el pago.';
       }
     });

@@ -1711,41 +1711,6 @@
   },
   {
     "ContainingType": "Ferremas.Api.Controllers.PedidosController",
-    "Method": "GetPedido",
-    "RelativePath": "api/Pedidos/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Ferremas.Api.DTOs.PedidoDTO",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 404
-      }
-    ]
-  },
-  {
-    "ContainingType": "Ferremas.Api.Controllers.PedidosController",
     "Method": "UpdatePedido",
     "RelativePath": "api/Pedidos/{id}",
     "HttpMethod": "PUT",
@@ -1991,6 +1956,22 @@
           "application/json",
           "text/json"
         ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Ferremas.Api.Controllers.PedidosController",
+    "Method": "TestUsuarios",
+    "RelativePath": "api/Pedidos/test-usuarios",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
         "StatusCode": 200
       }
     ]

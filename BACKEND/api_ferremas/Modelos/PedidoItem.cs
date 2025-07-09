@@ -30,5 +30,9 @@ namespace Ferremas.Api.Modelos
         [Required]
         [Column(TypeName = "decimal(10, 2)")]
         public decimal Subtotal { get; set; }
+
+        // Propiedad para nombre del producto (no mapeada a la base de datos)
+        [NotMapped]
+        public string ProductoNombre { get; set; }
     }
 }

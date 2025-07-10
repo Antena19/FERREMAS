@@ -939,17 +939,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Inventario"
+                "$ref": "#/components/schemas/InventarioUpdateDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Inventario"
+                "$ref": "#/components/schemas/InventarioUpdateDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Inventario"
+                "$ref": "#/components/schemas/InventarioUpdateDTO"
               }
             }
           }
@@ -5134,14 +5134,7 @@
         },
         "additionalProperties": false
       },
-      "Inventario": {
-        "required": [
-          "productoId",
-          "stock",
-          "stockMaximo",
-          "stockMinimo",
-          "sucursalId"
-        ],
+      "InventarioUpdateDTO": {
         "type": "object",
         "properties": {
           "id": {
@@ -5161,55 +5154,6 @@
             "format": "int32"
           },
           "stockMinimo": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "ultimoIngreso": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "ultimaSalida": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "stockMaximo": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "precioCompra": {
-            "type": "number",
-            "format": "double"
-          },
-          "precioVenta": {
-            "type": "number",
-            "format": "double"
-          },
-          "activo": {
-            "type": "boolean"
-          },
-          "producto": {
-            "$ref": "#/components/schemas/Producto"
-          },
-          "sucursal": {
-            "$ref": "#/components/schemas/Sucursal"
-          }
-        },
-        "additionalProperties": false
-      },
-      "InventarioUpdateDTO": {
-        "required": [
-          "stock",
-          "sucursalId"
-        ],
-        "type": "object",
-        "properties": {
-          "sucursalId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "stock": {
             "type": "integer",
             "format": "int32"
           }

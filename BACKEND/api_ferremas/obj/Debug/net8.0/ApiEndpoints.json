@@ -601,8 +601,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "inventario",
-        "Type": "Ferremas.Api.Modelos.Inventario",
+        "Name": "dto",
+        "Type": "Ferremas.Api.DTOs.InventarioUpdateDTO",
         "IsRequired": true
       }
     ],

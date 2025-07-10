@@ -1,13 +1,13 @@
-using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace Ferremas.Api.DTOs
 {
     public class InventarioUpdateDTO
     {
-        [Required]
+        public int Id { get; set; }
+        public int ProductoId { get; set; }
         public int SucursalId { get; set; }
-
-        [Required]
         public int Stock { get; set; }
+        public int StockMinimo { get; set; }
     }
 } 

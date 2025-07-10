@@ -113,7 +113,7 @@
     <ng-template #adminView>
       <div *ngFor="let pedido of pedidos" class="pedido-card">
         <h3>Pedido #{{ pedido.id }}</h3>
-        <p>Cliente: <a [routerLink]="['/admin/usuarios', pedido.usuarioId]">{{ pedido.usuarioNombre || '-' }}</a></p>
+        <p>Cliente: <a [routerLink]="['/clientes']" [queryParams]="{ clienteId: pedido.usuarioId }">{{ pedido.usuarioNombre || '-' }}</a></p>
         <table class="tabla-pedido">
           <tr><th>Fecha</th><td>{{ pedido.fecha ? formatearFecha(pedido.fecha) : '-' }}</td></tr>
           <tr><th>Estado</th><td>

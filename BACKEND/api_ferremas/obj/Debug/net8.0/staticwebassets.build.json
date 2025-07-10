@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "1xy3QJ+/xdivNyLbE9BANugY9wcb/1G5i274PIOHP60=",
+  "Hash": "8qBME1qtfuiN4MgIb9GD4zWMLAhSfkurFmSWcJCSASE=",
   "Source": "Ferremas.Api",
   "BasePath": "_content/Ferremas.Api",
   "Mode": "Default",
@@ -394,7 +394,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 10 Jul 2025 19:05:57 GMT"
+          "Value": "Thu, 10 Jul 2025 20:16:11 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -439,7 +439,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 10 Jul 2025 19:05:57 GMT"
+          "Value": "Thu, 10 Jul 2025 20:16:11 GMT"
         },
         {
           "Name": "Cache-Control",

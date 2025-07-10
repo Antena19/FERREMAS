@@ -38,8 +38,8 @@
         <h5>{{ producto.nombre }}</h5>
         <p>${{ producto.precio | number:'1.0-0' }}</p>
         <ng-container *ngIf="i === productoActual">
-          <button (click)="agregarAlCarrito(producto)">Agregar al carrito</button>
-          <button class="detalle-btn" (click)="verDetalle(producto)">Ver detalle</button>
+          <button class="btn-carrito" (click)="agregarAlCarrito(producto)">Agregar al carrito</button>
+          <button class="btn-carrito" (click)="verDetalle(producto)">Ver detalle</button>
         </ng-container>
       </div>
 
@@ -50,7 +50,7 @@
 
     <!-- 📎 Botón para ver más productos -->
     <div class="ver-mas-container">
-      <a routerLink="/productos" (click)="verMas()">Ver más</a>
+      <button class="btn-carrito" routerLink="/productos" (click)="verMas()">Ver más</button>
     </div>
   </section>
 

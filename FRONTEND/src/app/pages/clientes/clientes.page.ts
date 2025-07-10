@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommonModule } from '@angular/common'; // ✅ Necesario para *ngIf y *ngFor
+import { RouterModule } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -45,7 +46,8 @@ import {
     IonCardSubtitle,
     IonCardContent,
     IonIcon, // ✅ Para mostrar iconos en el HTML
-    IonButton
+    IonButton,
+    RouterModule // <-- AGREGA ESTA LÍNEA
   ]
 })
 export class ClientesPage implements OnInit {

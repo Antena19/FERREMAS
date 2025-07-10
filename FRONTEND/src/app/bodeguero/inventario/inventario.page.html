@@ -1,13 +1,383 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>inventario</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="inventario-container">
+  <h1 class="titulo-inventario">Inventario</h1>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">inventario</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+  <div *ngIf="cargando" class="spinner-center">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando inventario...</p>
+  </div>
+
+  <div *ngIf="mensaje" [ngClass]="{'mensaje-exito': mensajeTipo === 'exito', 'mensaje-error': mensajeTipo === 'error'}" class="mensaje-flotante">
+    {{ mensaje }}
+  </div>
+
+  <div *ngIf="!cargando && sucursales.length === 0" class="mensaje-vacio-tabla">
+    <ion-icon name="alert-circle-outline" class="icono-alerta"></ion-icon>
+    <div>No hay sucursales para mostrar</div>
+  </div>
+
+  <div *ngIf="!cargando && sucursales.length > 0">
+    <div *ngFor="let sucursal of sucursales" class="card-sucursal" [class.expandida]="sucursalExpandida === sucursal.id">
+      <div class="card-header" (click)="toggleSucursal(sucursal.id)">
+        <span class="sucursal-nombre">{{ sucursal.nombre }}</span>
+        <ion-icon [name]="sucursalExpandida === sucursal.id ? 'chevron-up-outline' : 'chevron-down-outline'" class="icono-chevron"></ion-icon>
+      </div>
+      <div class="card-body" *ngIf="sucursalExpandida === sucursal.id">
+        <table class="tabla-inventario">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Ficha técnica</th>
+              <th>Stock</th>
+              <th>Stock mínimo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="productos.length === 0">
+              <td colspan="5" class="mensaje-vacio-celda">
+                <div class="mensaje-vacio-tabla">
+                  <ion-icon name="alert-circle-outline" class="icono-alerta"></ion-icon>
+                  <div>No hay productos para mostrar</div>
+                </div>
+              </td>
+            </tr>
+            <tr *ngFor="let producto of productos">
+              <td>{{ producto.nombre }}</td>
+              <td>
+                <button class="btn-ficha" (click)="irAFichaTecnica(producto.id)">Ficha técnica</button>
+              </td>
+              <td>
+                <ng-container *ngIf="!inventarioEditando[sucursal.id + '-' + producto.id]; else editStock">
+                  <span [ngClass]="{'stock-cero': getStock(producto.id, sucursal.id) <= 0 || getStock(producto.id, sucursal.id) < getStockMinimo(producto.id, sucursal.id)}">
+                    {{ getStock(producto.id, sucursal.id) }}
+                  </span>
+                </ng-container>
+                <ng-template #editStock>
+                  <div class="stepper-stock">
+                    <input type="number" min="0" [(ngModel)]="stockEditado[sucursal.id + '-' + producto.id]" class="input-stock" />
+                  </div>
+                </ng-template>
+              </td>
+              <td>
+                <ng-container *ngIf="!inventarioEditando[sucursal.id + '-' + producto.id]; else editMinStock">
+                  {{ getStockMinimo(producto.id, sucursal.id) }}
+                </ng-container>
+                <ng-template #editMinStock>
+                  <input type="number" min="0" [(ngModel)]="minStockEditado[sucursal.id + '-' + producto.id]" class="input-stock" />
+                </ng-template>
+              </td>
+              <td>
+                <ng-container *ngIf="!inventarioEditando[sucursal.id + '-' + producto.id]">
+                  <button class="btn-editar" (click)="editarStockInline(producto.id, sucursal.id)">Editar</button>
+                </ng-container>
+                <ng-container *ngIf="inventarioEditando[sucursal.id + '-' + producto.id]">
+                  <button class="btn-guardar" [disabled]="!stockModificado(producto.id, sucursal.id) && !minStockModificado(producto.id, sucursal.id)" (click)="guardarStock(producto.id, sucursal.id)">Guardar</button>
+                  <button class="btn-cancelar" (click)="cancelarEdicionStock(producto.id, sucursal.id)">Cancelar</button>
+                </ng-container>
+              </td>
+            </tr>
+            <!-- Productos faltantes -->
+            <tr *ngFor="let producto of productosFaltantesEnSucursal(sucursal.id)" class="producto-faltante">
+              <td>{{ producto.nombre }}</td>
+              <td>
+                <button class="btn-ficha" (click)="irAFichaTecnica(producto.id)">Ficha técnica</button>
+              </td>
+              <td colspan="2">
+                <ng-container *ngIf="!agregandoProducto[sucursal.id + '-' + producto.id]">
+                  <span class="faltante-texto">No existe en esta sucursal</span>
+                  <button class="btn-agregar" (click)="iniciarAgregarProducto(producto.id, sucursal.id)">Agregar</button>
+                </ng-container>
+                <ng-container *ngIf="agregandoProducto[sucursal.id + '-' + producto.id]">
+                  <input type="number" min="0" [(ngModel)]="agregarStockEditado[sucursal.id + '-' + producto.id]" class="input-stock" placeholder="Stock inicial" />
+                  <input type="number" min="0" [(ngModel)]="agregarMinStockEditado[sucursal.id + '-' + producto.id]" class="input-stock" placeholder="Stock mínimo" />
+                  <button class="btn-guardar" (click)="guardarAgregarProducto(producto.id, sucursal.id)">Guardar</button>
+                  <button class="btn-cancelar" (click)="cancelarAgregarProducto(producto.id, sucursal.id)">Cancelar</button>
+                </ng-container>
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.inventario-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem 1rem 0.5rem 1rem;
+  background-color: #f5f5f5;
+  min-height: 80vh;
+}
+.titulo-inventario {
+  text-align: center;
+  font-weight: bold;
+  font-size: 2rem;
+  letter-spacing: 1px;
+  margin-top: 0;
+  color: #388e3c;
+}
+.spinner-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2.5rem;
+}
+.card-sucursal {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  border: 2.5px solid #388e3c;
+  margin-bottom: 1.2rem;
+  overflow: hidden;
+  transition: box-shadow 0.2s, border 0.2s;
+}
+.card-sucursal.expandida {
+  box-shadow: 0 4px 24px rgba(56,142,60,0.13);
+  border-color: #2e7031;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.3rem;
+  background: #e8f5e9;
+  color: #388e3c;
+  font-weight: bold;
+  font-size: 1.15rem;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid #e0e0e0;
+  transition: background 0.18s;
+}
+.card-header:hover {
+  background: #c8e6c9;
+}
+.sucursal-nombre {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.icono-chevron {
+  font-size: 1.5rem;
+  color: #388e3c;
+  margin-left: 0.7rem;
+}
+.card-body {
+  padding: 1.2rem 1.3rem 1.5rem 1.3rem;
+  animation: fadeIn 0.3s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.tabla-inventario {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.1rem;
+  background: #fafbfc;
+}
+.tabla-inventario th, .tabla-inventario td {
+  border: 1px solid #e0e0e0;
+  padding: 0.7rem 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+}
+.tabla-inventario th {
+  background: #e8f5e9;
+  color: #388e3c;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.stock-cero {
+  color: #e74c3c;
+  font-weight: bold;
+}
+.mensaje-vacio-celda {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 2.5rem 0;
+  background: #f9f9f9;
+  border-radius: 0 0 12px 12px;
+}
+.mensaje-vacio-tabla {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2rem;
+  gap: 0.5rem;
+}
+.icono-alerta {
+  font-size: 2.2rem;
+  color: #f9a825;
+  margin-bottom: 0.2rem;
+}
+.mensaje-error {
+  color: #e74c3c;
+  text-align: center;
+  margin: 1.5rem 0;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.input-stock, .input-stock-min {
+  width: 60px;
+  padding: 0.2rem 0.4rem;
+  font-size: 1rem;
+  border: 1.5px solid #388e3c;
+  border-radius: 0.4rem;
+  outline: none;
+  text-align: center;
+  background: #fff;
+  color: #388e3c;
+}
+.input-stock-min {
+  margin-left: 0.2rem;
+}
+.stepper-stock {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+.btn-stepper {
+  background: #e8f5e9;
+  border: 1.5px solid #388e3c;
+  color: #388e3c;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+.btn-stepper:hover {
+  background: #388e3c;
+  color: #fff;
+}
+.btn-editar, .btn-guardar, .btn-cancelar, .btn-eliminar {
+  background: #e8f5e9;
+  border: 1.5px solid #388e3c;
+  color: #388e3c;
+  border-radius: 0.7rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0.2rem;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+.btn-editar:hover, .btn-guardar:hover {
+  background: #388e3c;
+  color: #fff;
+}
+.btn-cancelar {
+  color: #e74c3c;
+  border-color: #e74c3c;
+}
+.btn-cancelar:hover {
+  background: #e74c3c;
+  color: #fff;
+}
+.btn-eliminar {
+  color: #c82333;
+  border-color: #c82333;
+}
+.btn-eliminar:disabled {
+  background: #eee;
+  color: #aaa;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+.btn-eliminar:hover:enabled {
+  background: #c82333;
+  color: #fff;
+}
+.stock-cero {
+  color: #e74c3c !important;
+  font-weight: bold;
+}
+.btn-ficha {
+  background: #388e3c;
+  color: #fff;
+  border: 1.5px solid #388e3c;
+  border-radius: 0.7rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0.2rem;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  display: inline-block;
+}
+.btn-ficha:hover {
+  background: #2e7031;
+  color: #fff;
+  border-color: #2e7031;
+}
+.mensaje-flotante {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 1rem auto 0.5rem auto;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+  z-index: 10;
+}
+.mensaje-exito {
+  background: #e8f5e9;
+  color: #388e3c;
+  border: 1.5px solid #388e3c;
+}
+.mensaje-error {
+  background: #fdecea;
+  color: #c82333;
+  border: 1.5px solid #c82333;
+}
+.producto-faltante {
+  opacity: 0.5;
+  background: #fdecea;
+  color: #c82333;
+  font-style: italic;
+}
+.faltante-texto {
+  color: #c82333;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.btn-agregar {
+  background: #fff;
+  color: #c82333;
+  border: 1.5px solid #c82333;
+  border-radius: 0.7rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0.2rem;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  display: inline-block;
+}
+.btn-agregar:hover {
+  background: #c82333;
+  color: #fff;
+}
+@media (max-width: 700px) {
+  .inventario-container {
+    padding: 0.3rem 0.1rem 0.2rem 0.1rem;
+  }
+  .card-header, .card-body {
+    padding: 0.7rem 0.5rem;
+  }
+  .tabla-inventario th, .tabla-inventario td {
+    font-size: 0.92rem;
+    padding: 0.4rem 0.2rem;
+  }
+}
+</style>

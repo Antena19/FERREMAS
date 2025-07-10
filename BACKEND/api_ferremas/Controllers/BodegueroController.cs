@@ -2,10 +2,11 @@ using Ferremas.Api.Services;
 using Ferremas.Api.Modelos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Ferremas.Api.DTOs;
 
 namespace Ferremas.Api.Controllers
 {
-    [Authorize(Roles = "bodeguero")]
+    [Authorize(Roles = "bodeguero,admin,administrador,Administrador")]
     [ApiController]
     [Route("api/[controller]")]
     public class BodegueroController : ControllerBase
@@ -76,10 +77,18 @@ namespace Ferremas.Api.Controllers
         }
 
         [HttpPut("inventario")]
-        public async Task<IActionResult> ActualizarInventario([FromBody] Inventario inventario)
+        public async Task<IActionResult> ActualizarInventario([FromBody] InventarioUpdateDTO dto)
         {
             try
             {
+                var inventario = new Inventario
+                {
+                    Id = dto.Id,
+                    ProductoId = dto.ProductoId,
+                    SucursalId = dto.SucursalId,
+                    Stock = dto.Stock,
+                    StockMinimo = dto.StockMinimo
+                };
                 var inventarioActualizado = await _bodegueroService.ActualizarInventario(inventario);
                 return Ok(inventarioActualizado);
             }

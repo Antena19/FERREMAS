@@ -555,18 +555,13 @@ namespace Ferremas.Api.Services
                 await connection.OpenAsync();
                 using var command = new MySqlCommand(@"
                     UPDATE inventario 
-                    SET stock = @stock, stock_minimo = @stockMinimo, stock_maximo = @stockMaximo,
-                        precio_compra = @precioCompra, precio_venta = @precioVenta, activo = @activo
+                    SET stock = @stock, stock_minimo = @stockMinimo
                     WHERE producto_id = @productoId AND sucursal_id = @sucursalId", connection);
 
                 command.Parameters.AddWithValue("@productoId", inventario.ProductoId);
                 command.Parameters.AddWithValue("@sucursalId", inventario.SucursalId);
                 command.Parameters.AddWithValue("@stock", inventario.Stock);
                 command.Parameters.AddWithValue("@stockMinimo", inventario.StockMinimo);
-                command.Parameters.AddWithValue("@stockMaximo", inventario.StockMaximo);
-                command.Parameters.AddWithValue("@precioCompra", inventario.PrecioCompra);
-                command.Parameters.AddWithValue("@precioVenta", inventario.PrecioVenta);
-                command.Parameters.AddWithValue("@activo", inventario.Activo);
 
                 await command.ExecuteNonQueryAsync();
                 return inventario;

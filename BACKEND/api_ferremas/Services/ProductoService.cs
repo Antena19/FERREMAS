@@ -5,16 +5,19 @@ using System.Threading.Tasks;
 using Ferremas.Api.DTOs;
 using Ferremas.Api.Modelos;
 using Ferremas.Api.Repositories;
+using Ferremas.Api.Services;
 
 namespace Ferremas.Api.Services
 {
     public class ProductoService : IProductoService
     {
         private readonly IProductoRepository _productoRepository;
+        private readonly IAdminService _adminService;
 
-        public ProductoService(IProductoRepository productoRepository)
+        public ProductoService(IProductoRepository productoRepository, IAdminService adminService)
         {
             _productoRepository = productoRepository;
+            _adminService = adminService;
         }
 
         public async Task<IEnumerable<ProductoDTO>> ObtenerTodosAsync(bool incluirInactivos = false)
@@ -63,7 +66,16 @@ namespace Ferremas.Api.Services
                 Activo = true
             };
 
-            return await _productoRepository.CrearProductoAsync(producto);
+            var id = await _productoRepository.CrearProductoAsync(producto);
+
+            // Crear inventario para cada sucursal activa con stock 50
+            var sucursales = await _adminService.GetAllSucursales();
+            foreach (var sucursal in sucursales)
+            {
+                await _productoRepository.ActualizarInventarioAsync(id, sucursal.Id, 50);
+            }
+
+            return id;
         }
 
         public async Task<bool> ActualizarProductoAsync(int id, ProductoUpdateDTO productoDTO)

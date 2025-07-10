@@ -285,4 +285,29 @@ export class ApiService {
     return this.http.get<any[]>(`${this.baseUrl}/admin/sucursales/activas`);
   }
 
+  /** Obtener inventario completo de una sucursal */
+  getInventarioPorSucursal(sucursalId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/inventario/sucursal/${sucursalId}`);
+  }
+
+  /** Actualizar stock de un inventario por ID */
+  actualizarStockInventario(inventarioId: number, cantidad: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/inventario/${inventarioId}/stock`, cantidad);
+  }
+
+  /** Obtener inventario global de todos los productos en todas las sucursales */
+  getInventarioGlobal(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/bodeguero/inventario`);
+  }
+
+  /** Actualizar inventario completo (stock y stock mínimo) */
+  actualizarInventarioCompleto(inventario: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/bodeguero/inventario`, inventario);
+  }
+
+  /** Eliminar producto por ID */
+  eliminarProducto(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/productos/${id}`);
+  }
+
 }

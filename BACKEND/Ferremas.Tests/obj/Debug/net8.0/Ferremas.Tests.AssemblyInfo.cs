@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ferremas.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71118a64e249d2466c3a94626a32889a8272a806")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6efeddfc7cf0b090aff7317d002091c85c734a49")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ferremas.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ferremas.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "2zFdNOjVKFquXu21Gz8utIsmwwd9UgXUbh0WUer79/8=",
+  "Hash": "1xy3QJ+/xdivNyLbE9BANugY9wcb/1G5i274PIOHP60=",
   "Source": "Ferremas.Api",
   "BasePath": "_content/Ferremas.Api",
   "Mode": "Default",
@@ -57,6 +57,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\7ceb605d-9331-4a57-9027-97c0486eec7d_prueba.png"
+    },
+    {
+      "Identity": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\80c4d3f2-5a1b-4d94-aab4-ef872b8211ae_images (1).png",
+      "SourceId": "Ferremas.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\",
+      "BasePath": "_content/Ferremas.Api",
+      "RelativePath": "img/80c4d3f2-5a1b-4d94-aab4-ef872b8211ae_images (1)#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hvjyaqmpe2",
+      "Integrity": "HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\80c4d3f2-5a1b-4d94-aab4-ef872b8211ae_images (1).png"
     },
     {
       "Identity": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\8367d20c-fd56-4d42-bfaf-3aaf8eced6ea_prueba.png",
@@ -337,6 +358,88 @@
         {
           "Name": "Last-Modified",
           "Value": "Tue, 08 Jul 2025 15:34:05 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc="
+        }
+      ]
+    },
+    {
+      "Route": "img/80c4d3f2-5a1b-4d94-aab4-ef872b8211ae_images (1).hvjyaqmpe2.png",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\80c4d3f2-5a1b-4d94-aab4-ef872b8211ae_images (1).png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4396"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 10 Jul 2025 19:05:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hvjyaqmpe2"
+        },
+        {
+          "Name": "label",
+          "Value": "img/80c4d3f2-5a1b-4d94-aab4-ef872b8211ae_images (1).png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc="
+        }
+      ]
+    },
+    {
+      "Route": "img/80c4d3f2-5a1b-4d94-aab4-ef872b8211ae_images (1).png",
+      "AssetFile": "C:\\FERREMAS\\BACKEND\\api_ferremas\\wwwroot\\img\\80c4d3f2-5a1b-4d94-aab4-ef872b8211ae_images (1).png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4396"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HStzJhd0H9dqo3+qlPUVf7l/YmtvcYll/LKn0QlU+Cc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 10 Jul 2025 19:05:57 GMT"
         },
         {
           "Name": "Cache-Control",

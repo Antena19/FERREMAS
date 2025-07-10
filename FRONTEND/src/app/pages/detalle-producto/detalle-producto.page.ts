@@ -27,6 +27,9 @@ export class DetalleProductoPage implements OnInit {
   cantidad: number = 1; // <--- Nueva variable para la cantidad
   modoCreacion: boolean = false;
   imagenSeleccionada: File | null = null;
+  puedeEliminar: boolean = false; // Si el producto puede eliminarse (stock=0 en todas las sucursales)
+  advertenciaStock: string = '';
+  inventarioGlobal: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -68,6 +71,7 @@ export class DetalleProductoPage implements OnInit {
           console.log('Producto detalle:', this.producto);
           if (this.esAdmin) {
             this.cargarSucursalesYInventario(+id);
+            this.verificarStockGlobal(+id);
           }
           this.cargando = false;
         },
@@ -211,6 +215,71 @@ export class DetalleProductoPage implements OnInit {
       error: (err) => {
         alert('Error al subir la imagen');
         console.error(err);
+      }
+    });
+  }
+
+  verificarStockGlobal(productoId: number) {
+    // Trae sucursales y luego inventario global
+    this.api.getSucursales().subscribe({
+      next: (sucursalesRes) => {
+        const sucursales = sucursalesRes.data || sucursalesRes; // Ajusta según tu backend
+        this.api.getInventarioGlobal().subscribe({
+          next: (data) => {
+            console.log('productoId:', productoId, typeof productoId);
+            this.inventarioGlobal = data.filter((inv: any) =>
+              Number(inv.productoId) === Number(productoId)
+            );
+            console.log('Inventario global filtrado:', this.inventarioGlobal);
+            // Log de depuración: mostrar el stock del producto para cada sucursal
+            sucursales.forEach((suc: any) => {
+              const sucId = suc.id || suc.sucursalId || suc.sucursal_id;
+              const inv = this.inventarioGlobal.find((i: any) =>
+                i.sucursalId == sucId || i.sucursal_id == sucId
+              );
+              console.log(`Sucursal ${sucId}:`, inv ? inv.stock : 'SIN INVENTARIO');
+            });
+            // Solo se puede eliminar si hay inventario en TODAS las sucursales y el stock es 0 en todas
+            const todosCero = sucursales.every((suc: any) => {
+              const sucId = suc.id || suc.sucursalId || suc.sucursal_id;
+              const inv = this.inventarioGlobal.find((i: any) =>
+                i.sucursalId == sucId || i.sucursal_id == sucId
+              );
+              return inv && inv.stock === 0;
+            });
+            // Además, debe haber inventario para todas las sucursales
+            const hayInventarioEnTodas = sucursales.every((suc: any) => {
+              const sucId = suc.id || suc.sucursalId || suc.sucursal_id;
+              return this.inventarioGlobal.some((i: any) => i.sucursalId == sucId || i.sucursal_id == sucId);
+            });
+            this.puedeEliminar = todosCero && hayInventarioEnTodas && sucursales.length > 0;
+            this.advertenciaStock = this.puedeEliminar
+              ? ''
+              : 'No se puede eliminar el producto mientras exista stock en alguna sucursal.';
+          },
+          error: () => {
+            this.puedeEliminar = false;
+            this.advertenciaStock = 'No se pudo verificar el stock global.';
+          }
+        });
+      },
+      error: () => {
+        this.puedeEliminar = false;
+        this.advertenciaStock = 'No se pudo obtener la lista de sucursales.';
+      }
+    });
+  }
+
+  eliminarProducto() {
+    if (!this.puedeEliminar || !this.producto) return;
+    if (!confirm('¿Estás seguro de que deseas eliminar este producto? Esta acción no se puede deshacer.')) return;
+    this.api.eliminarProducto(this.producto.id).subscribe({
+      next: () => {
+        alert('Producto eliminado exitosamente');
+        window.location.href = '/productos';
+      },
+      error: () => {
+        alert('Error al eliminar el producto');
       }
     });
   }

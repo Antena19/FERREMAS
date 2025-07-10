@@ -1,5 +1,6 @@
 wwwroot\img\02d342e2-c579-402f-8760-d5ebd3a6f9c6_Cerámica_Blanca_30x30cm.webp
 wwwroot\img\7ceb605d-9331-4a57-9027-97c0486eec7d_prueba.png
+wwwroot\img\80c4d3f2-5a1b-4d94-aab4-ef872b8211ae_images (1).png
 wwwroot\img\8367d20c-fd56-4d42-bfaf-3aaf8eced6ea_prueba.png
 wwwroot\img\8dd85146-9068-4dcd-9315-0e5ab8ded6e2_prueba.png
 wwwroot\img\af416ae3-cffe-4818-91dd-f018d1ecbfee_Arena_Fina_40kg.webp

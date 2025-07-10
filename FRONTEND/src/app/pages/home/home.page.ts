@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router'; // ✅ Asegúrate de importar es
 // 📦 Importaciones necesarias para la vista
 import { CommonModule } from '@angular/common';
 import { IonSpinner } from '@ionic/angular/standalone';
+import { IonButton } from '@ionic/angular/standalone';
 import { CarritoService } from 'src/app/services/carrito.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { CarritoService } from 'src/app/services/carrito.service';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonSpinner,RouterModule], // ✅ Necesarios para usar *ngIf, *ngFor y <ion-spinner>
+  imports: [CommonModule, IonSpinner, RouterModule, IonButton], // ✅ Agregado IonButton para los botones verdes
 })
 export class HomePage implements OnInit, OnDestroy {
   productos: any[] = [];       // ✅ Lista de productos destacados (máx. 8)

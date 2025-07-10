@@ -12,11 +12,10 @@
           <span><b>Estado:</b> {{ cliente.estado || 'activo' }}</span><br>
           <span><b>Newsletter:</b> {{ cliente.newsletter ? 'Sí' : 'No' }}</span><br>
           <span><b>Fecha registro:</b> {{ cliente.fechaRegistro ? (cliente.fechaRegistro | date:'short') : 'No disponible' }}</span><br>
-          <span><b>Última compra:</b> {{ cliente.ultimaCompra ? (cliente.ultimaCompra | date:'short') : 'Sin compras' }}</span><br>
-          <span><b>Total compras:</b> ${{ cliente.totalCompras || 0 }}</span><br>
-          <span><b>N° compras:</b> {{ cliente.numeroCompras || 0 }}</span>
         </div>
-        <button class="btn-detalle" (click)="verDetalleCliente(cliente)">Ver historial de compras</button>
+        <button class="btn-carrito" [routerLink]="['/pedidos']" [queryParams]="{ clienteId: cliente.id }">
+          Ver historial de compras
+        </button>
       </div>
     </ng-container>
 
@@ -29,32 +28,5 @@
   </div>
 
   <!-- Detalle e historial de cliente seleccionado (solo admin) -->
-  <ng-container *ngIf="esAdmin && clienteSeleccionado">
-    <ion-card class="detalle-cliente">
-      <ion-card-header>
-        <ion-card-title>Historial de compras de {{ clienteSeleccionado.nombre }} {{ clienteSeleccionado.apellido }}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-list *ngIf="historialPedidos.length > 0; else sinPedidos">
-          <ion-item *ngFor="let pedido of historialPedidos">
-            <ion-label>
-              <h5>Pedido #{{ pedido.id }}</h5>
-              <p><strong>Fecha:</strong> {{ pedido.fecha | date:'short' }}</p>
-              <p><strong>Total:</strong> ${{ pedido.total | number:'1.0-0' }}</p>
-              <p><strong>Estado:</strong> {{ pedido.estado }}</p>
-              <p><strong>Dirección entrega:</strong> {{ pedido.direccionEntrega || 'No disponible' }}</p>
-              <p><strong>Tipo entrega:</strong> {{ pedido.tipoEntrega || 'No disponible' }}</p>
-              <p><strong>Notas:</strong> {{ pedido.notas || 'Sin notas' }}</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-        <ng-template #sinPedidos>
-          <p>No hay pedidos registrados para este cliente.</p>
-        </ng-template>
-        <div class="ion-text-end">
-          <ion-button size="small" color="medium" (click)="clienteSeleccionado = null">Cerrar</ion-button>
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </ng-container>
+  <!-- Sección eliminada según requerimiento -->
 </div>

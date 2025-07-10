@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35913.81 d17.13
+VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferremas.Api", "Ferremas.Api.csproj", "{42DD5A17-5667-4E3A-B726-528526AF78A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferremas.Tests", "..\Ferremas.Tests\Ferremas.Tests.csproj", "{DE3CC55D-C585-47B1-9049-FF10BC9B9DB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{42DD5A17-5667-4E3A-B726-528526AF78A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42DD5A17-5667-4E3A-B726-528526AF78A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42DD5A17-5667-4E3A-B726-528526AF78A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE3CC55D-C585-47B1-9049-FF10BC9B9DB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE3CC55D-C585-47B1-9049-FF10BC9B9DB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE3CC55D-C585-47B1-9049-FF10BC9B9DB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE3CC55D-C585-47B1-9049-FF10BC9B9DB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

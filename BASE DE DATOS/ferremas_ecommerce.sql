@@ -68,7 +68,7 @@ CREATE TABLE `carritos` (
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`),
   CONSTRAINT `carritos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +77,7 @@ CREATE TABLE `carritos` (
 
 LOCK TABLES `carritos` WRITE;
 /*!40000 ALTER TABLE `carritos` DISABLE KEYS */;
-INSERT INTO `carritos` VALUES (21,34,'2025-07-08 16:37:17','2025-07-09 01:26:43',0.00,0.00,0.00,0.00,1),(22,33,'2025-07-08 16:54:27','2025-07-09 00:38:04',0.00,0.00,0.00,0.00,1),(23,15,'2025-07-09 00:41:30',NULL,0.00,0.00,0.00,0.00,1);
+INSERT INTO `carritos` VALUES (21,34,'2025-07-08 16:37:17','2025-07-09 01:26:43',0.00,0.00,0.00,0.00,1),(22,33,'2025-07-08 16:54:27','2025-07-09 00:38:04',0.00,0.00,0.00,0.00,1),(23,15,'2025-07-09 00:41:30',NULL,0.00,0.00,0.00,0.00,1),(24,35,'2025-07-09 15:09:34','2025-07-09 15:09:34',15990.00,3038.10,0.00,19028.10,1);
 /*!40000 ALTER TABLE `carritos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,7 +134,7 @@ CREATE TABLE `clientes` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `rut` (`rut`),
   UNIQUE KEY `correo_electronico` (`correo_electronico`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +143,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (14,'Batitú','Mayorga','25592802-5','angelina.mendoza.y@gmail.com','+56998555466','2025-07-05 19:10:42','particular','activo',0,NULL,0.00,0),(15,'Angelina Andrea','Mendoza Yañez','17144575-2','ange.mendoza@duocuc.cl','+56998555466','2025-07-05 20:46:16','particular','activo',0,NULL,0.00,0);
+INSERT INTO `clientes` VALUES (14,'Batitú','Mayorga','25592802-5','angelina.mendoza.y@gmail.com','+56998555466','2025-07-05 19:10:42','particular','activo',0,NULL,0.00,0),(15,'Angelina Andrea','Mendoza Yañez','17144575-2','ange.mendoza@duocuc.cl','+56998555466','2025-07-05 20:46:16','particular','activo',0,NULL,0.00,0),(16,'Cliente','Postman','11.111.111-1','clientes@prueba.cl','+56998555466','2025-07-09 14:54:46','particular','activo',0,NULL,0.00,0);
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -353,7 +353,7 @@ CREATE TABLE `items_carrito` (
   KEY `producto_id` (`producto_id`),
   CONSTRAINT `items_carrito_ibfk_1` FOREIGN KEY (`carrito_id`) REFERENCES `carritos` (`id`) ON DELETE CASCADE,
   CONSTRAINT `items_carrito_ibfk_2` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -362,6 +362,7 @@ CREATE TABLE `items_carrito` (
 
 LOCK TABLES `items_carrito` WRITE;
 /*!40000 ALTER TABLE `items_carrito` DISABLE KEYS */;
+INSERT INTO `items_carrito` VALUES (45,24,1,1,15990.00,15990.00);
 /*!40000 ALTER TABLE `items_carrito` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -517,7 +518,7 @@ CREATE TABLE `pagos` (
   KEY `contador_id` (`contador_id`),
   CONSTRAINT `pagos_ibfk_1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`) ON DELETE CASCADE,
   CONSTRAINT `pagos_ibfk_2` FOREIGN KEY (`contador_id`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -526,7 +527,7 @@ CREATE TABLE `pagos` (
 
 LOCK TABLES `pagos` WRITE;
 /*!40000 ALTER TABLE `pagos` DISABLE KEYS */;
-INSERT INTO `pagos` VALUES (12,12,'transferencia',83288.10,'completado','2025-06-04 14:09:36',NULL,NULL,24,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(19,16,'webpay',232026.20,'completado','2025-07-08 16:37:46',NULL,NULL,NULL,NULL,'01abe36bd756c8bb3156b8ba81ec890a8f5231150a0e65c50ffa5617a5c71ac6','16','session-94098efd-fea6-4136-ae42-b67e4ce4f0ac','1617','VN',0,'2032',0,'2025-07-08 20:38:43','AUTHORIZED','TSY'),(20,17,'webpay',107052.40,'completado','2025-07-08 17:04:25',NULL,NULL,NULL,NULL,'01ab7a857fed039bbd938a0b23caf060ee994a3cd2f17519fbc2921c2713192c','17','session-95ca59b3-56af-4f07-8936-a1ad30190f6a','1617','VN',0,'2032',0,'2025-07-08 21:05:22','AUTHORIZED','TSY'),(21,16,'webpay',10938.10,'completado','2025-07-08 17:20:12',NULL,NULL,NULL,NULL,'01abf5f4089adfb3b417adae15b718f0c32f09318ecfb59f143669b63a05cf39','16','session-c63c9972-16c2-4d83-a1f9-de9e2e2d3c04','1617','VN',0,'2032',0,'2025-07-08 21:21:24','AUTHORIZED','TSY'),(22,16,'webpay',10938.10,'completado','2025-07-08 17:20:27',NULL,NULL,NULL,NULL,'01abdf605f4c5dddb49e3da0eff865273837fdb73a26ca71029059b22758c492','16','session-d077004b-256a-4675-91ee-7736c0ae62e6','1617','VN',0,'2032',0,'2025-07-09 01:53:00','AUTHORIZED','TSY'),(23,16,'webpay',255826.20,'completado','2025-07-08 21:52:03',NULL,NULL,NULL,NULL,'01ab83a54dd9cf59b0d011594b216b5543267a523b3f546fb5d53606492c1a78','16','session-508f014c-6ac5-427f-872e-4dae72f1f404','1617','VN',0,'2032',0,'2025-07-09 01:55:52','AUTHORIZED','TSY'),(24,16,'webpay',10698.10,'completado','2025-07-08 21:54:54',NULL,NULL,NULL,'http://localhost:8100/carrito','01ab83a54dd9cf59b0d011594b216b5543267a523b3f546fb5d53606492c1a78','16',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(29,21,'webpay',5938.10,'completado','2025-07-08 23:40:07',NULL,NULL,NULL,NULL,'01ab6928417c1efdd05793fd08991e3338658fed7ab317a0aeab51af13a6d09c','21','session-f6b978b5-abbb-4c3c-84c4-b9e2d42710a6','1617','VN',0,'2032',0,'2025-07-09 03:41:05','AUTHORIZED','TSY'),(30,22,'webpay',24028.10,'completado','2025-07-08 23:50:58',NULL,NULL,NULL,NULL,'01ab410486948d3f8b132b0052fc85bd19954b221fb9a4f22221ad12c375cead','22','session-c8eb956a-67f0-47da-923c-0f002ce4c39a','1617','VN',0,'2032',0,'2025-07-09 03:51:56','AUTHORIZED','TSY'),(31,23,'webpay',5938.10,'completado','2025-07-09 00:18:22',NULL,NULL,NULL,NULL,'01ab18e4bcca8972ee63e141e191e3869b9864e49ef6d7904f93d246fcf5bc25','23','session-72193c40-306a-41b5-af69-b5b906cfa2b9','1617','VN',0,'2032',0,'2025-07-09 04:19:19','AUTHORIZED','TSY'),(32,24,'webpay',10698.10,'completado','2025-07-09 00:37:30',NULL,NULL,NULL,NULL,'01ab35c631c7c72ccdf7b8bb7290bf57b430887a578f89a2c100243c7ec2d35f','24','session-d9ba9695-5d5a-4cb0-9a72-0b6c1c2eeafa','1617','VN',0,'2032',0,'2025-07-09 04:38:28','AUTHORIZED','TSY'),(33,25,'webpay',20458.10,'completado','2025-07-09 01:12:55',NULL,NULL,NULL,'http://localhost:8100/carrito','01abf789ced51c9b475f81db139620ceac0b798bec7529010cb6960e7bef8573','25',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(34,26,'webpay',10938.10,'completado','2025-07-09 01:18:48',NULL,NULL,NULL,NULL,'01abb9a5038bfe0f7e52a57ad69e51a5dd281e8517e53704fef655b5013c2633','26','session-e72d232c-9d9e-4ad6-ba58-4bb620dcec03','1617','VN',0,'2032',0,'2025-07-09 05:19:45','AUTHORIZED','TSY'),(35,27,'webpay',11888.10,'completado','2025-07-09 01:26:06',NULL,NULL,NULL,NULL,'01ab2f57a2edba0a1421bc1d66c9fb3c5dea791c9a9088c9006f895dcd23a787','27','session-e64a75ab-e651-411f-8c2e-db06bc20761d','1617','VN',0,'2032',0,'2025-07-09 05:27:04','AUTHORIZED','TSY');
+INSERT INTO `pagos` VALUES (12,12,'transferencia',83288.10,'completado','2025-06-04 14:09:36',NULL,NULL,24,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(19,16,'webpay',232026.20,'completado','2025-07-08 16:37:46',NULL,NULL,NULL,NULL,'01abe36bd756c8bb3156b8ba81ec890a8f5231150a0e65c50ffa5617a5c71ac6','16','session-94098efd-fea6-4136-ae42-b67e4ce4f0ac','1617','VN',0,'2032',0,'2025-07-08 20:38:43','AUTHORIZED','TSY'),(20,17,'webpay',107052.40,'completado','2025-07-08 17:04:25',NULL,NULL,NULL,NULL,'01ab7a857fed039bbd938a0b23caf060ee994a3cd2f17519fbc2921c2713192c','17','session-95ca59b3-56af-4f07-8936-a1ad30190f6a','1617','VN',0,'2032',0,'2025-07-08 21:05:22','AUTHORIZED','TSY'),(21,16,'webpay',10938.10,'completado','2025-07-08 17:20:12',NULL,NULL,NULL,NULL,'01abf5f4089adfb3b417adae15b718f0c32f09318ecfb59f143669b63a05cf39','16','session-c63c9972-16c2-4d83-a1f9-de9e2e2d3c04','1617','VN',0,'2032',0,'2025-07-08 21:21:24','AUTHORIZED','TSY'),(22,16,'webpay',10938.10,'completado','2025-07-08 17:20:27',NULL,NULL,NULL,NULL,'01abdf605f4c5dddb49e3da0eff865273837fdb73a26ca71029059b22758c492','16','session-d077004b-256a-4675-91ee-7736c0ae62e6','1617','VN',0,'2032',0,'2025-07-09 01:53:00','AUTHORIZED','TSY'),(23,16,'webpay',255826.20,'completado','2025-07-08 21:52:03',NULL,NULL,NULL,NULL,'01ab83a54dd9cf59b0d011594b216b5543267a523b3f546fb5d53606492c1a78','16','session-508f014c-6ac5-427f-872e-4dae72f1f404','1617','VN',0,'2032',0,'2025-07-09 01:55:52','AUTHORIZED','TSY'),(24,16,'webpay',10698.10,'completado','2025-07-08 21:54:54',NULL,NULL,NULL,'http://localhost:8100/carrito','01ab83a54dd9cf59b0d011594b216b5543267a523b3f546fb5d53606492c1a78','16',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(29,21,'webpay',5938.10,'completado','2025-07-08 23:40:07',NULL,NULL,NULL,NULL,'01ab6928417c1efdd05793fd08991e3338658fed7ab317a0aeab51af13a6d09c','21','session-f6b978b5-abbb-4c3c-84c4-b9e2d42710a6','1617','VN',0,'2032',0,'2025-07-09 03:41:05','AUTHORIZED','TSY'),(30,22,'webpay',24028.10,'completado','2025-07-08 23:50:58',NULL,NULL,NULL,NULL,'01ab410486948d3f8b132b0052fc85bd19954b221fb9a4f22221ad12c375cead','22','session-c8eb956a-67f0-47da-923c-0f002ce4c39a','1617','VN',0,'2032',0,'2025-07-09 03:51:56','AUTHORIZED','TSY'),(31,23,'webpay',5938.10,'completado','2025-07-09 00:18:22',NULL,NULL,NULL,NULL,'01ab18e4bcca8972ee63e141e191e3869b9864e49ef6d7904f93d246fcf5bc25','23','session-72193c40-306a-41b5-af69-b5b906cfa2b9','1617','VN',0,'2032',0,'2025-07-09 04:19:19','AUTHORIZED','TSY'),(32,24,'webpay',10698.10,'completado','2025-07-09 00:37:30',NULL,NULL,NULL,NULL,'01ab35c631c7c72ccdf7b8bb7290bf57b430887a578f89a2c100243c7ec2d35f','24','session-d9ba9695-5d5a-4cb0-9a72-0b6c1c2eeafa','1617','VN',0,'2032',0,'2025-07-09 04:38:28','AUTHORIZED','TSY'),(33,25,'webpay',20458.10,'completado','2025-07-09 01:12:55',NULL,NULL,NULL,'http://localhost:8100/carrito','01abf789ced51c9b475f81db139620ceac0b798bec7529010cb6960e7bef8573','25',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(34,26,'webpay',10938.10,'completado','2025-07-09 01:18:48',NULL,NULL,NULL,NULL,'01abb9a5038bfe0f7e52a57ad69e51a5dd281e8517e53704fef655b5013c2633','26','session-e72d232c-9d9e-4ad6-ba58-4bb620dcec03','1617','VN',0,'2032',0,'2025-07-09 05:19:45','AUTHORIZED','TSY'),(35,27,'webpay',11888.10,'completado','2025-07-09 01:26:06',NULL,NULL,NULL,NULL,'01ab2f57a2edba0a1421bc1d66c9fb3c5dea791c9a9088c9006f895dcd23a787','27','session-e64a75ab-e651-411f-8c2e-db06bc20761d','1617','VN',0,'2032',0,'2025-07-09 05:27:04','AUTHORIZED','TSY'),(36,28,'webpay',19028.10,'pendiente','2025-07-09 15:38:28',NULL,NULL,NULL,'http://localhost:8100/carrito',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `pagos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -571,7 +572,7 @@ CREATE TABLE `pedido_items` (
   KEY `producto_id` (`producto_id`),
   CONSTRAINT `pedido_items_ibfk_1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`) ON DELETE CASCADE,
   CONSTRAINT `pedido_items_ibfk_2` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=263 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=264 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -580,7 +581,7 @@ CREATE TABLE `pedido_items` (
 
 LOCK TABLES `pedido_items` WRITE;
 /*!40000 ALTER TABLE `pedido_items` DISABLE KEYS */;
-INSERT INTO `pedido_items` VALUES (10,12,6,1,69990.00,69990.00),(209,17,13,1,8990.00,8990.00),(210,17,15,1,4990.00,4990.00),(211,17,14,1,5990.00,5990.00),(212,17,6,1,69990.00,69990.00),(229,16,13,1,8990.00,8990.00),(231,18,7,1,8990.00,8990.00),(247,21,8,1,4990.00,4990.00),(249,22,1,1,15990.00,15990.00),(252,23,8,1,4990.00,4990.00),(255,24,13,1,8990.00,8990.00),(257,25,2,1,12990.00,12990.00),(259,26,15,1,4990.00,4990.00),(262,27,12,1,9990.00,9990.00);
+INSERT INTO `pedido_items` VALUES (10,12,6,1,69990.00,69990.00),(209,17,13,1,8990.00,8990.00),(210,17,15,1,4990.00,4990.00),(211,17,14,1,5990.00,5990.00),(212,17,6,1,69990.00,69990.00),(229,16,13,1,8990.00,8990.00),(231,18,7,1,8990.00,8990.00),(247,21,8,1,4990.00,4990.00),(249,22,1,1,15990.00,15990.00),(252,23,8,1,4990.00,4990.00),(255,24,13,1,8990.00,8990.00),(257,25,2,1,12990.00,12990.00),(259,26,15,1,4990.00,4990.00),(262,27,12,1,9990.00,9990.00),(263,28,1,1,15990.00,15990.00);
 /*!40000 ALTER TABLE `pedido_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -617,7 +618,7 @@ CREATE TABLE `pedidos` (
   CONSTRAINT `pedidos_ibfk_3` FOREIGN KEY (`direccion_id`) REFERENCES `direcciones` (`id`) ON DELETE SET NULL,
   CONSTRAINT `pedidos_ibfk_4` FOREIGN KEY (`vendedor_id`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL,
   CONSTRAINT `pedidos_ibfk_5` FOREIGN KEY (`bodeguero_id`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -626,7 +627,7 @@ CREATE TABLE `pedidos` (
 
 LOCK TABLES `pedidos` WRITE;
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
-INSERT INTO `pedidos` VALUES (12,15,'2025-05-29 15:42:30','entregado','retiro_tienda',1,NULL,69990.00,0.00,13298.10,83288.10,'test',25,NULL),(16,34,'2025-07-08 16:37:39','confirmado','retiro_tienda',3,NULL,8990.00,0.00,1708.10,10698.10,'',NULL,NULL),(17,33,'2025-07-08 16:55:10','confirmado','retiro_tienda',7,NULL,89960.00,0.00,17092.40,107052.40,'',NULL,NULL),(18,34,'2025-07-08 23:16:01','confirmado','despacho_domicilio',NULL,NULL,8990.00,5000.00,1708.10,15698.10,'',NULL,NULL),(21,34,'2025-07-08 23:40:00','confirmado','retiro_tienda',7,NULL,4990.00,0.00,948.10,5938.10,'',NULL,NULL),(22,34,'2025-07-08 23:49:41','confirmado','despacho_domicilio',NULL,NULL,15990.00,5000.00,3038.10,24028.10,'',NULL,NULL),(23,34,'2025-07-09 00:18:14','confirmado','retiro_tienda',7,NULL,4990.00,0.00,948.10,5938.10,'',NULL,NULL),(24,33,'2025-07-09 00:37:24','confirmado','retiro_tienda',7,NULL,8990.00,0.00,1708.10,10698.10,'',NULL,NULL),(25,34,'2025-07-09 01:12:50','confirmado','despacho_domicilio',NULL,NULL,12990.00,5000.00,2468.10,20458.10,'',NULL,NULL),(26,34,'2025-07-09 01:18:43','confirmado','despacho_domicilio',NULL,NULL,4990.00,5000.00,948.10,10938.10,'',NULL,NULL),(27,34,'2025-07-09 01:24:04','confirmado','retiro_tienda',5,NULL,9990.00,0.00,1898.10,11888.10,'',NULL,NULL);
+INSERT INTO `pedidos` VALUES (12,15,'2025-05-29 15:42:30','entregado','retiro_tienda',1,NULL,69990.00,0.00,13298.10,83288.10,'test',25,NULL),(16,34,'2025-07-08 16:37:39','confirmado','retiro_tienda',3,NULL,8990.00,0.00,1708.10,10698.10,'',NULL,NULL),(17,33,'2025-07-08 16:55:10','confirmado','retiro_tienda',7,NULL,89960.00,0.00,17092.40,107052.40,'',NULL,NULL),(18,34,'2025-07-08 23:16:01','confirmado','despacho_domicilio',NULL,NULL,8990.00,5000.00,1708.10,15698.10,'',NULL,NULL),(21,34,'2025-07-08 23:40:00','confirmado','retiro_tienda',7,NULL,4990.00,0.00,948.10,5938.10,'',NULL,NULL),(22,34,'2025-07-08 23:49:41','confirmado','despacho_domicilio',NULL,NULL,15990.00,5000.00,3038.10,24028.10,'',NULL,NULL),(23,34,'2025-07-09 00:18:14','confirmado','retiro_tienda',7,NULL,4990.00,0.00,948.10,5938.10,'',NULL,NULL),(24,33,'2025-07-09 00:37:24','confirmado','retiro_tienda',7,NULL,8990.00,0.00,1708.10,10698.10,'',NULL,NULL),(25,34,'2025-07-09 01:12:50','confirmado','despacho_domicilio',NULL,NULL,12990.00,5000.00,2468.10,20458.10,'',NULL,NULL),(26,34,'2025-07-09 01:18:43','confirmado','despacho_domicilio',NULL,NULL,4990.00,5000.00,948.10,10938.10,'',NULL,NULL),(27,34,'2025-07-09 01:24:04','confirmado','retiro_tienda',5,NULL,9990.00,0.00,1898.10,11888.10,'',NULL,NULL),(28,35,'2025-07-09 15:30:57','pendiente','retiro_tienda',5,NULL,15990.00,0.00,3038.10,19028.10,'test postman',NULL,NULL);
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1087,7 +1088,7 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `rut` (`rut`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1096,7 +1097,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (13,'admin','admin','admin@ferremas.cl','rJaJ4ickJwheNbnT4+i+2IyzQ0gotDuG/AWWytTG4nA=','191991999','99999999','Administrador','2025-05-27 20:22:21','2025-05-30 17:22:29',1),(15,'Prueba','Prueba','Prueba@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','101001001','10101010','Administrador','2025-05-28 11:37:17','2025-07-09 01:27:53',1),(24,'Contador','Contador','contador@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-3','90909099','contador','2025-05-30 17:23:06','2025-06-04 14:09:09',1),(25,'Vendedor','Vendedor','vendedor@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-4','90909090','vendedor','2025-05-30 17:25:04','2025-06-05 15:05:11',1),(26,'Bodeguero','Bodeguero','bodeguero@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-5','90909097','bodeguero','2025-05-30 17:26:03','2025-06-05 14:56:13',1),(33,'Batitú','Mayorga','angelina.mendoza.y@gmail.com','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','25592802-5','+56998555466','cliente','2025-07-05 19:10:42','2025-07-09 00:36:57',1),(34,'Angelina Andrea','Mendoza Yañez','ange.mendoza@duocuc.cl','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','17144575-2','+56998555466','cliente','2025-07-05 20:46:16','2025-07-09 01:18:28',1);
+INSERT INTO `usuarios` VALUES (13,'admin','admin','admin@ferremas.cl','rJaJ4ickJwheNbnT4+i+2IyzQ0gotDuG/AWWytTG4nA=','191991999','99999999','Administrador','2025-05-27 20:22:21','2025-05-30 17:22:29',1),(15,'Prueba','Prueba','Prueba@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','101001001','10101010','Administrador','2025-05-28 11:37:17','2025-07-09 16:03:08',1),(24,'Contador','Contador','contador@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-3','90909099','contador','2025-05-30 17:23:06','2025-06-04 14:09:09',1),(25,'Vendedor','Vendedor','vendedor@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-4','90909090','vendedor','2025-05-30 17:25:04','2025-06-05 15:05:11',1),(26,'Bodeguero','Bodeguero','bodeguero@prueba.cl','ZtuE14gu8jIeRTdy0ifE5OmlPJYTGqyOZUk0Ldl7MgM=','11111111-5','90909097','bodeguero','2025-05-30 17:26:03','2025-06-05 14:56:13',1),(33,'Batitú','Mayorga','angelina.mendoza.y@gmail.com','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','25592802-5','+56998555466','cliente','2025-07-05 19:10:42','2025-07-09 00:36:57',1),(34,'Angelina Andrea','Mendoza Yañez','ange.mendoza@duocuc.cl','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','17144575-2','+56998555466','cliente','2025-07-05 20:46:16','2025-07-09 01:18:28',1),(35,'Cliente','Postman','clientes@prueba.cl','MLYsvkH/DNWmzY7S/09H1KFStW4OeVh6N1gTf1jSvsg=','11.111.111-1','+56998555466','cliente','2025-07-09 14:54:46','2025-07-09 15:37:50',1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3016,4 +3017,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-09 11:12:50
+-- Dump completed on 2025-07-10 11:35:56

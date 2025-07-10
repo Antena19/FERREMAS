@@ -225,100 +225,100 @@ namespace Ferremas.Api.Controllers
         }
 
         // POST: api/Productos/carga-masiva
-        [HttpPost("carga-masiva")]
-        [Authorize(Roles = "Administrador,administrador")]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> CargaMasiva([FromForm] IFormFile archivoCsv)
-        {
-            if (archivoCsv == null || archivoCsv.Length == 0)
-                return BadRequest("No se envió ningún archivo.");
-
-            var productosCreados = new List<string>();
-            var errores = new List<string>();
-            var lineas = new List<string>();
-            using (var reader = new StreamReader(archivoCsv.OpenReadStream()))
-            {
-                while (!reader.EndOfStream)
-                {
-                    var linea = await reader.ReadLineAsync();
-                    if (!string.IsNullOrWhiteSpace(linea))
-                        lineas.Add(linea);
-                }
-            }
-
-            // Detectar y saltar encabezado si la primera línea no es válida
-            int fila = 1;
-            if (lineas.Count > 0)
-            {
-                var primerLinea = lineas[0];
-                var partes = primerLinea.Split(',');
-                if (partes.Length < 6)
-                    partes = primerLinea.Split(';');
-                if (partes.Length >= 4 && !decimal.TryParse(partes[3], out _))
-                {
-                    // Es encabezado, saltar
-                    lineas.RemoveAt(0);
-                    fila++;
-                }
-            }
-
-            foreach (var linea in lineas)
-            {
-                var partes = linea.Split(',');
-                if (partes.Length < 6)
-                    partes = linea.Split(';');
-                if (partes.Length < 6)
-                {
-                    errores.Add($"Fila {fila}: Formato incorrecto");
-                    fila++;
-                    continue;
-                }
-                try
-                {
-                    // Validar precio
-                    if (!decimal.TryParse(partes[3], out decimal precio) || precio <= 0)
-                        throw new Exception("Precio inválido o menor o igual a cero");
-                    // Validar IDs
-                    if (!int.TryParse(partes[4], out int categoriaId))
-                        throw new Exception("ID de categoría inválido");
-                    if (!int.TryParse(partes[5], out int marcaId))
-                        throw new Exception("ID de marca inválido");
-
-                    // Validar existencia de categoría y marca
-                    // (esto requiere acceso a los servicios, aquí se asume que existen métodos para validar)
-                    // Puedes reemplazar por el servicio real si existe
-                    var categoriaExiste = await _productoService.CategoriaExisteAsync(categoriaId);
-                    var marcaExiste = await _productoService.MarcaExisteAsync(marcaId);
-                    if (!categoriaExiste)
-                        throw new Exception($"La categoría con ID {categoriaId} no existe");
-                    if (!marcaExiste)
-                        throw new Exception($"La marca con ID {marcaId} no existe");
-
-                    // Validar código único
-                    if (await _productoService.ProductoCodigoExisteAsync(partes[0]))
-                        throw new Exception($"Ya existe un producto con el código '{partes[0]}'");
-
-                    var productoDTO = new ProductoCreateDTO
-                    {
-                        Codigo = partes[0],
-                        Nombre = partes[1],
-                        Descripcion = partes[2],
-                        Precio = precio,
-                        CategoriaId = categoriaId,
-                        MarcaId = marcaId,
-                        ImagenUrl = partes.Length > 6 ? partes[6] : null,
-                        Especificaciones = partes.Length > 7 ? partes[7] : null
-                    };
-                    await _productoService.CrearProductoAsync(productoDTO);
-                    productosCreados.Add(productoDTO.Nombre);
-                }
-                catch (Exception ex)
-                {
-                    errores.Add($"Fila {fila}: {ex.Message}");
-                }
-                fila++;
-            }
-            return Ok(new { productosCreados, errores });
-        }
+        //[HttpPost("carga-masiva")]
+        //[Authorize(Roles = "Administrador,administrador")]
+        //[Consumes("multipart/form-data")]
+        //public async Task<IActionResult> CargaMasiva([FromForm] IFormFile archivoCsv)
+        //{
+        //    if (archivoCsv == null || archivoCsv.Length == 0)
+        //        return BadRequest("No se envió ningún archivo.");
+        //
+        //    var productosCreados = new List<string>();
+        //    var errores = new List<string>();
+        //    var lineas = new List<string>();
+        //    using (var reader = new StreamReader(archivoCsv.OpenReadStream()))
+        //    {
+        //        while (!reader.EndOfStream)
+        //        {
+        //            var linea = await reader.ReadLineAsync();
+        //            if (!string.IsNullOrWhiteSpace(linea))
+        //                lineas.Add(linea);
+        //        }
+        //    }
+        //
+        //    // Detectar y saltar encabezado si la primera línea no es válida
+        //    int fila = 1;
+        //    if (lineas.Count > 0)
+        //    {
+        //        var primerLinea = lineas[0];
+        //        var partes = primerLinea.Split(',');
+        //        if (partes.Length < 6)
+        //            partes = primerLinea.Split(';');
+        //        if (partes.Length >= 4 && !decimal.TryParse(partes[3], out _))
+        //        {
+        //            // Es encabezado, saltar
+        //            lineas.RemoveAt(0);
+        //            fila++;
+        //        }
+        //    }
+        //
+        //    foreach (var linea in lineas)
+        //    {
+        //        var partes = linea.Split(',');
+        //        if (partes.Length < 6)
+        //            partes = linea.Split(';');
+        //        if (partes.Length < 6)
+        //        {
+        //            errores.Add($"Fila {fila}: Formato incorrecto");
+        //            fila++;
+        //            continue;
+        //        }
+        //        try
+        //        {
+        //            // Validar precio
+        //            if (!decimal.TryParse(partes[3], out decimal precio) || precio <= 0)
+        //                throw new Exception("Precio inválido o menor o igual a cero");
+        //            // Validar IDs
+        //            if (!int.TryParse(partes[4], out int categoriaId))
+        //                throw new Exception("ID de categoría inválido");
+        //            if (!int.TryParse(partes[5], out int marcaId))
+        //                throw new Exception("ID de marca inválido");
+        //
+        //            // Validar existencia de categoría y marca
+        //            // (esto requiere acceso a los servicios, aquí se asume que existen métodos para validar)
+        //            // Puedes reemplazar por el servicio real si existe
+        //            var categoriaExiste = await _productoService.CategoriaExisteAsync(categoriaId);
+        //            var marcaExiste = await _productoService.MarcaExisteAsync(marcaId);
+        //            if (!categoriaExiste)
+        //                throw new Exception($"La categoría con ID {categoriaId} no existe");
+        //            if (!marcaExiste)
+        //                throw new Exception($"La marca con ID {marcaId} no existe");
+        //
+        //            // Validar código único
+        //            if (await _productoService.ProductoCodigoExisteAsync(partes[0]))
+        //                throw new Exception($"Ya existe un producto con el código '{partes[0]}'");
+        //
+        //            var productoDTO = new ProductoCreateDTO
+        //            {
+        //                Codigo = partes[0],
+        //                Nombre = partes[1],
+        //                Descripcion = partes[2],
+        //                Precio = precio,
+        //                CategoriaId = categoriaId,
+        //                MarcaId = marcaId,
+        //                ImagenUrl = partes.Length > 6 ? partes[6] : null,
+        //                Especificaciones = partes.Length > 7 ? partes[7] : null
+        //            };
+        //            await _productoService.CrearProductoAsync(productoDTO);
+        //            productosCreados.Add(productoDTO.Nombre);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            errores.Add($"Fila {fila}: {ex.Message}");
+        //        }
+        //        fila++;
+        //    }
+        //    return Ok(new { productosCreados, errores });
+        //}
     }
 }

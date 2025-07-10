@@ -669,6 +669,18 @@
         }
       }
     },
+    "/api/Admin/sucursales/activas": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Auth/login": {
       "post": {
         "tags": [
@@ -2715,6 +2727,68 @@
         }
       }
     },
+    "/api/Pagos/webpay/crear": {
+      "post": {
+        "tags": [
+          "Pagos"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebpayCrearRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebpayCrearRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebpayCrearRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pagos/webpay/confirmar": {
+      "post": {
+        "tags": [
+          "Pagos"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebpayConfirmarRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebpayConfirmarRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebpayConfirmarRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Pedidos": {
       "get": {
         "tags": [
@@ -2802,14 +2876,26 @@
         }
       }
     },
-    "/api/Pedidos/{id}": {
+    "/api/Pedidos/test-usuarios": {
+      "get": {
+        "tags": [
+          "Pedidos"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pedidos/usuario/{usuarioId}": {
       "get": {
         "tags": [
           "Pedidos"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "usuarioId",
             "in": "path",
             "required": true,
             "schema": {
@@ -2824,43 +2910,34 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PedidoDTO"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PedidoDTO"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PedidoDTO"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PedidoDTO"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PedidoDTO"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PedidoDTO"
+                  }
                 }
               }
             }
           }
         }
-      },
+      }
+    },
+    "/api/Pedidos/{id}": {
       "put": {
         "tags": [
           "Pedidos"
@@ -2993,55 +3070,6 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Pedidos/usuario/{usuarioId}": {
-      "get": {
-        "tags": [
-          "Pedidos"
-        ],
-        "parameters": [
-          {
-            "name": "usuarioId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PedidoDTO"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PedidoDTO"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PedidoDTO"
-                  }
                 }
               }
             }
@@ -3293,6 +3321,69 @@
         }
       }
     },
+    "/api/Pedidos/desde-carrito": {
+      "post": {
+        "tags": [
+          "Pedidos"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PedidoDesdeCarritoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PedidoDesdeCarritoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PedidoDesdeCarritoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Pedidos/pendiente": {
+      "get": {
+        "tags": [
+          "Pedidos"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Perfil/mi-perfil": {
       "get": {
         "tags": [
@@ -3456,6 +3547,16 @@
       "get": {
         "tags": [
           "Productos"
+        ],
+        "parameters": [
+          {
+            "name": "todos",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -5289,48 +5390,50 @@
             "minLength": 1,
             "type": "string"
           },
-          "mercadoPagoPaymentId": {
-            "maxLength": 100,
+          "webpayToken": {
             "type": "string",
             "nullable": true
           },
-          "mercadoPagoPreferenceId": {
-            "maxLength": 100,
+          "webpayBuyOrder": {
             "type": "string",
             "nullable": true
           },
-          "mercadoPagoStatus": {
-            "maxLength": 50,
+          "webpaySessionId": {
             "type": "string",
             "nullable": true
           },
-          "mercadoPagoStatusDetail": {
-            "maxLength": 100,
+          "webpayAuthorizationCode": {
             "type": "string",
             "nullable": true
           },
-          "mercadoPagoPaymentMethodId": {
-            "maxLength": 50,
+          "webpayPaymentTypeCode": {
             "type": "string",
             "nullable": true
           },
-          "mercadoPagoPaymentTypeId": {
-            "maxLength": 50,
-            "type": "string",
-            "nullable": true
-          },
-          "mercadoPagoInstallments": {
+          "webpayResponseCode": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "mercadoPagoCardNumber": {
-            "maxLength": 20,
+          "webpayCardLastDigits": {
             "type": "string",
             "nullable": true
           },
-          "referenciaTransaccion": {
-            "maxLength": 255,
+          "webpayInstallmentsNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "webpayTransactionDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "webpayStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "webpayVci": {
             "type": "string",
             "nullable": true
           },
@@ -5356,36 +5459,50 @@
       "PagoConfirmacionDTO": {
         "type": "object",
         "properties": {
-          "mercadoPagoPaymentId": {
+          "token": {
             "type": "string",
             "nullable": true
           },
-          "estado": {
+          "buyOrder": {
             "type": "string",
             "nullable": true
           },
-          "mercadoPagoStatus": {
+          "sessionId": {
             "type": "string",
             "nullable": true
           },
-          "mercadoPagoStatusDetail": {
+          "authorizationCode": {
             "type": "string",
             "nullable": true
           },
-          "mercadoPagoPaymentMethodId": {
+          "paymentTypeCode": {
             "type": "string",
             "nullable": true
           },
-          "mercadoPagoPaymentTypeId": {
-            "type": "string",
-            "nullable": true
-          },
-          "mercadoPagoInstallments": {
+          "responseCode": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "mercadoPagoCardNumber": {
+          "cardLastDigits": {
+            "type": "string",
+            "nullable": true
+          },
+          "installmentsNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "transactionDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "vci": {
             "type": "string",
             "nullable": true
           }
@@ -5405,7 +5522,7 @@
           },
           "metodo": {
             "minLength": 1,
-            "pattern": "tarjeta_debito|tarjeta_credito|transferencia|mercadopago",
+            "pattern": "tarjeta_debito|tarjeta_credito|transferencia|webpay",
             "type": "string"
           },
           "urlRetorno": {
@@ -5439,39 +5556,6 @@
             "nullable": true
           },
           "metodo": {
-            "type": "string",
-            "nullable": true
-          },
-          "mercadoPagoPaymentId": {
-            "type": "string",
-            "nullable": true
-          },
-          "mercadoPagoPreferenceId": {
-            "type": "string",
-            "nullable": true
-          },
-          "mercadoPagoStatus": {
-            "type": "string",
-            "nullable": true
-          },
-          "mercadoPagoStatusDetail": {
-            "type": "string",
-            "nullable": true
-          },
-          "mercadoPagoPaymentMethodId": {
-            "type": "string",
-            "nullable": true
-          },
-          "mercadoPagoPaymentTypeId": {
-            "type": "string",
-            "nullable": true
-          },
-          "mercadoPagoInstallments": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "mercadoPagoCardNumber": {
             "type": "string",
             "nullable": true
           },
@@ -5582,6 +5666,22 @@
           "comisionCalculada": {
             "type": "number",
             "format": "double",
+            "nullable": true
+          },
+          "usuarioNombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "sucursalNombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendedorNombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "bodegueroNombre": {
+            "type": "string",
             "nullable": true
           },
           "cliente": {
@@ -5732,6 +5832,10 @@
             "format": "int32",
             "nullable": true
           },
+          "direccionTexto": {
+            "type": "string",
+            "nullable": true
+          },
           "subtotal": {
             "type": "number",
             "format": "double"
@@ -5780,6 +5884,33 @@
         },
         "additionalProperties": false
       },
+      "PedidoDesdeCarritoDTO": {
+        "required": [
+          "tipoEntrega"
+        ],
+        "type": "object",
+        "properties": {
+          "tipoEntrega": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "sucursalId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "direccionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "notas": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "PedidoItem": {
         "required": [
           "cantidad",
@@ -5819,6 +5950,10 @@
           "subtotal": {
             "type": "number",
             "format": "double"
+          },
+          "productoNombre": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -6535,6 +6670,30 @@
               "$ref": "#/components/schemas/Pedido"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WebpayConfirmarRequestDTO": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WebpayCrearRequestDTO": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "pedidoId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
